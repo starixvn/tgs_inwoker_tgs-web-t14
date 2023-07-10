@@ -23,7 +23,7 @@ const Img = styled.img`
 
   margin: 0 auto 0 -960px;
   position: relative;
-  left: 45.5%;
+  left: 50%;
 `;
 
 class Slider extends React.Component {
