@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Common from "../../../../../utils/Common";
 import config from "../../../../../config/config";
+import { is } from "date-fns/locale";
 const ContentHolder = styled.div`
   display: flex;
-  flex-direction: row;
-  gap: 40px;
+  flex-direction: column;
 `;
 
 const Title = styled.div`
@@ -25,45 +25,24 @@ const WinnerList = styled.div`
   );
 `;
 
-const TableLayout = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  text-align: center;
-  padding: 3px;
-`;
-
-const TableHeader = styled(TableLayout)`
-  color: ${({ theme }) => {
-    return theme.accent;
-  }};
-  font-weight: bold;
-`;
-
-const TableData = styled(TableLayout)`
-  border-top: solid 1.25px #fff;
-  font-size: 12px;
-  color: #fff;
-
-  div {
-    white-space: nowrap;
-  }
-`;
-
 const WinnerListItem = styled.div`
+  &:nth-child(even) {
+    background: #27273f;
+  }
   display: grid;
-  grid-template-columns: 120px 1fr 1fr;
-  justify-content: space-evenly;
+  grid-template-columns: 1fr 120px 90px 1fr;
+  gap: 20px;
+  justify-content: space-between;
+  padding: 0 20px 0 10px;
   align-items: center;
-  background: #27273f;
+  background: #0f1339;
   color: #fff;
-  width: 400px;
   height: 120px;
-  border-radius: 25px;
 `;
 
 const WinnerListItemImage = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   background-image: url(${(props) => props.img});
   background-size: contain;
   background-repeat: no-repeat;
@@ -74,15 +53,28 @@ const WinnerListItemDescription = styled.div`
   display: flex;
   flex-direction: column;
   align-self: center;
-  & > div{
-    font-size: 16px;
+  & > div {
+    font-size: 12px;
   }
 `;
 const WinnerListItemPrize = styled.div`
-  color: ${({ theme }) => theme.primary};
+  span {
+    color: #ffa200;
+  }
+
+  color: #fff;
   font-weight: 600;
-  font-size: 22px;
+  font-size: 13px;
   align-self: center;
+`;
+
+const CustomButton = styled.div`
+  background: #ffa200;
+  width: fit-content;
+  border-radius: 20px;
+  padding: 7px 15px;
+  cursor: pointer;
+  font-size: 12px;
 `;
 
 const Winners = React.memo(({ title }) => {
@@ -203,6 +195,7 @@ const Winners = React.memo(({ title }) => {
 
   var min = 5;
   var max = 5000;
+  var isOdd = true;
 
   const [winnerList, setWinnerList] = useState([]);
   var newList = [...winnerList];
@@ -216,8 +209,7 @@ const Winners = React.memo(({ title }) => {
   );
 
   useEffect(() => {
-    if(winnerList<=0)
-    {
+    if (winnerList <= 0) {
       setWinnerList(newList);
     }
     const updateList = () => {
@@ -229,6 +221,9 @@ const Winners = React.memo(({ title }) => {
         amount: Common.formatNumberWithThousand(randomNumber(min, max)),
       });
       setWinnerList(newList);
+      if (isOdd) {
+        isOdd = !isOdd;
+      }
     };
 
     const interval = setInterval(updateList, randomNumber(1000, 10000));
@@ -251,7 +246,7 @@ const Winners = React.memo(({ title }) => {
     <ContentHolder>
       {winnerList.slice(0, 3).map((data, index) => {
         return (
-          <WinnerListItem>
+          <WinnerListItem isOdd={isOdd}>
             <WinnerListItemImage
               img={`${
                 config.sourceUrl
@@ -263,7 +258,21 @@ const Winners = React.memo(({ title }) => {
               <div>{data.name}</div>
               <div>{data.game.name}</div>
             </WinnerListItemDescription>
-            <WinnerListItemPrize>₱ {data.amount}</WinnerListItemPrize>
+            <div style={{ fontSize: 12 }}>
+              Just won
+              <WinnerListItemPrize>
+                <span>PHP</span> {data.amount}
+              </WinnerListItemPrize>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <CustomButton>Play</CustomButton>
+            </div>
           </WinnerListItem>
         );
       })}

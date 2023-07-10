@@ -1,11 +1,11 @@
 export const wapT13 = {
-  pcAppBar: "#1b1d30",
-  loginBody: "#1b1d30",
+  pcAppBar: "#000326",
+  loginBody: "#000326",
   loginText: "#fff",
   primary: "#cf2029",
   primaryRgb: "213, 38, 98",
   primaryText: "#fff",
-  primaryGradient: "#1b1d30",
+  primaryGradient: "#000326",
   primaryGradientRgb: "213, 38, 98",
   primaryHightlight: "#fde73f",
   secondary: "#404040",
@@ -13,14 +13,14 @@ export const wapT13 = {
   tertiary: "rgba(255, 255, 255, 1)",
   tertiaryText: "rgba(255, 255, 255, 0.5)",
   //new addition to compensate wap-t2
-  appbar: "#1b1d30",
+  appbar: "#000326",
   buttonBackground: "#cf2029",
   buttonText: "#fff",
   buttonText2: "#fff",
-  bottomnav: "#1b1d30",
+  bottomnav: "#000326",
   bottomNavAction: "#fff",
   bottomNavActionSelected: "#fff",
-  body: "#1b1d30",
+  body: "#000326",
   bodyBackground: `url(${
     process.env.PUBLIC_URL + `/assets/images/wapp/resource/T11/bodybg.png`
   })`,
@@ -32,7 +32,7 @@ export const wapT13 = {
   pcHeaderText: "#fff",
   pcHeaderTextHover: "#fde73f",
   pcHeaderRightMenu: "#f6f6f6",
-  pcHeaderRightMenuHover: "#1b1d30",
+  pcHeaderRightMenuHover: "#000326",
   gamelisterOriginalText: "#fff",
   gamelisterSelectedText: "#fff",
   gamelisterBg:
@@ -41,9 +41,9 @@ export const wapT13 = {
   popoverGameTypeText: "#c40511",
   popoverSubWalletText: "#000",
 
-  wapMarqueeBg: "#1b1d3075",
+  wapMarqueeBg: "#00032675",
   wapMarqueeText: "#fff",
-  accent: "#1b1d30",
+  accent: "#000326",
   wapPrimary: "#fff",
   wapSecondary: "#fff",
   buttonWapBoxShadow: "none",

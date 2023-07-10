@@ -21,7 +21,7 @@ import { AppHistory } from "../../../history/History";
 // try {
 // const channel = new BroadcastChannel('refreshBalance');
 // }catch {
-  
+
 // }
 const Container = styled.div`
   width: 100%;
@@ -32,10 +32,10 @@ const InnerContainer = styled.div`
   width: 1280px;
   height: 837px;
   overflow: hidden;
-  background-color: #1b1d30;
+  background-color: #000326;
   padding-bottom: 15px;
   position: relative;
-  border: solid #1b1d30 15px;
+  border: solid #000326 15px;
 `;
 const LoadingContainer = styled.div`
   width: 100%;
@@ -68,7 +68,7 @@ const GameFrameHeader = styled.div`
   width: 100%;
   height: 50px;
   margin: 0 0 10px 0;
-  background-color: #1b1d30;
+  background-color: #000326;
   display: flex;
   justify-content: space-between;
 `;
@@ -320,7 +320,7 @@ class Play extends Component {
               }
             })()}
             <GameFrameHeader>
-              <div style={{padding: "0px 10px"}}>
+              <div style={{ padding: "0px 10px" }}>
                 <BackButton onClick={this.handleGoBack}></BackButton>
                 {/* <Spliter></Spliter> */}
                 <RefreshButton

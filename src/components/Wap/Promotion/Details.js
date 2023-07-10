@@ -28,7 +28,7 @@ const PromoDesc = styled.div`
 
 const TheEntireWrapper = styled.div`
   padding: 110px 30px 220px 30px;
-  background: #1b1d30;
+  background: #000326;
   color: #fff;
   min-height: 100vh;
 `;

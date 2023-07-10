@@ -5,70 +5,95 @@ import i18n from "../../../../utils/i18n";
 import { AppHistory } from "../../../../history/History";
 const GameMenuContainer = styled.div`
   display: flex;
-  width: 1280px;
+
   justify-content: center;
   margin: 0px auto 0px auto;
-  padding: 15px 10px;
+  background: #252958;
+  width: 100%;
 `;
 
 const GameMenuIcon = styled.div`
-  min-height: 80px;
-  min-width: 80px;
-
-  height: 41px;
-  width: 45px;
+  height: 50px;
+  width: 50px;
 
   margin: 10px auto 0 auto;
 
   mask: ${({ src }) => {
     return `url(${
-      process.env.PUBLIC_URL + `/assets/images/pcHeaderMenu/${src}.png`
+      process.env.PUBLIC_URL + `/assets/images/pcHeaderMenu/${src}.svg`
     }) no-repeat center /
   contain;`;
   }};
-  background: ${({ theme }) => theme.primary};
+  background: #fff;
 
   transition: background 0.1s ease-in;
 `;
 
-const GameMenu = styled.div`
-  width: 151px;
-  height: 131px;
-  background: #27273f;
-  border-radius: 16px;
-  margin: 0 8px;
-  filter: drop-shadow(0 3px 6px #00000028);
-  ${({ active }) => {
-    return active
-      ? `    
-    background: #cf2029;
-    filter: drop-shadow(1px 1px 8px #cf2029ba);
-    ${GameMenuIcon} {
-      background: #fff;
-    }`
-      : ``;
-  }}
-  &:hover {
-    background: #cf2029;
-    filter: drop-shadow(1px 1px 8px #cf2029ba);
-    ${GameMenuIcon} {
-      background: #fff;
-    }
-  }
-`;
-
 const GameMenuTitle = styled.div`
-  font-size: 20px;
+  font-size: 16px;
   white-space: nowrap;
   width: 100%;
   text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
+
   color: ${({ theme }) => theme.gamelisterOriginalText};
 `;
 
+const GameMenu = styled.div`
+  width: 120px;
+  height: 135px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 16px;
+  filter: drop-shadow(0 3px 6px #00000028);
+  ${({ active }) => {
+    return active
+      ? `    
+  
+
+      ${GameMenuTitle}{
+        color:  #ffa200;
+      }
+    ${GameMenuIcon} {
+      background: #ffa200;
+    }`
+      : ``;
+  }}
+  &:hover {
+    ${GameMenuTitle} {
+      color: #ffa200;
+    }
+    ${GameMenuIcon} {
+      background: #ffa200;
+    }
+  }
+`;
+
 const GameLister = ({ game }) => {
-  var currentPage = window.location.pathname.split("/")[2];
+  var currentPage = window.location.pathname.split("/")[1];
+
+  const hardcoded = [
+    {
+      title: "common.promotion",
+      gameType: "promotion",
+      path: "promotion",
+    },
+    {
+      title: "VIP",
+      gameType: "vip",
+      path: "vip",
+    },
+    {
+      title: "T13.header.news",
+      gameType: "news",
+      path: "news",
+    },
+  ];
 
   const filterGameList = (item) => {
     if (item.include && item.include !== undefined) {
@@ -113,6 +138,19 @@ const GameLister = ({ game }) => {
         } else {
           return null;
         }
+      })}
+      {hardcoded.map((item, index) => {
+        return (
+          <GameMenu
+            active={currentPage === item.path}
+            onClick={() => {
+              AppHistory.push("/" + item.path);
+            }}
+          >
+            <GameMenuIcon src={item.gameType}></GameMenuIcon>
+            <GameMenuTitle>{i18n.t(item.title)}</GameMenuTitle>
+          </GameMenu>
+        );
       })}
     </GameMenuContainer>
   );

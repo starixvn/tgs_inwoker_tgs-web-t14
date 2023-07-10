@@ -17,7 +17,7 @@ import Messagebox from "../../../../Messagebox";
 const Container = styled.div`
   padding: 20px 28px;
   box-sizing: border-box
-  background-color: #1b1d30;
+  background-color: #000326;
   width: 100%;
   min-height: 611px;
 
@@ -116,7 +116,7 @@ const GameTranferWallet = styled.div`
   width: 265px;
   height: 98px;
   border-radius: 15px;
-  background: #1b1d30;
+  background: #000326;
   margin: 0 10px 10px 0;
   float: left;
 `;
@@ -183,7 +183,7 @@ const GameWalletButton = styled.div`
 const TransferOutButton = styled(GameWalletButton)`
   width: 100px;
   padding-top: 7px;
-  background: #1b1d30;
+  background: #000326;
   filter: none;
   pointer-events: all;
   &:hover {
@@ -253,7 +253,7 @@ const CustomFormControl = withStyles((theme) => ({
     },
     "& .MuiSelect-select > option": {
       fontSize: "14px",
-      color: "#1b1d30",
+      color: "#000326",
     },
     "& .MuiSelect-icon": {
       color: "#ffffff",
@@ -389,7 +389,14 @@ const Template13 = ({
                 )
                 .filter((e) => {
                   if (config.features.MergeEVORTNT) {
-                    if (!(e.gpcode === "NTTF" || e.gpcode === "RTTF" || e.gpcode === "BTG" || e.gpcode === "NLC")) {
+                    if (
+                      !(
+                        e.gpcode === "NTTF" ||
+                        e.gpcode === "RTTF" ||
+                        e.gpcode === "BTG" ||
+                        e.gpcode === "NLC"
+                      )
+                    ) {
                       return e;
                     }
                   } else {
@@ -425,7 +432,14 @@ const Template13 = ({
                 )
                 .filter((e) => {
                   if (config.features.MergeEVORTNT) {
-                    if (!(e.gpcode === "NTTF" || e.gpcode === "RTTF" || e.gpcode === "BTG" || e.gpcode === "NLC")) {
+                    if (
+                      !(
+                        e.gpcode === "NTTF" ||
+                        e.gpcode === "RTTF" ||
+                        e.gpcode === "BTG" ||
+                        e.gpcode === "NLC"
+                      )
+                    ) {
                       return e;
                     }
                   } else {
@@ -486,7 +500,14 @@ const Template13 = ({
             .filter((item) => item.status === 0 && item.transferwallet === true)
             .filter((e) => {
               if (config.features.MergeEVORTNT) {
-                if (!(e.gpcode === "NTTF" || e.gpcode === "RTTF" || e.gpcode === "BTG" || e.gpcode === "NLC")) {
+                if (
+                  !(
+                    e.gpcode === "NTTF" ||
+                    e.gpcode === "RTTF" ||
+                    e.gpcode === "BTG" ||
+                    e.gpcode === "NLC"
+                  )
+                ) {
                   return e;
                 }
               } else {
@@ -536,7 +557,7 @@ const Template13 = ({
             })}
         </TransferContainer>
         <Loading
-          withLoading={false} 
+          withLoading={false}
           withLogo={true}
           show={
             loading || wallet.transferLoading || wallet.updateBalanceloading

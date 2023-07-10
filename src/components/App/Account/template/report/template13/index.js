@@ -6,7 +6,7 @@ import i18n from "../../../../../../utils/i18n";
 const Container = styled.div`
   padding: 20px 28px;
   box-sizing: border-box;
-  background-color: #1b1d30;
+  background-color: #000326;
   width: 100%;
   min-height: 611px;
 `;
@@ -41,7 +41,7 @@ const TabButton = styled.div`
   font-size: 16px;
   border-radius: 25px;
   color: #fff;
-  background-color: #1b1d30;
+  background-color: #000326;
   text-align: center;
   padding-top: 16px;
   box-sizing: border-box;
@@ -89,7 +89,10 @@ const Template13 = ({ transferwallet, tab, handleTabClick, switchTab }) => {
             {i18n.t("T13.report.transfer.title")}
           </TabButton>
         )}
-        <BalanceChangesTabButton active={tab === 8} onClick={() => handleTabClick(8)}>
+        <BalanceChangesTabButton
+          active={tab === 8}
+          onClick={() => handleTabClick(8)}
+        >
           {i18n.t("report.balanceChanges.title")}
         </BalanceChangesTabButton>
         <TabButton active={tab === 7} onClick={() => handleTabClick(7)}>

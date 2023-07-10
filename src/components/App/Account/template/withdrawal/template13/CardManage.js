@@ -26,13 +26,10 @@ const RemoveButtonWrapper = styled.div`
 `;
 
 const BackButtonWrapper = styled(RemoveButtonWrapper)`
-& #shared-custom-button {
+  & #shared-custom-button {
     color: #fff;
     border-radius: 25px;
-    ${(props) =>
-      props.disabled
-        ? ``
-        : ``}
+    ${(props) => (props.disabled ? `` : ``)}
     border: none;
     cursor: pointer;
     padding-top: 4px;
@@ -58,7 +55,7 @@ const CardContainer = styled.div`
 const CardFrame = styled.div`
   width: 279px;
   height: 133px;
-  background-color: #1B1D30;
+  background-color: #000326;
   border-radius: 15px;
   float: left;
   margin: 8px;

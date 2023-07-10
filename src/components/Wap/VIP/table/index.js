@@ -112,7 +112,7 @@ const FixedPosition = styled.div`
   height: 120px;
   padding: 20px;
   color: #fff;
-  background: #1b1d30;
+  background: #000326;
 
   background: linear-gradient(
     180deg,

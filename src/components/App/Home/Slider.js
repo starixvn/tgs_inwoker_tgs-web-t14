@@ -18,12 +18,12 @@ const ATag = styled.a`
 `;
 const Img = styled.img`
   border: none;
-  width: 1920px;
+  width: 100%;
   height: 600px;
 
   margin: 0 auto 0 -960px;
   position: relative;
-  left: 50%;
+  left: 45.5%;
 `;
 
 class Slider extends React.Component {

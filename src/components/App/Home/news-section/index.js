@@ -44,7 +44,7 @@ const NewsItem = styled.div`
   border: double 1px transparent;
   background-origin: border-box;
   background-clip: content-box, border-box;
-  background-image: linear-gradient(#1b1d30, #1b1d30),
+  background-image: linear-gradient(#000326, #000326),
     linear-gradient(to bottom, #ffffff00, #707070);
 `;
 

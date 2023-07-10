@@ -90,7 +90,7 @@ const CustomFormControlT13 = withStyles((theme) => ({
     },
     "& .MuiSelect-select > option": {
       fontSize: "14px",
-      color: "#1b1d30",
+      color: "#000326",
     },
     "& .MuiSelect-icon": {
       color: "#ffffff",

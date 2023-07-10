@@ -66,8 +66,8 @@ const Main = styled.div`
   min-height: 600px;
 `;
 const EmptyHeader = styled.div`
-  height: ${(props) => (props.displayGameListInHeader ? `384px` : `155px`)};
-  background: #000103;
+  height: 328px;
+  background: transparent;
 `;
 const RouletteFloatingPanel = styled.div`
   position: fixed;
@@ -133,7 +133,7 @@ class App extends Component {
     //this.props.getHomePageGameList();
     const urlpath = this.props.location.pathname.split("/");
 
-     if (urlpath.length === 3) {
+    if (urlpath.length === 3) {
       if (urlpath[1] === "a") {
         localStorage.setItem("promotionId", urlpath[2] || "");
         localStorage.setItem("upper", ""); //reset

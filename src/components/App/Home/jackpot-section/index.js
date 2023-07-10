@@ -10,6 +10,7 @@ import SlotGenerator from "../slot-generator";
 import Winners from "./winners";
 
 import { GameService } from "../../../../api-services/services/GameService";
+import i18n from "../../../../utils/i18n";
 
 const Container = styled.div`
   width: 100%;
@@ -17,7 +18,7 @@ const Container = styled.div`
 
 const Title = styled.div`
   width: 1280px;
-  margin: 40px auto 0 auto;
+  margin: 40px auto 40px auto;
   font-size: 44px;
   font-weight: bold;
   text-transform: uppercase;
@@ -33,14 +34,12 @@ const JackpotHolder = styled.div`
 const JackpotContentWorkingSpace = styled.div`
   width: 1280px;
   height: 400px;
-  position: relative;
-  display: grid;
-  grid-auto-columns: 1fr;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 215px 1fr;
-  grid-template-areas:
-    "topContent topContent"
-    "bottomContent bottomContent";
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  gap: 10px;
+
   margin: 0 auto;
 `;
 
@@ -61,10 +60,7 @@ const TopContent = styled.div`
 `;
 
 const BottomContent = styled.div`
-  grid-area: bottomContent;
-  width: 1280px;
   display: flex;
-  height: 150px;
 `;
 
 const TextHolder = styled.div`
@@ -84,7 +80,7 @@ const TextHolder = styled.div`
    align-items: flex-end;
   
   `
-      : ` background: #1B1D30;font-size: 75px;
+      : ` background: #000326;font-size: 75px;
       align-items: center; width: 75px;`;
   }};
   color: ${({ theme }) => theme.primary};
@@ -112,9 +108,67 @@ const SlotContainer = styled.div`
   flex-direction: column;
 `;
 
+const GameEntranceWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 100%;
+  gap: 20px;
+`;
+
+const GameEntranceDisplayer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const CustomImage = styled.img`
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  object-fit: cover;
+`;
+
+const Overlay = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background: #00000099;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+`;
+
+const CustomButton = styled.div`
+  position: absolute;
+  bottom: 0;
+  z-index: 2;
+  width: 100%;
+  padding: 10px 0;
+  text-align: center;
+  background: #fff;
+  transition: all 0.3s ease-in-out;
+  font-size: 20px;
+`;
+
+const ContentWrapper = styled.div`
+  width: 100%;
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+
+  &:hover {
+    ${Overlay} {
+      opacity: 1;
+    }
+    ${CustomButton} {
+      background: #ffa200;
+      color: #fff;
+    }
+  }
+`;
+
 const JackpotSection = ({ showLogin, token }) => {
   const Numbers = React.memo(({ amount }) => {
-
     var formatedAmount = Common.formatNumberWithCommas(amount);
     var display = formatedAmount && formatedAmount.split("");
 
@@ -172,6 +226,12 @@ const JackpotSection = ({ showLogin, token }) => {
     isInitialized: false,
   });
 
+  const [gameToDisplay, setGameToDisplay] = useState([
+    { title: "common.live", type: "live", path: "/live" },
+    { title: "common.chess", type: "card", path: "/live" },
+    { title: "common.sports", type: "sport", path: "/live" },
+  ]);
+
   useEffect(() => {
     getGameList();
   }, []);
@@ -179,7 +239,10 @@ const JackpotSection = ({ showLogin, token }) => {
   useEffect(() => {
     const updateJackpotAmount = () => {
       if (jackpotAmount < 9999999.99) {
-        setJackpotAmount((currentJackpotAmount) => currentJackpotAmount + randomNumber(0.01,0.20));
+        setJackpotAmount(
+          (currentJackpotAmount) =>
+            currentJackpotAmount + randomNumber(0.01, 0.2)
+        );
       } else {
         setJackpotAmount(initialJackpotAmount);
       }
@@ -191,9 +254,9 @@ const JackpotSection = ({ showLogin, token }) => {
     };
   });
 
-  const  randomNumber = (min, max) => {
-    return (Math.random() * (min - max) + max);
-  }
+  const randomNumber = (min, max) => {
+    return Math.random() * (min - max) + max;
+  };
   const checking = (variant) => {
     return homePageGameList.filter((a) => {
       return a.tag[variant] === true;
@@ -216,33 +279,44 @@ const JackpotSection = ({ showLogin, token }) => {
 
   return (
     <Container>
-      <Title>MEGA JACKPOT</Title>
       <JackpotHolder>
         <JackpotContentWorkingSpace>
-          <TopContent>
-            <Numbers amount="PHP "></Numbers>
-            <Numbers amount={jackpotAmount} />
-          </TopContent>
-          <BottomContent>
-            <Winners></Winners>
-          </BottomContent>
+          <div style={{ color: "#fff" }}>
+            <img
+              style={{ height: "360px" }}
+              alt="banners"
+              src={
+                process.env.PUBLIC_URL +
+                "/assets/images/pcHomePage/startplay.png"
+              }
+            />
+          </div>
+
+          <Winners />
         </JackpotContentWorkingSpace>
+        <Title>Game Entrance</Title>
+        <GameEntranceDisplayer>
+          <GameEntranceWrapper>
+            {gameToDisplay.map((game) => {
+              return (
+                <ContentWrapper>
+                  <Overlay />
+                  <CustomButton>{i18n.t(game.title)}</CustomButton>
+                  <CustomImage
+                    src={
+                      process.env.PUBLIC_URL +
+                      "/assets/images/pcHomePage/" +
+                      game.type +
+                      ".png"
+                    }
+                  />
+                </ContentWrapper>
+              );
+            })}
+          </GameEntranceWrapper>
+        </GameEntranceDisplayer>
+        <Title>time to play</Title>
       </JackpotHolder>
-      <SlotContainer>
-        {homePageGames.games.map((data, index) => {
-          return (
-            checking(data.type).length > 0 && (
-              <SlotGenerator
-                title={data.title}
-                type={homePageGames.type}
-                category={data.category}
-                list={checking(data.type)}
-                commonprops={commonprops}
-              ></SlotGenerator>
-            )
-          );
-        })}
-      </SlotContainer>
     </Container>
   );
 };

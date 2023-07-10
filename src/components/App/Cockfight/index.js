@@ -181,7 +181,7 @@ class Cockfight extends Component {
     return (
       <Container>
         <Banner></Banner>
-        <GameLister game={this.props.game}></GameLister>
+
         <ItemContainer>
           <LeftSlide
             animateIn="fadeInLeft"

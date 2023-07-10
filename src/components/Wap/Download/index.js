@@ -77,13 +77,13 @@ const CustomModal = styled(Dialog)`
     color: #fff;
 
     border-radius: 16px;
-    background: #1b1d30;
+    background: #000326;
     min-height: 200px;
   }
 `;
 
 const DialogTitle = styled.div`
-  background: #1b1d30;
+  background: #000326;
   min-height: 50px;
   display: flex;
   align-items: center;
@@ -99,7 +99,7 @@ const DialogContent = styled.div`
 `;
 
 const DialogTitle2 = styled(DialogTitle)`
-  background: #1b1d30;
+  background: #000326;
   color: white;
 `;
 

@@ -115,7 +115,7 @@ const CustomFormControl = withStyles((theme) => ({
     },
     "& .MuiSelect-select > option": {
       fontSize: "14px",
-      color: "#1b1d30",
+      color: "#000326",
     },
     "& .MuiSelect-icon": {
       color: "#ffffff",
@@ -124,47 +124,47 @@ const CustomFormControl = withStyles((theme) => ({
 }))(FormControl);
 
 const TextFieldFormControl = withStyles((theme) => ({
-    root: {
+  root: {
+    border: "none",
+    "& .MuiTextField-root": {
       border: "none",
-      "& .MuiTextField-root": {
-        border: "none",
-        marginBottom: "10px",
-        background: "none"
-      },
-      "& .MuiInputBase-root": {
-        color: "#fff",
-      },
-      "& .MuiInputBase-input::-webkit-input-placeholder": {
-        opacity: "1",
+      marginBottom: "10px",
+      background: "none",
+    },
+    "& .MuiInputBase-root": {
+      color: "#fff",
+    },
+    "& .MuiInputBase-input::-webkit-input-placeholder": {
+      opacity: "1",
+      color: "#747474",
+    },
+    "& .MuiOutlinedInput-root.Mui-disabled": {
+      "& .MuiOutlinedInput-input": {
         color: "#747474",
       },
-      "& .MuiOutlinedInput-root.Mui-disabled":{
-        "& .MuiOutlinedInput-input": {
-            color: "#747474",
-        },
-        "& fieldset": {
-            borderColor: "#747474",
-          },
-      },
-      "& .MuiOutlinedInput-root": {
-        "& fieldset": {
-          borderRadius: "20px",
-          borderColor: "#747474",
-          marginTop: "1px",
-        },
-        "&:hover fieldset": {
-          borderColor: "#747474",
-          marginTop: "1px",
-        },
-        "&.Mui-focused fieldset": {
-          borderWidth: "1px",
-          color: "#fff",
-          borderColor: "#fff",
-          marginTop: "1px",
-        },
+      "& fieldset": {
+        borderColor: "#747474",
       },
     },
-  }))(FormControl);
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderRadius: "20px",
+        borderColor: "#747474",
+        marginTop: "1px",
+      },
+      "&:hover fieldset": {
+        borderColor: "#747474",
+        marginTop: "1px",
+      },
+      "&.Mui-focused fieldset": {
+        borderWidth: "1px",
+        color: "#fff",
+        borderColor: "#fff",
+        marginTop: "1px",
+      },
+    },
+  },
+}))(FormControl);
 
 const AddCard = ({
   isDeposit,

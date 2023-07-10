@@ -101,7 +101,7 @@ const IDText = styled.div`
 
 const CustomDialog = styled(Dialog)`
   .MuiDialog-paper {
-    background: #1b1d30;
+    background: #000326;
     color: #fff;
     border-radius: 30px;
   }

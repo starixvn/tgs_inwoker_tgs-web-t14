@@ -9,7 +9,7 @@ import Success from "../../../Deposit/Success";
 const Container = styled.div`
   padding: 20px 28px;
   box-sizing: border-box
-  background-color: #1b1d30;
+  background-color: #000326;
   width: 100%;
   min-height: 611px;
 
@@ -219,7 +219,11 @@ const Template13 = ({
           );
         })()}
 
-        <Loading withLoading={false} withLogo={true} show={loading || wallet.depositLoading}></Loading>
+        <Loading
+          withLoading={false}
+          withLogo={true}
+          show={loading || wallet.depositLoading}
+        ></Loading>
         <UnderConstructionWrap
           style={isMaintenance ? { display: "block" } : { display: "none" }}
         >

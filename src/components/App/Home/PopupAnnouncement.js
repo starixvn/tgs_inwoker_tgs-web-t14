@@ -106,7 +106,7 @@ const CustomPromoContentContainer = styled(ContentContainer)`
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #1b1d30;
+    background: #000326;
     border-radius: 14px;
   }
 `;

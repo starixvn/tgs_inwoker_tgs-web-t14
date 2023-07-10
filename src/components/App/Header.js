@@ -62,14 +62,17 @@ const btnCSHoverSwitcher = () => {
 
 const InnerWrap = styled.div`
   margin: 0 auto;
-  max-width: 1280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   font-size: 14px;
-  height: ${(props) => (props.displayGameListInHeader ? `384px` : `155px`)};
+  min-height: 328px;
 `;
 const TopContainer = styled.div`
   height: 45px;
   display: flex;
+  width: 1280px;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid ${({ theme }) => theme.pcHeaderRightMenuHover};
@@ -123,6 +126,7 @@ const RightContainer = styled.div`
 const BottomContainer = styled.div`
   display: grid;
   grid-template-columns: 230px auto auto;
+  width: 1280px;
   grid-gap: 5px;
   @media (max-width: 1279px) {
     grid-template-columns: auto;
@@ -259,10 +263,8 @@ const LeftContent = styled.div`
 `;
 
 const MarqueeContainer = styled.div`
-  width: 1280px;
-  background-color: #27273f;
-  border-radius: 25px;
-  margin: 15px auto;
+  background-color: #181c42;
+  width: 100%;
 `;
 
 class Header extends Component {
@@ -776,26 +778,7 @@ class Header extends Component {
                     ? classes.maxMenu
                     : classes.minMenu
                 }`}
-              >
-                {this.RightMenuItem(
-                  "promotion",
-                  i18n.t("common.promotion"),
-                  currentPage === "promotion"
-                )}
-
-                {this.RightMenuItem("vip", "VIP", currentPage === "vip")}
-                {config.features.HaveDownloadFeature &&
-                  this.RightMenuItem(
-                    "download",
-                    "APP",
-                    currentPage === "download"
-                  )}
-                {this.RightMenuItem(
-                  "news",
-                  i18n.t("T13.header.news"),
-                  currentPage === "news"
-                )}
-              </RightMenuUL>
+              ></RightMenuUL>
             </RightMenuContainer>
             {(() => {
               if (!this.props.general.isMaintenance) {
@@ -830,16 +813,16 @@ class Header extends Component {
               }
             })()}
           </BottomContainer>
-          {this.displayGameListInHeader() && (
+          {
             <>
+              <GameLister game={this.props.game}></GameLister>
               {!config.features.HideMarquee && (
                 <MarqueeContainer>
                   <Marquee text={this.props.ui.marqueeText}></Marquee>
                 </MarqueeContainer>
               )}
-              <GameLister game={this.props.game}></GameLister>
             </>
-          )}
+          }
         </InnerWrap>
       </CustomAppBar>
     );

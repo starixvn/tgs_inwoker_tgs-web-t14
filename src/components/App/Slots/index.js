@@ -209,7 +209,7 @@ const CustomFormControl = withStyles((theme) => ({
     },
     "& .MuiSelect-select > option": {
       fontSize: "14px",
-      color: "#1b1d30",
+      color: "#000326",
       fontFamily: "Montserrat",
     },
     "& .MuiSelect-icon": {
@@ -711,7 +711,7 @@ class Slots extends Component {
     return (
       <Container type={this.state.type}>
         <Banner type={this.state.type}></Banner>
-        <GameLister game={this.props.game}></GameLister>
+
         <InnerWrap type={this.state.type}>
           <GameSubFilterContainer>
             {this.genCategoryItem(SlotFilterType.All, i18n.t("slot.allGame"))}

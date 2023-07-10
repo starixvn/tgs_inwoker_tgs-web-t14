@@ -12,7 +12,7 @@ import Details from "../../../Inbox/Details";
 const Container = styled.div`
   padding: 20px 28px;
   box-sizing: border-box;
-  background-color: #1b1d30;
+  background-color: #000326;
 
   width: 100%;
   min-height: 611px;
@@ -45,7 +45,7 @@ const InnerWrap = styled.div`
     color: #fff;
     background-color: #27273f;
     border-bottom-color: #ffffff26;
-    font-family: 'Montserrat';
+    font-family: "Montserrat";
   }
 
   & .MuiTableBody-root {
@@ -95,7 +95,7 @@ const DialogContainer = styled.div`
     }
 
     ::-webkit-scrollbar-thumb {
-      background: #1b1d30;
+      background: #000326;
       border-radius: 14px;
     }
   }

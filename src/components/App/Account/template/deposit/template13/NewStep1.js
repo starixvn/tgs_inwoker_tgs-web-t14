@@ -95,7 +95,7 @@ const CustomFormControl = withStyles((theme) => ({
     },
     "& .MuiSelect-select > option": {
       fontSize: "14px",
-      color: "#1b1d30",
+      color: "#000326",
     },
     "& .MuiSelect-icon": {
       color: "#ffffff",
@@ -301,7 +301,12 @@ const NewStep1 = ({
   const DepositDetails = ({ title, data }) => {
     return (
       <TransferContainer>
-        <TransferLabel>{i18n.exists("extended." + title) ? i18n.t("extended." + title) : title}:</TransferLabel>
+        <TransferLabel>
+          {i18n.exists("extended." + title)
+            ? i18n.t("extended." + title)
+            : title}
+          :
+        </TransferLabel>
         {data && (
           <>
             <TransferLabelValue>{data}</TransferLabelValue>

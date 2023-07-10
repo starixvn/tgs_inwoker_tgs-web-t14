@@ -42,7 +42,7 @@ const VipEmlemContainer = styled.div`
   ${({ selected, theme }) => {
     return (
       selected &&
-      ` background: #1b1d30;border-radius: 20px;border: solid 3px ${
+      ` background: #000326;border-radius: 20px;border: solid 3px ${
         theme.wapPrimary ? theme.wapPrimary : theme.primary
       };`
     );
