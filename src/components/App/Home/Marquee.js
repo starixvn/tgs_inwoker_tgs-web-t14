@@ -6,7 +6,7 @@ import i18n from "../../../utils/i18n";
 import { connect } from "react-redux";
 
 const AnnounceContainer = styled.div`
-  width: 1280px;
+  width: 100%;
   height: 38px;
   margin: 0 auto;
   display: flex;
@@ -17,7 +17,7 @@ const MarqueeContainer = styled.div`
   white-space: nowrap;
   font-size: 14px;
   color: #ffffff;
-  line-hight: 26px;
+  line-height: 26px;
 `;
 
 function Marquee(props) {

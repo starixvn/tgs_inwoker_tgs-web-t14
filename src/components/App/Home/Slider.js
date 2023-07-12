@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 const Container = styled.div`
   position: relative;
-  width: 100%;
+  width: 1920px;
   margin: 0 auto;
   height: 600px;
 `;

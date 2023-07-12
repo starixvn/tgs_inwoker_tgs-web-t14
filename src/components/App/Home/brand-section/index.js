@@ -69,7 +69,7 @@ const BrandSection = ({ logo, handleNavigateClick }) => {
   return (
     <Container>
       <TitleGapper>
-        <TitleIcon icon={hardcodeBrand.brand}></TitleIcon>
+        {/* <TitleIcon icon={hardcodeBrand.brand}></TitleIcon> */}
         <TitleHolder>{hardcodeBrand.title}</TitleHolder>
       </TitleGapper>
       <BrandContainer>

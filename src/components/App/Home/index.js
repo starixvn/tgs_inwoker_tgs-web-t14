@@ -34,7 +34,7 @@ const SliderContainer = styled.div`
 `;
 
 const MarqueeContainer = styled.div`
-  width: 1280px;
+  width: 100%;
   background-color: #27273f;
   border-radius: 25px;
   margin: 15px auto;
@@ -188,13 +188,18 @@ class Home extends Component {
         <SliderContainer>
           <Slider list={this.props.ui.board_list}></Slider>
         </SliderContainer>
+        {!config.features.HideMarquee && (
+          <MarqueeContainer>
+            <Marquee text={this.props.ui.marqueeText}></Marquee>
+          </MarqueeContainer>
+        )}
         <SectionContainer>
           <JackpotSection
             showLogin={this.props.showLogin}
             token={this.props.token}
           />
         </SectionContainer>
-        <SliderContainer>
+        {/* <SliderContainer>
           <PromotionSlider
             promotionList={this.props.general.promotionList.items}
             handleNavigateClick={this.handleNavigateClick}
@@ -202,7 +207,7 @@ class Home extends Component {
         </SliderContainer>
         <NewsSection
           handleNavigateClick={this.handleNavigateClick}
-        ></NewsSection>
+        ></NewsSection> */}
         <BrandSection
           logo={this.props.general.brand.desktopLogoUrl}
         ></BrandSection>
