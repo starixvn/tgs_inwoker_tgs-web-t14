@@ -53,7 +53,7 @@ class Home extends Component {
     super(props);
 
     var displayGame = this.getHomePageDisplayGame();
-
+    
     this.state = {
       marqueeText: [],
       banner_list: [],

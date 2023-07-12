@@ -815,7 +815,10 @@ class Header extends Component {
           </BottomContainer>
           {
             <>
-              <GameLister game={this.props.game}></GameLister>
+              <GameLister
+                game={this.props.game}
+                onhandleShowCSClick={this.props.onhandleShowCSClick}
+              ></GameLister>
             </>
           }
         </InnerWrap>

@@ -12,15 +12,15 @@ import { SHOW_LOGIN } from "../../../api-services/constant/actionType";
 
 import ChevronLeftRounded from "@material-ui/icons/ChevronLeftRounded";
 import ChevronRightRounded from "@material-ui/icons/ChevronRightRounded";
-
+import { Dialog } from "@material-ui/core";
 const moment = require("moment");
 
 const Container = styled.div`
-  width: 100%;
-  padding-top: 20px;
-
-  position: relative;
-  min-height: 800px;
+width: 100%;
+padding: 40px 30px;
+position: relative;
+//min-height: 800px;
+background: #181c42;
 `;
 
 const Title = styled.div`
@@ -76,8 +76,8 @@ const SubTitle = styled.div`
 `;
 
 const PromotionContent = styled.div`
-  width: 1000px;
-  background: #27273f;
+  width: 100%;
+  background: #252958;
   margin: 0 auto 40px auto;
   padding: 25px;
   color: #ffffff;
@@ -94,8 +94,11 @@ const PromotionButton = styled.div`
   text-align: center;
   color: ${({ theme }) => theme.pcHeaderText};
   cursor: pointer;
-  background: ${({ theme }) => theme.primary};
-  border-color: ${({ theme }) => theme.primary};
+
+  background: #ffa200;
+  //background: ${({ theme }) => theme.primary};
+  border-color: #ffa200;
+  //border-color: ${({ theme }) => theme.primary};
   border-radius: 30px;
   text-transform: uppercase;
   filter: drop-shadow(1px 1px 8px #cf2029ba);
@@ -128,7 +131,7 @@ const EventText = styled.div`
 `;
 
 const BottomContainer = styled.div`
-  width: 1000px;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -142,7 +145,8 @@ const TNCToggle = styled.div`
   place-self: flex-start;
   &:before {
     content: ${(props) => (props.active ? `"—"` : `"+"`)};
-    color: ${({ theme }) => theme.primary};
+    //color: ${({ theme }) => theme.primary};
+    color: #ffa200;
     width: 28px;
     height: 28px;
     margin: 0 5px;
@@ -155,6 +159,41 @@ const TNCContainer = styled.div`
   padding: 0 35px;
   margin-bottom: 40px;
 `;
+
+const CustomModal = styled(Dialog)`
+  .MuiBackdrop-root {
+    background: transparent;
+  }
+  .MuiDialog-scrollPaper {
+  }
+
+  .MuiDialog-paper {
+    min-width: 900px;
+
+    border-radius: 16px;
+    background: #f6f8f7;
+    min-height: 200px;
+  }
+`;
+
+const DialogTitle = styled.div`
+  background: #252958;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 0px 30px;
+  font-size: 20px;
+  font-weight: bold;
+  justify-content: space-between;
+  color: white;
+`;
+
+const CloseButton = styled.div`
+  cursor: pointer;
+  position: absolute;
+  right: 30px;
+`;
+
 class PromotionDetails extends Component {
   constructor(props) {
     super(props);
@@ -232,7 +271,6 @@ class PromotionDetails extends Component {
       AppHistory.replace("/promotion");
     }
     if (
-      prevProps.match.params.id !== null &&
       this.props.match.params.id != null &&
       prevProps.match.params.id !== this.props.match.params.id
     ) {
@@ -271,9 +309,10 @@ class PromotionDetails extends Component {
             details: this.props.general.promotionList.items[i],
             term: term,
             joined: false,
-            openDialog: false,
+            openDialog: true,
             isTNCToggled: false,
           });
+          console.log("here show");
           break;
         }
       }
@@ -283,19 +322,19 @@ class PromotionDetails extends Component {
   handleBospIdChange = (bospId) => {
     this.setState({ ...this.state, selectedBospId: bospId });
   };
-  ResetPopup = () => {
-    this.setState({
-      ...this.state,
-      openJoin: false,
-      selectedPromoSpecifications: [],
-      selectedPromoTitle: "",
-      selectedBospId: 0,
-    });
-    this.props.history.push("/promotion");
-  };
-  handleCloseDialog = () => {
-    this.ResetPopup();
-  };
+  // ResetPopup = () => {
+  //   this.setState({
+  //     ...this.state,
+  //     openJoin: false,
+  //     selectedPromoSpecifications: [],
+  //     selectedPromoTitle: "",
+  //     selectedBospId: 0,
+  //   });
+  //   this.props.history.push("/promotion");
+  // };
+  // handleCloseDialog = () => {
+  //   this.ResetPopup();
+  // };
   ViewAllClick = (activity_id) => {
     let list = this.state.list;
     var foundIndex = list.findIndex((x) => x.id === activity_id);
@@ -356,6 +395,7 @@ class PromotionDetails extends Component {
     }
   };
   handleCloseDialog = () => {
+    this.goBack();
     this.setState({ ...this.state, openDialog: false });
   };
   handleShowDialog = () => {
@@ -397,114 +437,135 @@ class PromotionDetails extends Component {
     var checkIfLocalizationIsEmpty =
       JSON.stringify(this.state.details.localization) === "{}";
     return (
-      <Container>
-        <Title>{this.state.details.name}</Title>
-        <BannerContainer
-          img={(() => {
-            if (this.state.details.localization !== null) {
-              var checkLocale = this.state.details.localization[i18n.language];
-              if (checkLocale) {
-                return checkLocale.desktopBanner;
+      <React.Fragment>
+        <CustomModal
+          open={this.state.openDialog}
+          onClose={this.handleCloseDialog}
+        >
+          <DialogTitle>
+            <div>{this.state.details.subSubject}</div>
+            <CloseButton onClick={() => this.handleCloseDialog()}>
+              ✖
+            </CloseButton>
+          </DialogTitle>
+          <Container>
+            {/* <Title>{this.state.details.name}</Title> */}
+            {/* <BannerContainer
+            img={(() => {
+              if (this.state.details.localization !== null) {
+                var checkLocale =
+                  this.state.details.localization[i18n.language];
+                if (checkLocale) {
+                  return checkLocale.desktopBanner;
+                } else {
+                  return this.state.details.desktopBanner;
+                }
               } else {
                 return this.state.details.desktopBanner;
               }
-            } else {
-              return this.state.details.desktopBanner;
-            }
-          })()}
-        >
-          {this.props.general.promotionList.items.length > 1 && (
-            <React.Fragment>
-              <NavigationButton
-                isLeft={true}
-                onClick={() => {
-                  this.navigatePromotion(true);
-                }}
-              >
-                <ChevronLeftRounded></ChevronLeftRounded>
-              </NavigationButton>
-              <NavigationButton
-                isLeft={false}
-                onClick={() => {
-                  this.navigatePromotion(false);
-                }}
-              >
-                <ChevronRightRounded></ChevronRightRounded>
-              </NavigationButton>
-            </React.Fragment>
-          )}
-        </BannerContainer>
-        <SubTitle>{this.state.details.subSubject}</SubTitle>
-        <PromotionContent>
-          <EventText>
-            <PromoDesc
-              dangerouslySetInnerHTML={{
-                __html:
-                  "<div>" +
-                  (() => {
-                    if (
-                      !checkIfLocalizationIsEmpty &&
-                      (this.state.details.localization[i18n.language] !== "" ||
-                        this.state.details.localization[i18n.language] !== null)
-                    ) {
-                      return (
-                        (this.state.details.localization[i18n.language].content
-                          ? this.state.details.localization[i18n.language]
-                              .content
-                          : this.state.details.content) ?? ""
-                      );
-                    } else {
-                      return this.state.details.content ?? "";
-                    }
-                  })() +
-                  "</div>",
-              }}
-            ></PromoDesc>
-          </EventText>
-          <EventDetail>
-            <EventTitle>{i18n.t("promotion.promoDate")}：</EventTitle>
-            <EventText>
-              {moment(this.state.details.from).format("YYYY/MM/DD HH:mm:ss")}
-              {" - "}
-              {moment(this.state.details.to).format("YYYY/MM/DD HH:mm:ss")} (GMT
-              +8)
-            </EventText>
-          </EventDetail>
-        </PromotionContent>
-        <BottomContainer>
-          {this.state.term !== "" && (
-            <React.Fragment>
-              <TNCToggle
-                onClick={this.handleToggleTnC}
-                active={this.state.isTNCToggled}
-              >
-                {i18n.t("common.termsAndCondition")}
-              </TNCToggle>
-              {this.state.isTNCToggled && (
-                <TNCContainer
-                  dangerouslySetInnerHTML={{
-                    __html: "<div >" + this.state.term + "</div>",
+            })()}
+          >
+            {this.props.general.promotionList.items.length > 1 && (
+              <React.Fragment>
+                <NavigationButton
+                  isLeft={true}
+                  onClick={() => {
+                    this.navigatePromotion(true);
                   }}
-                ></TNCContainer>
+                >
+                  <ChevronLeftRounded></ChevronLeftRounded>
+                </NavigationButton>
+                <NavigationButton
+                  isLeft={false}
+                  onClick={() => {
+                    this.navigatePromotion(false);
+                  }}
+                >
+                  <ChevronRightRounded></ChevronRightRounded>
+                </NavigationButton>
+              </React.Fragment>
+            )}
+          </BannerContainer> */}
+            {/* <SubTitle>{this.state.details.subSubject}</SubTitle> */}
+            <PromotionContent>
+              <EventText>
+                <PromoDesc
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      "<div>" +
+                      (() => {
+                        if (
+                          !checkIfLocalizationIsEmpty &&
+                          (this.state.details.localization[i18n.language] !==
+                            "" ||
+                            this.state.details.localization[i18n.language] !==
+                              null)
+                        ) {
+                          return (
+                            (this.state.details.localization[i18n.language]
+                              .content
+                              ? this.state.details.localization[i18n.language]
+                                  .content
+                              : this.state.details.content) ?? ""
+                          );
+                        } else {
+                          return this.state.details.content ?? "";
+                        }
+                      })() +
+                      "</div>",
+                  }}
+                ></PromoDesc>
+              </EventText>
+              <EventDetail>
+                <EventTitle>{i18n.t("promotion.promoDate")}：</EventTitle>
+                <EventText>
+                  {moment(this.state.details.from).format(
+                    "YYYY/MM/DD HH:mm:ss"
+                  )}
+                  {" - "}
+                  {moment(this.state.details.to).format(
+                    "YYYY/MM/DD HH:mm:ss"
+                  )}{" "}
+                  (GMT +8)
+                </EventText>
+              </EventDetail>
+            </PromotionContent>
+            <BottomContainer>
+              {this.state.term !== "" && (
+                <React.Fragment>
+                  <TNCToggle
+                    onClick={this.handleToggleTnC}
+                    active={this.state.isTNCToggled}
+                  >
+                    {i18n.t("common.termsAndCondition")}
+                  </TNCToggle>
+                  {this.state.isTNCToggled && (
+                    <TNCContainer
+                      dangerouslySetInnerHTML={{
+                        __html: "<div >" + this.state.term + "</div>",
+                      }}
+                    ></TNCContainer>
+                  )}
+                </React.Fragment>
               )}
-            </React.Fragment>
-          )}
-          {!isDummy && (
-            <PromotionButton
-              disabled={this.state.joined}
-              onClick={() =>
-                !this.state.joined &&
-                this.handlejoinPromotionClick(
-                  this.state.details.id,
-                  this.state.details.promotionType
-                )
-              }
-            >
-              {i18n.t("T13.promo.join")}
-            </PromotionButton>
-          )}
-        </BottomContainer>
-      </Container>
+              {!isDummy && (
+                <PromotionButton
+                  disabled={this.state.joined}
+                  onClick={() =>
+                    !this.state.joined &&
+                    this.handlejoinPromotionClick(
+                      this.state.details.id,
+                      this.state.details.promotionType
+                    )
+                  }
+                >
+                  {i18n.t("T13.promo.join")}
+                </PromotionButton>
+              )}
+            </BottomContainer>
+          </Container>
+        </CustomModal>
+      </React.Fragment>
     );
   }
 }

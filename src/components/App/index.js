@@ -565,15 +565,10 @@ class App extends Component {
 
                     <Route
                       exact
-                      path={"/promotion"}
+                      path={["/promotion", "/promotion/:id"]}
                       render={(props) => (
                         <Promotion token={this.props.account.token} />
                       )}
-                    />
-                    <Route
-                      exact
-                      path={"/promotion/:id"}
-                      render={(props) => <PromotionDetails />}
                     />
                     <Route exact path={"/vip"} render={(props) => <VIP />} />
                     {/* <Route
