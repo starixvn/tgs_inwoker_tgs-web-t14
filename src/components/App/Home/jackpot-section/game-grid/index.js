@@ -20,10 +20,9 @@ const GameProvider = styled.div`
   position: absolute;
   height: 40px;
   background-image: linear-gradient(0, #ffa200, white);
-  padding-left: 15px;
-  padding-top: 11px;
+  padding: 10px 10px 0px;
   border-bottom-right-radius: 25px;
-  width: 80px;
+  width: auto;
   font-size: 14px;
   font-weight: bold;
 `;
