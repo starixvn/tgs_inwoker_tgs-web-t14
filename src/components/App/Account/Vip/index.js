@@ -36,7 +36,4 @@ const mapDispatchToProps = (dispatch) => {
     getVIP: () => dispatch(generalAction.getVIP()),
   };
 };
-const mapStateToProps = (state) => {
-  return "";
-};
-export default connect(mapStateToProps, mapDispatchToProps)(VIP);
+export default connect(null, mapDispatchToProps)(VIP);

@@ -5,7 +5,7 @@
 	branch = develop
 [submodule "src/components/App/Account"]
 	path = src/components/App/Account
-	url = https://gitlab+deploy-token-744236:tkwZbhR5StpEcquEPfkH@gitlab.com/inwoker/tgs/tgs-web-profile.git
+	url = https://gitlab.com/inwoker/tgs/tgs-web-profile
 	branch = develop
 [submodule "src/components/Wap"]
 	path = src/components/Wap

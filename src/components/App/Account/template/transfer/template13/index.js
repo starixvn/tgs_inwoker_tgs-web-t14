@@ -17,7 +17,7 @@ import Messagebox from "../../../../Messagebox";
 const Container = styled.div`
   padding: 20px 28px;
   box-sizing: border-box
-  background-color: #000326;
+  background-color: #1b1d30;
   width: 100%;
   min-height: 611px;
 
@@ -116,7 +116,7 @@ const GameTranferWallet = styled.div`
   width: 265px;
   height: 98px;
   border-radius: 15px;
-  background: #000326;
+  background: #1b1d30;
   margin: 0 10px 10px 0;
   float: left;
 `;
@@ -138,6 +138,7 @@ const GameIcon = styled.div`
   background-position: center;
   margin: 0 auto;
   display: block;
+  transform: scale(1.5);
 `;
 const GameName = styled.div`
   font-size: 14px;
@@ -183,7 +184,7 @@ const GameWalletButton = styled.div`
 const TransferOutButton = styled(GameWalletButton)`
   width: 100px;
   padding-top: 7px;
-  background: #000326;
+  background: #1b1d30;
   filter: none;
   pointer-events: all;
   &:hover {
@@ -253,7 +254,7 @@ const CustomFormControl = withStyles((theme) => ({
     },
     "& .MuiSelect-select > option": {
       fontSize: "14px",
-      color: "#000326",
+      color: "#1b1d30",
     },
     "& .MuiSelect-icon": {
       color: "#ffffff",
@@ -532,7 +533,7 @@ const Template13 = ({
                     <GameIcon
                       src={
                         process.env.PUBLIC_URL +
-                        `/assets/images/provider/transfer/${displayLogo()}.png`
+                        `/assets/images/provider/${displayLogo()}.png`
                       }
                     ></GameIcon>
                     <GameName>

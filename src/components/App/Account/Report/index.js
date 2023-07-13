@@ -18,67 +18,7 @@ import config from "../../../../config/config";
 import { Report as ReportTemplate } from "../template/report/index";
 
 const moment = require("moment");
-const Container = styled.div`
-  padding: 20px 28px;
-  box-sizing: border-box;
 
-  width: 100%;
-  min-height: 611px;
-`;
-const Title = styled.div`
-  color: ${({ theme }) => theme.secondary};
-`;
-const TitleIcon = styled.div`
-  width: 34px;
-  height: 24px;
-
-  background: url(${IconReportRedPNG}) no-repeat left center;
-  background-size: 24px 24px;
-
-  float: left;
-`;
-const InnerWrap = styled.div`
-  width: 935px;
-
-  margin-top: 18px;
-  box-sizing: border-box;
-  background-color: #f7f7f7;
-  padding: 25px;
-  position: relative;
-  border-radius: 10px;
-`;
-const TabButton = styled.div`
-  width: 161px;
-  height: 50px;
-  font-size: 16px;
-
-  color: #747474;
-  background-color: #f7f7f7;
-  text-align: center;
-  padding-top: 14px;
-  box-sizing: border-box;
-  float: left;
-  margin-right: 8px;
-  margin-bottom: 20px;
-  border: solid 1px #e4eaff;
-  transition: all 0.3s;
-
-  ${(props) =>
-    props.active
-      ? ` 
-      border: solid 1px ${props.theme.primary};
-      color: ${props.theme.primary};`
-      : ` `};
-  &:hover {
-    cursor: pointer;
-  }
-`;
-const SplitLine = styled.div`
-  width: 100%;
-  height: 1px;
-  background-color: #e1dfdf;
-  margin: 20px 0;
-`;
 class Report extends Component {
   state = {
     tab: 2,
@@ -326,7 +266,7 @@ class Report extends Component {
       moment(dateFrom).utc().format(),
       moment(dateTo).utc().add(1, "days").format(),
       page,
-      this.state.limit,
+      this.state.limit
     ).then((response) => {
       if (response.IsSuccess) {
         this.setState({
@@ -394,7 +334,7 @@ class Report extends Component {
             joinedReport={this.state.joinedReport}
           />
         );
-        case 8: 
+      case 8:
         return (
           <BalanceChangesReport
             token={this.props.token}

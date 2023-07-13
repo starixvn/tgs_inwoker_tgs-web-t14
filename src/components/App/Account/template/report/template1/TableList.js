@@ -22,8 +22,6 @@ const CustomTable = styled(Table)`
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: "#f7f7f7",
-    color: "#747474",
     padding: "5px 20px 5px 20px",
   },
   body: {
@@ -34,15 +32,29 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
+const CustomTableCell = styled(StyledTableCell)`
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : "#000";
+  }} !important;
+`;
+
 const StyledTableRow = withStyles((theme) => ({
   root: {
-    backgroundColor: "#FFFFFF",
     "&:hover": {
-      backgroundColor: "#dde3f6 !important",
       cursor: "pointer",
     },
   },
 }))(TableRow);
+
+const CustomTableRow = styled(StyledTableRow)`
+  color: ${({ theme }) => {
+    return theme.darkMode ? theme.customProfileBackground80 : "#000";
+  }};
+
+  .MuiTableRow-root {
+    background: green;
+  }
+`;
 
 const CustomWinLose = styled(StyledTableCell)`
   color: ${({ value }) => {
@@ -55,7 +67,13 @@ const InnerWrap = styled.div`
   float: left;
   margin-top: 8px;
   box-sizing: border-box;
-  background-color: #f7f7f7;
+  background-color: ${({ theme }) => {
+    return theme.darkMode ? theme.customProfileBackground80 : "#f7f7f7";
+  }};
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : "#000";
+  }};
+
   overflow-x: auto;
   user-select: none;
   padding-bottom: 15px;
@@ -70,6 +88,21 @@ const TheDepositButton = styled.div`
   color: white;
   border-radius: 4px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+`;
+
+const CustomTablePagination = styled(TablePagination)`
+  color: #fff;
+
+  .MuiIconButton-root {
+    color: ${({ theme }) => {
+      return theme.darkMode ? "#fff" : "#000";
+    }};
+    opacity: 0.5;
+  }
+
+  .MuiIconButton-root.Mui-disabled {
+    opacity: 0.5;
+  }
 `;
 const TableList = ({
   page,
@@ -92,20 +125,27 @@ const TableList = ({
             <TableRow>
               {headerLists[type].map((header, index) => {
                 return (
-                  <StyledTableCell
+                  <CustomTableCell
                     align={header.align}
                     style={{ width: header.width }}
                   >
                     {i18n.t(header.title)}
-                  </StyledTableCell>
+                  </CustomTableCell>
                 );
               })}
             </TableRow>
           </TableHead>
-          <TableBody>{getTableList(StyledTableRow,StyledTableCell,CustomWinLose,TheDepositButton)}</TableBody>
+          <TableBody>
+            {getTableList(
+              CustomTableRow,
+              CustomTableCell,
+              CustomWinLose,
+              TheDepositButton
+            )}
+          </TableBody>
         </CustomTable>
       </InnerWrap>
-      <TablePagination
+      <CustomTablePagination
         rowsPerPageOptions={[20]}
         component="div"
         count={total}

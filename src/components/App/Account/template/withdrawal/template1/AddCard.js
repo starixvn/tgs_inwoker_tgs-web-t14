@@ -13,7 +13,9 @@ const SubTitle = styled.div`
   font-size: 22px;
   font-weight: bold;
   text-align: center;
-  color: #16242a;
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : " #16242a";
+  }};
   margin-top: 0px;
 `;
 

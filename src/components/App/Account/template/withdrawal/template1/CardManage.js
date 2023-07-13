@@ -13,7 +13,9 @@ const SubTitle = styled.div`
   font-size: 22px;
   font-weight: bold;
   text-align: center;
-  color: #16242a;
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : " #16242a";
+  }};
   margin-top: 50px;
 `;
 
@@ -150,7 +152,8 @@ const CardManage = ({
               {!(
                 config.features.AddCard_NotAllowedEditDelete ||
                 config.features.ChangesNotAllowed ||
-                config.features.AddCard_DisableCreateUpdateDelete
+                config.features.AddCard_DisableCreateUpdateDelete ||
+                config.features.DisableRemoveCard
               ) && (
                 <RowContainer>
                   <LeftLabel>{i18n.t("card.removeCard")}</LeftLabel>

@@ -5,6 +5,7 @@ import config from "../../../../config/config";
 import { withSnackbar } from "notistack";
 import Common from "../../../../utils/Common";
 import { AddCardTemplate } from "../template/withdrawal";
+import { utility } from "../../../../utils/utility";
 class AddCard extends Component {
   constructor(props) {
     super(props);
@@ -191,37 +192,44 @@ class AddCard extends Component {
   };
 
   handleNextClick = (e) => {
-    var selected = this.props.isDeposit
+    const selected = this.props.isDeposit
       ? this.props.depositList[this.state.selectedBankTypeIndex]
       : this.props.withdrawalList[this.state.selectedBankTypeIndex];
-    var detail = {};
+    let detail = {};
+
+    const {
+      selectedChannelIndex,
+      channelList,
+      bankName,
+      bankAccountName,
+      bankBranch,
+      number,
+      name,
+      phone,
+    } = this.state;
+
+    const trimAndRemoveSpace = (value) => utility.removeSpace(value.trim());
 
     if (selected.banktype === "Bank") {
-      var bankName =
-        this.state.channelList[this.state.selectedChannelIndex].channelcode;
+      let bankNameValue = channelList[selectedChannelIndex].channelcode;
       if (
-        this.state.channelList[this.state.selectedChannelIndex].channelcode ===
-          "CustomBank" &&
+        bankNameValue === "CustomBank" &&
         !(
           config.features.AddCard_HideCertainField ||
           config.features.AddCard_Bank_Custom_IDR
         )
       ) {
-        bankName = this.state.bankName.trim();
+        bankNameValue = bankName.trim();
       }
 
-      var bankAccountName = this.state.bankAccountName.trim();
-      var bankBranch = this.state.bankBranch.trim();
-      var number = this.state.number.trim();
-
-      if (bankName === "") {
+      if (bankNameValue === "") {
         this.props.enqueueSnackbar(i18n.t("card.addCard.msgEnterBankName"), {
           variant: "error",
         });
         return;
       }
 
-      if (bankAccountName === "") {
+      if (bankAccountName.trim() === "") {
         this.props.enqueueSnackbar(
           i18n.t("card.addCard.msgEnterBankAccountName"),
           {
@@ -231,23 +239,24 @@ class AddCard extends Component {
         return;
       }
 
-      if (number === "") {
+      if (number.trim() === "") {
         this.props.enqueueSnackbar(i18n.t("common.msgEnterWithdrawalNumber"), {
           variant: "error",
         });
         return;
       }
+
       detail = {
-        bankAccount: number,
-        bankName: bankName,
-        name: bankAccountName,
-        bankBranch: bankBranch,
+        bankAccount: trimAndRemoveSpace(number),
+        bankName: trimAndRemoveSpace(bankNameValue),
+        name: trimAndRemoveSpace(bankAccountName),
+        bankBranch: trimAndRemoveSpace(bankBranch),
       };
     } else if (
       selected.banktype === "ThirdParty" ||
       selected.banktype === "FPS"
     ) {
-      if (this.state.name === "") {
+      if (name === "") {
         this.props.enqueueSnackbar(
           i18n.t("profile.nameVerify.msgPlsEnterName"),
           {
@@ -256,7 +265,8 @@ class AddCard extends Component {
         );
         return;
       }
-      if (this.state.phone === "") {
+
+      if (phone === "") {
         this.props.enqueueSnackbar(i18n.t("common.msgEnterPhone"), {
           variant: "error",
         });
@@ -264,8 +274,8 @@ class AddCard extends Component {
       }
 
       if (
-        this.state.phone.length < 8 ||
-        this.state.phone.length > (config.features.MAX_PHONE_LENGTH || 10)
+        phone.length < 8 ||
+        phone.length > (config.features.MAX_PHONE_LENGTH || 10)
       ) {
         this.props.enqueueSnackbar(
           i18n
@@ -277,13 +287,13 @@ class AddCard extends Component {
         );
         return;
       }
+
       detail = {
-        username: this.state.name,
-        phone: this.state.phone,
+        username: trimAndRemoveSpace(name),
+        phone: trimAndRemoveSpace(phone),
       };
     } else if (selected.banktype === "EWallet") {
-      bankAccountName = this.state.bankAccountName.trim();
-      if (bankAccountName === "") {
+      if (bankAccountName.trim() === "") {
         this.props.enqueueSnackbar(
           i18n.t("card.addCard.msgEnterEwalletAccount"),
           {
@@ -292,10 +302,10 @@ class AddCard extends Component {
         );
         return;
       }
-      number = this.state.number.trim();
+
       if (
-        number.length < 8 ||
-        number.length > (config.features.MAX_PHONE_LENGTH || 10)
+        number.trim().length < 8 ||
+        number.trim().length > (config.features.MAX_PHONE_LENGTH || 10)
       ) {
         this.props.enqueueSnackbar(
           i18n
@@ -307,54 +317,55 @@ class AddCard extends Component {
         );
         return;
       }
+
       if (config.features.AddCard_CustomParam_IDR) {
         detail = {
-          //qrCode: "",
-          phone: number,
-          eMoneyName: bankAccountName,
+          phone: trimAndRemoveSpace(number),
+          eMoneyName: trimAndRemoveSpace(bankAccountName),
         };
       } else {
         detail = {
-          name: bankAccountName,
-          phone: number,
+          name: trimAndRemoveSpace(bankAccountName),
+          phone: trimAndRemoveSpace(number),
         };
       }
     } else if (selected.banktype === "Pulsa") {
-      number = this.state.number.trim();
-      if (number === "") {
+      if (number.trim() === "") {
         this.props.enqueueSnackbar(i18n.t("common.msgEnterWithdrawalNumber"), {
           variant: "error",
         });
         return;
       }
+
       if (config.features.AddCard_CustomParam_IDR) {
         detail = {
-          phone: number,
+          phone: trimAndRemoveSpace(number),
         };
       } else {
         detail = {
-          phone: number,
+          phone: trimAndRemoveSpace(number),
         };
       }
     } else {
-      number = this.state.number.trim();
-      if (number === "") {
+      if (number.trim() === "") {
         this.props.enqueueSnackbar(i18n.t("common.msgEnterWithdrawalNumber"), {
           variant: "error",
         });
         return;
       }
+
       detail = {
-        address: number,
+        address: trimAndRemoveSpace(number),
       };
     }
 
     this.props.onhandleNextClick(
-      this.state.channelList[this.state.selectedChannelIndex].channelid,
+      channelList[selectedChannelIndex].channelid,
       selected.banktype,
       detail
     );
   };
+
   render() {
     const { withdrawalList, depositList } = this.props;
     const listDetector = (list, type) => {

@@ -1,28 +1,29 @@
 import React from "react";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TablePagination from "@material-ui/core/TablePagination";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TablePagination,
+} from "@material-ui/core";
 import i18n from "../../../../utils/i18n";
 import moment from "moment";
+
 const StyledTableCell = withStyles((theme) => ({
   root: {
     fontFamily: 'Arial,"Microsoft Yahei", "微软雅黑"',
   },
   head: {
-    backgroundColor: "#f7f7f7",
     color: "#747474",
     padding: "12px",
-    maxWidth: "600px",
   },
   body: {
     fontSize: 14,
     padding: "5px 0 5px 10px",
-    maxWidth: "600px",
+
     color: "#7b7b7b",
     whiteSpace: "nowrap",
     overflow: "hidden",
@@ -30,9 +31,17 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
+const CustomTableCell = styled(StyledTableCell)`
+  background: ${({ theme }) => {
+    return theme.darkMode ? theme.customProfileBackground80 : "#fff";
+  }};
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : "#000";
+  }};
+`;
+
 const StyledTableRow = withStyles((theme) => ({
   root: {
-    backgroundColor: "#FFFFFF",
     "&:hover": {
       backgroundColor: "#dde3f6 !important",
       cursor: "pointer",
@@ -41,42 +50,56 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 const InnerWrap = styled.div`
-  width: 935px;
   float: left;
-  margin-top: 18px;
   box-sizing: border-box;
-  background-color: #f7f7f7;
-  display: contents;
+  width: 100%;
+  width: -webkit-fill-available;
 `;
+
+const CustomTablePagination = styled(TablePagination)`
+  color: #fff;
+
+  .MuiIconButton-root {
+    color: ${({ theme }) => {
+      return theme.darkMode ? "#fff" : "#000";
+    }};
+    opacity: 0.5;
+  }
+
+  .MuiIconButton-root.Mui-disabled {
+    opacity: 0.5;
+  }
+`;
+
 function List(props) {
+  const { inbox, selected, onhandleChangePage, onhandleRowClick, page } = props;
+
   const handleChangePage = (event, newPage) => {
-    props.onhandleChangePage(newPage + 1);
+    onhandleChangePage(newPage + 1);
   };
 
-  const isSelected = (id) => props.selected.indexOf(id) !== -1;
+  const isSelected = (id) => selected.indexOf(id) !== -1;
 
   return (
     <InnerWrap>
       <Table aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell style={{ width: "170px" }}>
+            <CustomTableCell style={{ width: "170px" }}>
               {i18n.t("inbox.dateTime")}
-            </StyledTableCell>
-            <StyledTableCell style={{ width: "200px" }}>
+            </CustomTableCell>
+            <CustomTableCell style={{ width: "200px" }}>
               {i18n.t("inbox.inboxTitle")}
-            </StyledTableCell>
-            <StyledTableCell>{i18n.t("inbox.details")}</StyledTableCell>
+            </CustomTableCell>
+            <CustomTableCell>{i18n.t("inbox.details")}</CustomTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.inbox.items.map((row, index) => {
+          {inbox.items.map((row, index) => {
             const isItemSelected = isSelected(row.id);
             const labelId = `enhanced-table-checkbox-${index}`;
             let doc = new DOMParser().parseFromString(
-              row.localization !== null && row.localization.content
-                ? row.localization.content
-                : row.content,
+              row.localization?.content ?? row.content,
               "text/html"
             );
 
@@ -88,9 +111,9 @@ function List(props) {
                 tabIndex={-1}
                 key={row.id}
                 selected={isItemSelected}
-                onClick={() => props.onhandleRowClick(row)}
+                onClick={() => onhandleRowClick(row)}
               >
-                <StyledTableCell
+                <CustomTableCell
                   style={
                     row.isread === false
                       ? { fontWeight: "bold" }
@@ -98,8 +121,8 @@ function List(props) {
                   }
                 >
                   {moment(row.createon).format("YYYY-MM-DD hh:mm:ss a")}
-                </StyledTableCell>
-                <StyledTableCell
+                </CustomTableCell>
+                <CustomTableCell
                   id={labelId}
                   style={
                     row.isread === false
@@ -107,40 +130,36 @@ function List(props) {
                       : { fontWeight: "normal" }
                   }
                 >
-                  {row.localization !== null && row.localization.subject
-                    ? row.localization.subject
-                    : row.subject}
-                </StyledTableCell>
-                <StyledTableCell
+                  {row.localization?.subject ?? row.subject}
+                </CustomTableCell>
+                <CustomTableCell
                   style={
                     row.isread === false
                       ? { fontWeight: "bold" }
                       : { fontWeight: "normal" }
                   }
                 >
-                  {doc.querySelector("p")
-                    ? doc.querySelector("p").textContent
-                    : ""}
-                </StyledTableCell>
-                <StyledTableCell
+                  {doc.querySelector("p")?.textContent ?? ""}
+                </CustomTableCell>
+                <CustomTableCell
                   style={
                     row.status === 1
                       ? { fontWeight: "bold" }
                       : { fontWeight: "normal" }
                   }
-                ></StyledTableCell>
+                ></CustomTableCell>
               </StyledTableRow>
             );
           })}
         </TableBody>
       </Table>
-      <TablePagination
+      <CustomTablePagination
         rowsPerPageOptions={[10]}
         component="div"
-        count={props.inbox.totalcount}
+        count={inbox.totalcount}
         rowsPerPage={10}
-        page={props.page}
-        labelRowsPerPage={("asd", "213123", "asdasdasda", "每頁行数")}
+        page={page}
+        labelRowsPerPage={i18n.t("inbox.rowsPerPage")}
         backIconButtonProps={{
           "aria-label": "previous page",
         }}
@@ -152,4 +171,5 @@ function List(props) {
     </InnerWrap>
   );
 }
+
 export default List;

@@ -2,34 +2,37 @@ import React from "react";
 import styled from "styled-components";
 import Dialog from "@material-ui/core/Dialog";
 import { withStyles } from "@material-ui/core/styles";
-import IconInboxRedPNG from "../../../../../../assets/images/icon-inbox.png";
-import LoginBGPNG from "../../../../../../assets/images/login-bg.png";
-import IconLoginClosePNG from "../../../../../../assets/images/icon-login-close.png";
-import i18n from "../../../../../../utils/i18n";
-import List from "../../../Inbox/List";
-import Details from "../../../Inbox/Details";
+import IconInboxRedPNG from "../../../../../assets/images/icon-inbox.png";
+import LoginBGPNG from "../../../../../assets/images/login-bg.png";
+import IconLoginClosePNG from "../../../../../assets/images/icon-login-close.png";
+import i18n from "../../../../../utils/i18n";
+import List from "../../Inbox/List";
+import Details from "../../Inbox/Details";
+import { TitleIcon } from "../../components";
 
 const Container = styled.div` 
 padding: 20px 28px;
 box-sizing: border-box
-width: 100%;
+width: 100%; 
+background-color: ${({ theme }) => {
+  return theme.customProfileBackground100
+    ? theme.customProfileBackground100
+    : "#eaeaea";
+}};
 min-height: 611px;`;
 const Title = styled.div`
   color: ${({ theme }) => theme.secondary};
 `;
-const TitleIcon = styled.div`
-  width: 34px;
-  height: 24px;
-  background: url(${IconInboxRedPNG}) no-repeat left center;
-  background-size: 24px 24px;
-  float: left;
-`;
+
 const InnerWrap = styled.div`
   width: 100%;
   padding: 25px;
   margin-top: 14px;
   position: relative;
-  background-color: #f7f7f7;
+  background-color: ${({ theme }) => {
+    return theme.darkMode ? theme.customProfileBackground80 : "#f7f7f7";
+  }};
+
   min-height: 630px;
   border-radius: 10px;
 `;
@@ -72,6 +75,7 @@ const DialogHeadertitle = styled.div`
   color: ${({ theme }) => theme.secondary};
   width: 320px;
 `;
+
 const Template1 = ({
   inbox,
   page,
@@ -82,12 +86,11 @@ const Template1 = ({
   handleRowClick,
   handleSelectedChange,
   handleCloseDialog,
-  showDialog,
 }) => {
   return (
     <Container>
       <Title>
-        <TitleIcon></TitleIcon>
+        <TitleIcon src={IconInboxRedPNG} />
         {i18n.t("inbox.title")}
       </Title>
       <InnerWrap>
@@ -102,12 +105,7 @@ const Template1 = ({
           onhandleSelectedChange={handleSelectedChange}
         ></List>
       </InnerWrap>
-      <StyledDialog
-        open={openDialog}
-        onClose={handleCloseDialog}
-        onEntering={() => showDialog(true)}
-        onExited={() => showDialog(false)}
-      >
+      <StyledDialog open={openDialog} onClose={handleCloseDialog}>
         <DialogHeader>
           <DialogHeadertitle>{i18n.t("inbox.title")}</DialogHeadertitle>
           <DialogCloseIconContainer

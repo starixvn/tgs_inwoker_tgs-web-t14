@@ -25,8 +25,11 @@ const Content = styled.div`
 `;
 
 const LabelLink = styled(Link)`
-  color: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => {
+    return theme.useBackgroundColor ? theme.useBackgroundColor : theme.primary;
+  }};
   text-decoration: none;
+  font-weight: bold;
 `;
 const CustomText = withStyles({
   root: {
@@ -62,7 +65,10 @@ const CustomText = withStyles({
 const StyleButton = styled.div`
   width: 140px;
   height: 44px;
-  border: solid 1px #b6b6b6;
+  border: solid 1px
+    ${({ theme }) => {
+      return !theme.useBackgroundColor ? theme.homeHeaderTextColor : "#b6b6b6";
+    }};
   margin: 0;
   margin-top: 10px;
   margin-left: 5px;
@@ -80,7 +86,9 @@ const StyleButton = styled.div`
 
   border-radius: 5px;
   font-size: 16px;
-  color: #fff;
+  color: ${({ theme }) => {
+    return theme.useBackgroundColor ? theme.useBackgroundColor : "#fff";
+  }};
 
   &:hover {
     cursor: pointer;

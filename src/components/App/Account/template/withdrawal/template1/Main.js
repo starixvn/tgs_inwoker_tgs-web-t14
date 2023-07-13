@@ -18,11 +18,15 @@ const NumberContainer = styled.div`
   width: 20px;
   height: 20px;
   border-radius: 3.2px;
-  background-color: #141933;
+  background-color: ${({ theme }) => {
+    return theme.darkMode ? theme.primary : "#141933";
+  }};
   font-family: Arial;
   font-size: 14px;
   font-weight: bold;
-  color: #ffffff;
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#000" : "#fff";
+  }};
   text-align: center;
   padding-top: 2px;
   float: left;
@@ -30,7 +34,9 @@ const NumberContainer = styled.div`
 const SubTitle = styled.div`
   font-size: 16px;
   float: left;
-  color: #818181;
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : "#000";
+  }};
   margin: 0 0 0 10px;
 `;
 const SelectionContainer = styled.div`
@@ -124,10 +130,11 @@ const LimitPopupContainer = styled.div`
 `;
 
 const Turnover = styled.div`
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : "#000";
+  }};
   span {
-    color: ${({ theme }) => {
-      return theme.primary;
-    }};
+    color: ${({ theme }) => theme.primary};
     font-weight: bold;
   }
 `;
@@ -166,27 +173,27 @@ const GameWalletButton = styled.div`
 `;
 
 const Main = ({
-    amount,
-    playerNote,
-    min,
-    max,
-    disabled,
-    exchangeRate,
-    cardList,
-    minWithdrawLimit,
-    selectedCardIndex,
-    handleSelectCardChange,
-    getTransferLimit,
-    onhandleManageCardClick,
-    performWithdrawFromEveryBrand,
-    onhandleRefreshClick,
-    handleAmountChange,
-    handlePlayerNote,
-    handleWithdrawalClick
-  }) => {
-    return (    
-        <React.Fragment>
-    <SubHeaderContainer>
+  amount,
+  playerNote,
+  min,
+  max,
+  disabled,
+  exchangeRate,
+  cardList,
+  minWithdrawLimit,
+  selectedCardIndex,
+  handleSelectCardChange,
+  getTransferLimit,
+  onhandleManageCardClick,
+  performWithdrawFromEveryBrand,
+  onhandleRefreshClick,
+  handleAmountChange,
+  handlePlayerNote,
+  handleWithdrawalClick,
+}) => {
+  return (
+    <React.Fragment>
+      <SubHeaderContainer>
         <NumberContainer>1</NumberContainer>
         <SubTitle>{i18n.t("withdrawal.msgEnterBank")}</SubTitle>
       </SubHeaderContainer>
@@ -285,7 +292,7 @@ const Main = ({
                 onClick={() => {
                   performWithdrawFromEveryBrand().then((e) => {
                     if (e.IsSuccess) {
-                    onhandleRefreshClick();
+                      onhandleRefreshClick();
                     }
                   });
                 }}
@@ -297,22 +304,22 @@ const Main = ({
         </>
       )}
 
-        <SplitLine></SplitLine>
-        <SubHeaderContainer>
-          <NumberContainer>
-            {config.features.NewTransferUI ? 3 : 2}
-          </NumberContainer>
+      <SplitLine></SplitLine>
+      <SubHeaderContainer>
+        <NumberContainer>
+          {config.features.NewTransferUI ? 3 : 2}
+        </NumberContainer>
 
-          <SubTitle>{i18n.t("withdrawal.enterAmount")}</SubTitle>
-          {
-            //    <GapLeaver>
-            //    <FeeSpot>
-            //      {i18n.t("fees.withdraw")}: <span>{fee}%</span>
-            //    </FeeSpot>
-            //  </GapLeaver>
-          }
+        <SubTitle>{i18n.t("withdrawal.enterAmount")}</SubTitle>
+        {
+          //    <GapLeaver>
+          //    <FeeSpot>
+          //      {i18n.t("fees.withdraw")}: <span>{fee}%</span>
+          //    </FeeSpot>
+          //  </GapLeaver>
+        }
 
-          {/* {(() => {
+        {/* {(() => {
             if (
               props.cardList[selectedCardIndex] &&
               props.cardList[selectedCardIndex].banktype === "Usdt"
@@ -333,110 +340,104 @@ const Main = ({
               );
             }
           })()} */}
-        </SubHeaderContainer>
-        <SelectionContainer>
-          <CustomTextField
-            width={250}
-            height={38}
-            placeholder={i18n.t("withdrawal.enterAmount")}
-            handleTextFieldChange={handleAmountChange}
-            variant="outlined"
-            autoComplete="off"
-            value={amount}
-            pattern="[0-9]*"
-            type={"number"}
-            maxLength={12}
-          ></CustomTextField>
+      </SubHeaderContainer>
+      <SelectionContainer>
+        <CustomTextField
+          width={250}
+          height={38}
+          placeholder={i18n.t("withdrawal.enterAmount")}
+          handleTextFieldChange={handleAmountChange}
+          variant="outlined"
+          autoComplete="off"
+          value={amount}
+          pattern="[0-9]*"
+          type={"number"}
+          maxLength={12}
+        ></CustomTextField>
 
-          <LimitPopupContainer>
-            {Common.formatNumberWithThousand(min)} -{" "}
-            {Common.formatNumberWithThousand(max)}
-          </LimitPopupContainer>
-          {(() => {
-            if (
-              cardList[selectedCardIndex] &&
-              cardList[selectedCardIndex].banktype === "Usdt"
-            ) {
-              return (
-                <React.Fragment>
-                  <div class="clear"></div>
-                  <SubHeaderContainer>
-                    <SubTitle style={{ margin: "0px" }}>
-                      {i18n.t("withdrawal.usdtAmount")}
-                    </SubTitle>
-                  </SubHeaderContainer>
-                  <CustomTextField
-                    width={250}
-                    height={38}
-                    variant="outlined"
-                    autoComplete="off"
-                    value={
-                      isNaN(amount) === false
-                        ? (amount * exchangeRate).toFixed(2)
-                        : 0
-                    }
-                    pattern="[0-9]*"
-                    type={"number"}
-                    disabled={true}
-                  ></CustomTextField>
-                </React.Fragment>
-              );
-            }
-          })()}
-          <div class="clear"></div>
-          <Turnover>
-            {i18n.t("withdrawal.turnover")}
-            <span>
-              {Common.formatNumberWithThousand(minWithdrawLimit)}
-            </span>
-          </Turnover>
-        </SelectionContainer>
-        {config.features.Deposit_Withdrawal_PlayerNote &&
-          cardList[selectedCardIndex] &&
-          (cardList[selectedCardIndex].banktype.toUpperCase() ===
-            "BANK" ||
-            cardList[selectedCardIndex].banktype.toUpperCase() ===
-              "EWALLET" ||
-            cardList[selectedCardIndex].banktype.toUpperCase() ===
-              "PULSA") && (
-            <React.Fragment>
-              <SplitLine></SplitLine>
-              <SubHeaderContainer>
-                <NumberContainer>3</NumberContainer>
-                <SubTitle>{i18n.t("withdrawal.playerNote")}</SubTitle>
-              </SubHeaderContainer>
-              <SelectionContainer>
+        <LimitPopupContainer>
+          {Common.formatNumberWithThousand(min)} -{" "}
+          {Common.formatNumberWithThousand(max)}
+        </LimitPopupContainer>
+        {(() => {
+          if (
+            cardList[selectedCardIndex] &&
+            cardList[selectedCardIndex].banktype === "Usdt"
+          ) {
+            return (
+              <React.Fragment>
+                <div class="clear"></div>
+                <SubHeaderContainer>
+                  <SubTitle style={{ margin: "0px" }}>
+                    {i18n.t("withdrawal.usdtAmount")}
+                  </SubTitle>
+                </SubHeaderContainer>
                 <CustomTextField
                   width={250}
                   height={38}
-                  placeholder={i18n.t("withdrawal.plsEnterPlayerNote")}
-                  handleTextFieldChange={handlePlayerNote}
                   variant="outlined"
                   autoComplete="off"
-                  value={playerNote}
-                  maxLength={50}
+                  value={
+                    isNaN(amount) === false
+                      ? (amount * exchangeRate).toFixed(2)
+                      : 0
+                  }
+                  pattern="[0-9]*"
+                  type={"number"}
+                  disabled={true}
                 ></CustomTextField>
-              </SelectionContainer>
-            </React.Fragment>
-          )}
-
-        <CustomButton
-          disabled={
-            isNaN(parseFloat(amount)) ||
-            parseFloat(amount) < min ||
-            parseFloat(amount) > max ||
-            disabled
+              </React.Fragment>
+            );
           }
-          name={i18n.t("common.nextStep")}
-          width={255}
-          marginTop={0}
-          float={"none"}
-          marginLeft={290}
-          handleClick={handleWithdrawalClick}
-        ></CustomButton>
-      </React.Fragment>  
-    );
-  };
-  
-  export default Main;
-  
+        })()}
+        <div class="clear"></div>
+        <Turnover>
+          {i18n.t("withdrawal.turnover")}
+          <span>{Common.formatNumberWithThousand(minWithdrawLimit)}</span>
+        </Turnover>
+      </SelectionContainer>
+      {config.features.Deposit_Withdrawal_PlayerNote &&
+        cardList[selectedCardIndex] &&
+        (cardList[selectedCardIndex].banktype.toUpperCase() === "BANK" ||
+          cardList[selectedCardIndex].banktype.toUpperCase() === "EWALLET" ||
+          cardList[selectedCardIndex].banktype.toUpperCase() === "PULSA") && (
+          <React.Fragment>
+            <SplitLine></SplitLine>
+            <SubHeaderContainer>
+              <NumberContainer>3</NumberContainer>
+              <SubTitle>{i18n.t("withdrawal.playerNote")}</SubTitle>
+            </SubHeaderContainer>
+            <SelectionContainer>
+              <CustomTextField
+                width={250}
+                height={38}
+                placeholder={i18n.t("withdrawal.plsEnterPlayerNote")}
+                handleTextFieldChange={handlePlayerNote}
+                variant="outlined"
+                autoComplete="off"
+                value={playerNote}
+                maxLength={50}
+              ></CustomTextField>
+            </SelectionContainer>
+          </React.Fragment>
+        )}
+
+      <CustomButton
+        disabled={
+          isNaN(parseFloat(amount)) ||
+          parseFloat(amount) < min ||
+          parseFloat(amount) > max ||
+          disabled
+        }
+        name={i18n.t("common.nextStep")}
+        width={255}
+        marginTop={0}
+        float={"none"}
+        marginLeft={290}
+        handleClick={handleWithdrawalClick}
+      ></CustomButton>
+    </React.Fragment>
+  );
+};
+
+export default Main;

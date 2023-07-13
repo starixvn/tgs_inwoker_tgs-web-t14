@@ -4,7 +4,6 @@ import { withRouter } from "react-router-dom";
 import NameVerification from "../../Share/NameVerification";
 import AddCard from "./AddCard";
 import Main from "./Main";
-import Success from "./Success";
 import config from "../../../../config/config";
 import ErrorSwitcher from "../../../../utils/ErrorSwitcher";
 import { walletAction } from "../../../../api-services/actions/walletAction";
@@ -521,7 +520,7 @@ class Withdrawal extends Component {
         (item) => item.abbreviation !== "NTTF" && item.abbreviation !== "RTTF"
       )
       .map((a) => {
-        this.props.getGameBalance(a.abbreviation).then((e) => {
+        return this.props.getGameBalance(a.abbreviation).then((e) => {
           if (e.IsSuccess) {
           }
         });

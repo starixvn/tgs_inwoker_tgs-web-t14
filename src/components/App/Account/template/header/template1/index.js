@@ -21,7 +21,10 @@ const Container = styled.div`
   height: 142px;
   margin: 19px 13px 10px 13px;
   border-radius: 10px;
-  background-color: #ededed;
+  background-color: ${({ theme }) =>
+    theme.customProfileBackground80
+      ? theme.customProfileBackground80
+      : "#ededed"};
   box-shadow: 0px 3px 16px -3px rgba(0, 0, 0, 0.75);
 `;
 const AvatarContainer = styled.img`
@@ -88,7 +91,10 @@ const RefreshButton = styled.div`
 const RefreshButtonIcon = styled.div`
   width: 28px;
   height: 29px;
-  background: url(${IconRefreshPNG}) no-repeat center;
+  mask: url(${IconRefreshPNG}) no-repeat center;
+  background: ${({ theme }) => {
+    return theme.useBackgroundColor ? theme.useBackgroundColor : "#fff";
+  }};
 
   &:hover {
     animation: ${rotateKeyFrame} 1s linear 0s infinite;
@@ -96,7 +102,9 @@ const RefreshButtonIcon = styled.div`
 `;
 
 const VIPLabel = styled.div`
-  color: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => {
+    return theme.useBackgroundColor ? theme.secondary : theme.primary;
+  }};
   font-weight: bold;
   font-size: 18px;
   margin-top: 10px;
@@ -113,10 +121,12 @@ const Template1 = ({ game, info, wallet, onhandleRefreshClick }) => {
       <AvatarContainer src={AvatarPNG}></AvatarContainer>
       <PlayerInfoContainer>
         <PlayerName>{info.member_username}</PlayerName>
-        <VIPLabel>
-          VIP
-          {info.member_level_id}
-        </VIPLabel>
+        {config.features.HaveVIPFeature && (
+          <VIPLabel>
+            VIP
+            {info.member_level_id}
+          </VIPLabel>
+        )}
       </PlayerInfoContainer>
 
       <SpliterLine></SpliterLine>

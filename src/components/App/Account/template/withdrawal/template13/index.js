@@ -7,9 +7,10 @@ import i18n from "../../../../../../utils/i18n";
 const Container = styled.div`
   padding: 20px 28px;
   box-sizing: border-box;
-  background-color: #000326;
+  background-color: #1b1d30;
   width: 100%;
   min-height: 611px;
+
 `;
 const Title = styled.div`
   display: flex;

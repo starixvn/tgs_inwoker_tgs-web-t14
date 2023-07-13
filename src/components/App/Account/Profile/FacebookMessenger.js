@@ -22,8 +22,11 @@ const Content = styled.div`
 `;
 
 const LabelLink = styled(Link)`
-  color: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => {
+    return theme.useBackgroundColor ? theme.useBackgroundColor : theme.primary;
+  }};
   text-decoration: none;
+  font-weight: bold;
 `;
 
 const FacebookMessenger = (props) => {
@@ -105,4 +108,4 @@ const FacebookMessenger = (props) => {
   );
 };
 
-export default connect(null,null)(withSnackbar(FacebookMessenger));
+export default connect(null, null)(withSnackbar(FacebookMessenger));

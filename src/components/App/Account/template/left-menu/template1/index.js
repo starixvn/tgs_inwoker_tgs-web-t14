@@ -12,7 +12,6 @@ import i18n from "../../../../../../utils/i18n";
 import config from "../../../../../../config/config";
 
 const Container = styled.div`
-  background-color: #d9d9d9;
   width: 216px;
   height: 100%;
   float: left;
@@ -43,9 +42,9 @@ const MenuButtonDiv = styled.div`
   ${({ active, theme }) => {
     return active
       ? ` background-color: ${theme.primary};
-          color:${config.features.UseAccentColor ? theme.accent : " #fff"}
+          color:${theme.useBackgroundColor ? theme.useBackgroundColor : " #fff"}
         `
-      : `background-color: #ededed;`;
+      : `background:${theme.useBackgroundColor ? "transparent" : " #ededed"}`;
   }}
 `;
 const MenuButtonSpan = styled.span`
@@ -62,8 +61,8 @@ const MenuImgFrame = styled.div`
 
   ${({ active, theme }) => {
     return active
-      ? config.features.UseAccentColor
-        ? `background: ${theme.accent};`
+      ? theme.useBackgroundColor
+        ? `background: ${theme.useBackgroundColor};`
         : " background:#fff;"
       : `background: ${theme.secondary};`;
   }};
@@ -126,7 +125,7 @@ const Template1 = ({ game, haveAffiliate, activePage, onhandleClickTab }) => {
       <MenuTitle>{i18n.t("web.account.personal")}</MenuTitle>
       {genMenuButtonDiv(i18n.t("web.account.profile"), "profile")}
       {genMenuButtonDiv(i18n.t("web.account.inbox"), "inbox")}{" "}
-      {genMenuButtonDiv("VIP", "vip")}
+      {config.features.HaveVIPFeature && genMenuButtonDiv("VIP", "vip")}
       {haveAffiliate &&
         genMenuButtonDiv(i18n.t("web.account.affiliate"), "affiliate")}
     </Container>

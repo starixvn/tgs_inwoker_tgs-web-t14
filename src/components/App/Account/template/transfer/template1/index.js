@@ -16,6 +16,7 @@ import i18n from "../../../../../../utils/i18n";
 import Common from "../../../../../../utils/Common";
 import Loading from "../../../../Loading";
 import Messagebox from "../../../../Messagebox";
+import { TitleIcon } from "../../../components";
 
 export const rotateKeyFrame = keyframes`
   0% {
@@ -28,7 +29,11 @@ export const rotateKeyFrame = keyframes`
 const Container = styled.div`
   padding: 20px 28px;
   box-sizing: border-box
-
+  background-color: ${({ theme }) => {
+    return theme.customProfileBackground100
+      ? theme.customProfileBackground100
+      : "#eaeaea";
+  }};
   width: 100%;
   min-height: 611px;
 
@@ -36,21 +41,15 @@ const Container = styled.div`
 const Title = styled.div`
   color: ${({ theme }) => theme.secondary};
 `;
-const TitleIcon = styled.div`
-  width: 34px;
-  height: 24px;
 
-  background: url(${IconTransferRedPNG}) no-repeat left center;
-  background-size: 24px 24px;
-
-  float: left;
-`;
 const InnerWrap = styled.div`
   width: 935px;
 
   margin-top: 18px;
   box-sizing: border-box;
-  background-color: #f7f7f7;
+  background-color: ${({ theme }) => {
+    return theme.darkMode ? theme.customProfileBackground80 : "#f7f7f7";
+  }};
   padding: 25px 20px;
   position: relative;
   border-radius: 10px;
@@ -59,15 +58,36 @@ const WalletFrame = styled.div`
   width: 297px;
   height: 133px;
   float: left;
+  position: relative;
 `;
 const MainWallet = styled(WalletFrame)`
-  background: url(${TransferMWalletPNG}) no-repeat center;
+  background: ${({ theme }) => {
+    return theme.darkMode
+      ? `url(${
+          process.env.PUBLIC_URL +
+          "/assets/images/pcProfilePage/mainwallet-dark.png"
+        }) no-repeat center`
+      : `url(${TransferMWalletPNG}) no-repeat center`;
+  }};
 `;
 const TransferWallet = styled(WalletFrame)`
-  background: url(${TransferTWalletPNG}) no-repeat center;
+  background: ${({ theme }) => {
+    return theme.darkMode
+      ? `url(${
+          process.env.PUBLIC_URL +
+          "/assets/images/pcProfilePage/transferwallet-dark.png"
+        }) no-repeat center`
+      : `url(${TransferTWalletPNG}) no-repeat center`;
+  }};
 `;
 const TotalWallet = styled(WalletFrame)`
-  background: url(${TransferTotalPNG}) no-repeat center;
+  background: ${({ theme }) => {
+    return theme.darkMode
+      ? `url(${
+          process.env.PUBLIC_URL + "/assets/images/pcProfilePage/total-dark.png"
+        }) no-repeat center`
+      : `url(${TransferTotalPNG}) no-repeat center`;
+  }};
 `;
 const WalletTitle = styled.div`
   font-size: 18px;
@@ -99,7 +119,10 @@ const RefreshButton = styled.div`
 const RefreshButtonIcon = styled.div`
   width: 28px;
   height: 29px;
-  background: url(${IconRefreshPNG}) no-repeat center;
+  mask: url(${IconRefreshPNG}) no-repeat center;
+  background: ${({ theme }) => {
+    return theme.useBackgroundColor ? theme.useBackgroundColor : "#fff";
+  }};
   &:hover {
     animation: ${rotateKeyFrame} 1s linear 0s infinite;
   }
@@ -150,7 +173,9 @@ const QuickTransferButton = styled.div`
   text-align: center;
   padding: 10px;
 
-  color: #fff;
+  color: ${({ theme }) => {
+    return theme.useBackgroundColor ? theme.useBackgroundColor : "#fff";
+  }};
   font-size: 14px;
   margin-left: 12px;
 
@@ -160,7 +185,7 @@ const QuickTransferButton = styled.div`
   ${(props) => (props.disabled === false ? " " : "pointer-events: none;")}
   ${(props) =>
     props.disabled === true
-      ? "background-blend-mode: multiply, normal; background-image:  linear-gradient(to bottom, #bfbfbf, #bfbfbf), linear-gradient(to top, #797979, #c3c3c3);"
+      ? "color: #fff;background-blend-mode: multiply, normal; background-image:  linear-gradient(to bottom, #bfbfbf, #bfbfbf), linear-gradient(to top, #797979, #c3c3c3);"
       : "background-image: linear-gradient(to top, " +
         props.theme.primaryGradient +
         ", " +
@@ -178,8 +203,14 @@ const GameTranferWallet = styled.div`
   width: 280px;
   height: 98px;
   border-radius: 4px;
-  border: solid 1px #dddedf;
-  background-image: linear-gradient(to top, #f4f4f4, #ffffff);
+  border: solid 1px ${({ theme }) => {
+    return theme.darkMode ? theme.customProfileBackground50 : "#dddedf";
+  }};
+  background: ${({ theme }) => {
+    return theme.darkMode
+      ? theme.customProfileBackground50
+      : `linear-gradient(to top, #f4f4f4, #ffffff);`;
+  }}
   margin: 0 10px 10px 0;
   float: left;
 `;
@@ -196,6 +227,8 @@ const GameIcon = styled.div`
   background-position: center;
   margin: 0 auto;
   display: block;
+
+  transform: scale(1.5);
 `;
 const GameName = styled.div`
   font-size: 14px;
@@ -207,7 +240,9 @@ const GameWalletAmount = styled.div`
   font-family: Arial;
   font-size: 22px;
   text-align: right;
-  color: #29356c;
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : "#000";
+  }};
   margin: 21px 0 0 0px;
   width: 170px;
   display: inline-block;
@@ -225,7 +260,9 @@ const GameWalletButton = styled.div`
   padding: 5px;
 
   margin: 8px 5px 0 0;
-  color: #fff;
+  color: ${({ theme }) => {
+    return theme.useBackgroundColor ? theme.useBackgroundColor : "#fff";
+  }};
   float: right;
 
   min-width: 79px;
@@ -374,6 +411,9 @@ const CustomSwitchContainer = styled.div`
   align-items: center;
   font-weight: normal;
   margin-bottom: 10px;
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : "#000";
+  }};
 `;
 
 const Template1 = ({
@@ -398,10 +438,17 @@ const Template1 = ({
   getAllGameBalance,
   getBalanceList,
 }) => {
+  const switchAlternateLogo = (condition) => {
+    if (condition) {
+      return "alternate/";
+    } else {
+      return "";
+    }
+  };
   return (
     <Container>
       <Title>
-        <TitleIcon></TitleIcon>
+        <TitleIcon src={IconTransferRedPNG} />
         {i18n.t("transfer.title")}
       </Title>
       <InnerWrap>
@@ -482,7 +529,14 @@ const Template1 = ({
                 )
                 .filter((e) => {
                   if (config.features.MergeEVORTNT) {
-                    if (!(e.gpcode === "NTTF" || e.gpcode === "RTTF" || e.gpcode === "BTG" || e.gpcode === "NLC")) {
+                    if (
+                      !(
+                        e.gpcode === "NTTF" ||
+                        e.gpcode === "RTTF" ||
+                        e.gpcode === "BTG" ||
+                        e.gpcode === "NLC"
+                      )
+                    ) {
                       return e;
                     }
                   } else {
@@ -515,7 +569,14 @@ const Template1 = ({
                 )
                 .filter((e) => {
                   if (config.features.MergeEVORTNT) {
-                    if (!(e.gpcode === "NTTF" || e.gpcode === "RTTF" || e.gpcode === "BTG" || e.gpcode === "NLC")) {
+                    if (
+                      !(
+                        e.gpcode === "NTTF" ||
+                        e.gpcode === "RTTF" ||
+                        e.gpcode === "BTG" ||
+                        e.gpcode === "NLC"
+                      )
+                    ) {
                       return e;
                     }
                   } else {
@@ -575,7 +636,14 @@ const Template1 = ({
             .filter((item) => item.status === 0 && item.transferwallet === true)
             .filter((e) => {
               if (config.features.MergeEVORTNT) {
-                if (!(e.gpcode === "NTTF" || e.gpcode === "RTTF" || e.gpcode === "BTG" || e.gpcode === "NLC")) {
+                if (
+                  !(
+                    e.gpcode === "NTTF" ||
+                    e.gpcode === "RTTF" ||
+                    e.gpcode === "BTG" ||
+                    e.gpcode === "NLC"
+                  )
+                ) {
                   return e;
                 }
               } else {
@@ -600,7 +668,9 @@ const Template1 = ({
                     <GameIcon
                       src={
                         process.env.PUBLIC_URL +
-                        `/assets/images/provider/transfer/${displayLogo()}.png`
+                        `/assets/images/provider/${switchAlternateLogo(
+                          config.features.UseAlternateLogo || false
+                        )}${displayLogo()}.png`
                       }
                     ></GameIcon>
                     <GameName>

@@ -2,17 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import Dialog from "@material-ui/core/Dialog";
 import { withStyles } from "@material-ui/core/styles";
-import IconInboxRedPNG from "../../../../../../assets/images/icon-inbox.png";
-import LoginBGPNG from "../../../../../../assets/images/login-bg.png";
-import IconLoginClosePNG from "../../../../../../assets/images/icon-login-close.png";
-import i18n from "../../../../../../utils/i18n";
-import List from "../../../Inbox/List";
-import Details from "../../../Inbox/Details";
+import IconLoginClosePNG from "../../../../../assets/images/icon-login-close.png";
+import i18n from "../../../../../utils/i18n";
+import List from "../../Inbox/List";
+import Details from "../../Inbox/Details";
 
 const Container = styled.div`
   padding: 20px 28px;
   box-sizing: border-box;
-  background-color: #000326;
+  background-color: #1b1d30;
 
   width: 100%;
   min-height: 611px;
@@ -95,7 +93,7 @@ const DialogContainer = styled.div`
     }
 
     ::-webkit-scrollbar-thumb {
-      background: #000326;
+      background: #1b1d30;
       border-radius: 14px;
     }
   }
@@ -133,16 +131,7 @@ const DialogCloseIconContainer = styled.div`
 const DialogHeader = styled.div`
   height: 50px;
 `;
-const DialogHeadertitle = styled.div`
-  text-align: center;
-  margin-left: 45px;
-  padding-top: 12px;
-  float: left;
-  font-size: 18px;
-  font-weight: bold;
-  color: #fff;
-  width: 320px;
-`;
+
 const Template13 = ({
   inbox,
   page,
@@ -153,7 +142,6 @@ const Template13 = ({
   handleRowClick,
   handleSelectedChange,
   handleCloseDialog,
-  showDialog,
 }) => {
   return (
     <Container>
@@ -173,12 +161,7 @@ const Template13 = ({
           onhandleSelectedChange={handleSelectedChange}
         ></List>
       </InnerWrap>
-      <StyledDialog
-        open={openDialog}
-        onClose={handleCloseDialog}
-        onEntering={() => showDialog(true)}
-        onExited={() => showDialog(false)}
-      >
+      <StyledDialog open={openDialog} onClose={handleCloseDialog}>
         <DialogHeader>
           <DialogCloseIconContainer
             onClick={handleCloseDialog}

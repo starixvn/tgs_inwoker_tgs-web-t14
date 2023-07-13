@@ -18,12 +18,17 @@ const Content = styled.div`
   text-align: center;
   margin-top: 30px;
   padding: 0 30px;
-  color: ${({ theme }) => theme.secondary};
+  color: ${({ theme }) => {
+    return theme.darkMode ? "" : theme.secondary;
+  }};
 `;
 
 const LabelLink = styled(Link)`
-  color: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => {
+    return theme.darkMode ? theme.useBackgroundColor : theme.primary;
+  }};
   text-decoration: none;
+  font-weight: bold;
 `;
 
 const DatepickerWrapper = styled.div`

@@ -1,15 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import IconBonusRedPNG from "../../../../../../assets/images/icon-bonus.png";
-import i18n from "../../../../../../utils/i18n";
+import IconBonusRedPNG from "../../../../../assets/images/icon-bonus.png";
+import i18n from "../../../../../utils/i18n";
 import QRCode from "react-qr-code";
-
 import { FormControl, Select } from "@material-ui/core";
-
 import { withStyles } from "@material-ui/core/styles";
 import { useEffect } from "react";
 import { useState } from "react";
-import { generalAction } from "../../../../../../api-services/actions/generalAction";
+import { generalAction } from "../../../../../api-services/actions/generalAction";
 
 import {
   Table,
@@ -18,6 +16,7 @@ import {
   TableHead,
   TableRow,
 } from "@material-ui/core";
+import { TitleIcon } from "../../components";
 
 const CustomTable = styled(Table)`
   white-space: nowrap;
@@ -44,28 +43,36 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
+const CustomTableCell = styled(StyledTableCell)`
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : "#000";
+  }};
+`;
+
 const Container = styled.div`
   padding: 20px 28px;
   box-sizing: border-box
   width: 100%;
-  min-height: 611px;
+  min-height: 611px; 
+  background-color: ${({ theme }) => {
+    return theme.customProfileBackground100
+      ? theme.customProfileBackground100
+      : "#eaeaea";
+  }};
 `;
 const Title = styled.div`
-  color: ${({ theme }) => theme.secondary};
-`;
-const TitleIcon = styled.div`
-  width: 34px;
-  height: 24px;
-  background: url(${IconBonusRedPNG}) no-repeat left center;
-  background-size: 24px 24px;
-  float: left;
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : theme.secondary;
+  }};
 `;
 
 const InnerWrap = styled.div`
   width: 935px;
   margin-top: 18px;
   box-sizing: border-box;
-  background-color: #f7f7f7;
+  background-color: ${({ theme }) => {
+    return theme.darkMode ? theme.customProfileBackground80 : "#f7f7f7;";
+  }}
   padding: 25px;
   position: relative;
   border-radius: 10px;
@@ -77,6 +84,10 @@ const QRCodeLabel = styled.div`
   margin: 30px auto;
   display: table;
   font-size: 18px;
+
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : theme.secondary;
+  }};
 `;
 const QRCodeContainer = styled.div`
   padding: 10px;
@@ -119,7 +130,10 @@ const CustomInput = styled.input`
 `;
 const Button = styled.div`
   height: 30px;
-  border: solid 1px #000;
+  border: solid 1px
+    ${({ theme }) => {
+      return theme.darkMode ? theme.homeHeaderTextColor : "#000";
+    }};
   font-size: 12px;
   font-weight: 600;
   text-align: center;
@@ -128,7 +142,7 @@ const Button = styled.div`
   padding: 5px 20px 0 20px;
   margin-top: 6px;
   width: 80px;
-  color: #fff;
+  color: ${({ theme }) => (theme.darkMode ? theme.useBackgroundColor : "#fff")};
   border-radius: 6px;
   background-image: linear-gradient(
     to top,
@@ -152,6 +166,9 @@ const RebateContent = styled.div`
   align-items: flex-start;
   gap: 10px;
   padding: 20px;
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : theme.secondary;
+  }};
 `;
 
 const QRCodeActionContainer = styled.div`
@@ -227,7 +244,6 @@ const Template1 = ({
     { value: 13, title: "lottery" },
     { value: 15, title: "egame" },
   ];
-
   const [rebates, setRebates] = useState([]);
   const [rebateType, setRebateType] = useState(1);
 
@@ -245,18 +261,27 @@ const Template1 = ({
     } else if (rebates.length > 0) {
       getRebates();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [general.rebates]);
+
+  const filteredRebates = rebates.filter((item) => {
+    if (rebateType === 0) {
+      return true;
+    } else {
+      return item.allagentgametype.toString() === rebateType.toString();
+    }
+  });
 
   return (
     <Container>
       <Title>
-        <TitleIcon></TitleIcon>
+        <TitleIcon src={IconBonusRedPNG} />
         {i18n.t("affiliate.title")}
       </Title>
       <InnerWrap>
         <div>
           <QRCodeLabel>{i18n.t("affiliate.qrCode")}</QRCodeLabel>
-          <QRCodeContainer id="qrcode-container"> 
+          <QRCodeContainer id="qrcode-container">
             <QRCode size={128} value={affiliateLink}></QRCode>
           </QRCodeContainer>
           <QRCodeActionContainer>
@@ -302,13 +327,11 @@ const Template1 = ({
                   setRebateType(e.target.value);
                 }}
               >
-                {type.map((item, index) => {
-                  return (
-                    <option key={index} value={item.value}>
-                      {i18n.t(`common.${item.title}`)}
-                    </option>
-                  );
-                })}
+                {type.map((item, index) => (
+                  <option key={index} value={item.value}>
+                    {i18n.t(`common.${item.title}`)}
+                  </option>
+                ))}
               </CustomSelect>
             </CustomFormControl>
           </div>
@@ -331,28 +354,13 @@ const Template1 = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rebates
-                  .filter((item) => {
-                    if (rebateType === 0) {
-                      return true;
-                    } else {
-                      return (
-                        item.allagentgametype.toString() ===
-                        rebateType.toString()
-                      );
-                    }
-                  })
-                  .map((data, index) => {
-                    return (
-                      <TableRow>
-                        <StyledTableCell>{data.activenumber}</StyledTableCell>{" "}
-                        <StyledTableCell>{data.turnover}</StyledTableCell>{" "}
-                        <StyledTableCell>
-                          {data.rebatepercentage}
-                        </StyledTableCell>
-                      </TableRow>
-                    );
-                  })}
+                {filteredRebates.map((data, index) => (
+                  <TableRow key={index}>
+                    <CustomTableCell>{data.activenumber}</CustomTableCell>
+                    <CustomTableCell>{data.turnover}</CustomTableCell>
+                    <CustomTableCell>{data.rebatepercentage}</CustomTableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </CustomTable>
           </div>

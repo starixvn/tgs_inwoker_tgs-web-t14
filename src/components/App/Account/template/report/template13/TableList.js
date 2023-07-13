@@ -22,7 +22,7 @@ const Container = styled.div`
   & .MuiIconButton-root.Mui-disabled {
     color: #747474;
   }
-  & .MuiTableCell-root {
+  & .MuiTableCell-root{
     border: none;
   }
 
@@ -55,16 +55,18 @@ const StyledTableCell = withStyles((theme) => ({
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
-    "&#show-total-rounds": {},
+    "&#show-total-rounds":{
+    },
     "&#show-total-rounds .MuiTableCell-root": {
       border: "none",
-      background: "#000326",
+      background: "#1B1D30",
     },
     "&:hover": {
       cursor: "pointer",
     },
   },
 }))(TableRow);
+
 
 const CustomWinLose = styled(StyledTableCell)`
   color: ${({ value }) => {
@@ -90,7 +92,7 @@ const InnerWrap = styled.div`
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #000326;
+    background: #1b1d30;
     border-radius: 14px;
   }
 `;
@@ -138,14 +140,7 @@ const TableList = ({
               })}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {getTableList(
-              StyledTableRow,
-              StyledTableCell,
-              CustomWinLose,
-              TheDepositButton
-            )}
-          </TableBody>
+          <TableBody>{getTableList(StyledTableRow,StyledTableCell,CustomWinLose,TheDepositButton)}</TableBody>
         </CustomTable>
       </InnerWrap>
       <TablePagination

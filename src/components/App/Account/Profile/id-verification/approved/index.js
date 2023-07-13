@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import styled from "styled-components";
 import CustomTextField from "../../../../../Share/TextField";
 import IconInputReceivePNG from "../../../../../../assets/images/icon-input-receive.png";
 import { withSnackbar } from "notistack";

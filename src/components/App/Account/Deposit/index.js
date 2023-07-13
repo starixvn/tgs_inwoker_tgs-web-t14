@@ -15,7 +15,6 @@ import NewStepOneHKJP from "./NewStep1HKJP";
 import NewStepTwoHKJP from "./NewStep2HKJP";
 import config from "../../../../config/config";
 import AddCard from "../Withdrawal/AddCard";
-import AddCardSuccess from "../Withdrawal/AddCardSuccess";
 import { Deposit as DepositTemplate } from "../template/deposit";
 import { AddCardSuccessTemplate } from "../template/withdrawal";
 

@@ -95,7 +95,7 @@ const CustomFormControl = withStyles((theme) => ({
     },
     "& .MuiSelect-select > option": {
       fontSize: "14px",
-      color: "#000326",
+      color: "#1b1d30",
     },
     "& .MuiSelect-icon": {
       color: "#ffffff",
@@ -364,7 +364,7 @@ const NewStep1 = ({
                   onClick={() => onMethodChange(index)}
                   active={selectedMethodIndex === index}
                 >
-                  {i18n.t(item.methodcode)}
+                  {i18n.t(item.displayname)}
                 </TunnelButton>
               );
             })}

@@ -52,18 +52,17 @@ const CustomFormControl = withStyles((theme) => ({
 const TabButton = styled.div`
   height: 86px;
   font-size: 14px;
-  background-color: #f7f7f7;
-  color: #747474;
+
   text-align: center;
   float: left;
   margin-right: 8px;
   transition: all 0.3s;
-  ${(props) =>
-    props.active
-      ? ` border: solid 1px ${props.theme.primary};
-        color: ${props.theme.primary};`
-      : ` border: solid 1px #e1dfdf;
-        color: #747474;`};
+  ${({ theme, active }) =>
+    active
+      ? ` border: solid 1px ${theme.primary};
+        color: ${theme.primary};`
+      : ` border: solid 1px ${theme.darkMode ? "#fff" : "#747474;"}
+        color: ${theme.darkMode ? "#fff" : "#747474;"}`};
   &:hover {
     cursor: pointer;
   }
@@ -72,7 +71,9 @@ const TabButton = styled.div`
 const SubTitle = styled.div`
   font-size: 16px;
   float: left;
-  color: #818181;
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : "#818181";
+  }};
   margin: 0 0 0 10px;
 `;
 const SelectionContainer = styled.div`
@@ -88,7 +89,9 @@ const TunnelButton = styled(TabButton)`
 const SplitLine = styled.div`
   width: 100%;
   height: 1px;
-  background-color: #e1dfdf;
+  background-color: ${({ theme }) => {
+    return theme.darkMode ? "#222222" : "#e4eaff";
+  }};
   margin: 20px 0;
 `;
 const CustomSelect = withStyles((theme) => ({
@@ -105,6 +108,7 @@ const LimitPopupContainer = styled.div`
   color: #ffffff;
   display: inline-block;
   min-width: 150px;
+  padding: 10px 20px;
 `;
 
 const LimitLabel = styled.span`
@@ -123,21 +127,23 @@ const TransferContainer = styled.div`
 `;
 const TransferLabel = styled.span`
   float: left;
-  //min-width: 100px;
-  color: #151a34;
+
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : "#151a34";
+  }};
 `;
 const TransferLabelValue = styled.span`
   float: left;
   margin-left: 10px;
+
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : "";
+  }};
 `;
 
 const Remark = styled.div`
   color: ${({ theme }) => theme.primary};
   opacity: 0.75;
-`;
-
-const CustomNumberingContainer = styled.div`
-  display: flex;
 `;
 
 const CopyIcon = styled.div`
@@ -154,27 +160,9 @@ const CopyIcon = styled.div`
   margin-left: 10px;
 `;
 
-const Numbering = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 3.2px;
-  background-color: #151a34;
-  font-family: Arial;
-  font-size: 14px;
-  font-weight: bold;
-  color: #ffffff;
-  text-align: center;
-  padding-top: 2px;
-  float: left;
-`;
-
 const TitleHint = styled.span`
   opacity: 0.5;
   margin-left: 10px;
-`;
-
-const GapLeaver = styled.div`
-  padding-left: 50px;
 `;
 
 const FeeSpot = styled.div`
@@ -231,7 +219,12 @@ const NewStep1 = ({
   const DepositDetails = ({ title, data }) => {
     return (
       <TransferContainer>
-        <TransferLabel>{i18n.exists("extended." + title) ? i18n.t("extended." + title) : title}:</TransferLabel>
+        <TransferLabel>
+          {i18n.exists("extended." + title)
+            ? i18n.t("extended." + title)
+            : title}
+          :
+        </TransferLabel>
         {data && (
           <>
             <TransferLabelValue>{data}</TransferLabelValue>
@@ -254,7 +247,7 @@ const NewStep1 = ({
       .map((key, index) => {
         if (content[key] !== "" && content[key]) {
           if (typeof content[key] === "number") {
-            return <></>;
+            return null;
           } else if (content[key].includes("http")) {
             return <img src={content[key]} alt={content[key]} key={index} />;
           } else {
@@ -263,6 +256,7 @@ const NewStep1 = ({
             );
           }
         }
+        return null;
       });
   };
 
@@ -289,7 +283,7 @@ const NewStep1 = ({
                   onClick={() => onMethodChange(index)}
                   active={selectedMethodIndex === index}
                 >
-                  {i18n.t(item.methodcode)}
+                  {i18n.t(item.displayname)}
                 </TunnelButton>
               );
             })}
@@ -526,6 +520,7 @@ const NewStep1 = ({
                                   float: "left",
                                   marginRight: "5px",
                                   padding: 0,
+                                  background: "#fff",
                                 }}
                                 placeholder={
                                   config.features.Deposit_OriginAccount
@@ -636,6 +631,7 @@ const NewStep1 = ({
                     float: "left",
                     marginRight: "5px",
                     padding: 0,
+                    background: "#fff",
                   }}
                   placeholder={
                     method("usdt")
@@ -751,6 +747,7 @@ const NewStep1 = ({
                               </div>
                             );
                           }
+                          return null;
                         });
                       });
                     }

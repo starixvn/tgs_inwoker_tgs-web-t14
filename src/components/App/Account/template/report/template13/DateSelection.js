@@ -24,7 +24,7 @@ const TabButton = styled.div`
   float: left;
 
   margin-left: 8px
-  background: #000326;
+  background: #1b1d30;
   transition: all 0.3s;
 
   ${(props) =>
@@ -37,7 +37,7 @@ const TabButton = styled.div`
   }
 `;
 const DatePicker = styled(CustomDatePicker)`
-  .MuiFormControl-root {
+   .MuiFormControl-root {
     background: none !important;
   }
 `;
@@ -52,15 +52,15 @@ const LabelDash = styled.span`
   margin: 10px 10px;
 `;
 const DateSelection = ({
-  dateFrom,
-  dateTo,
-  dateRange,
-  minDate,
-  handleDateFromChange,
-  handleDateToChange,
-  handleTodayClick,
-  handleWeeklyClick,
-  handleMontlyClick,
+    dateFrom,
+    dateTo,
+    dateRange,
+    minDate,
+    handleDateFromChange,
+    handleDateToChange,
+    handleTodayClick,
+    handleWeeklyClick,
+    handleMontlyClick,
 }) => {
   return (
     <Container>
@@ -77,13 +77,22 @@ const DateSelection = ({
         onhandleDateChange={handleDateToChange}
         selectedDate={dateTo}
       ></DatePicker>
-      <TabButton onClick={handleTodayClick} active={dateRange === 0}>
+      <TabButton
+        onClick={handleTodayClick}
+        active={dateRange === 0}
+      >
         {i18n.t("report.today")}
       </TabButton>
-      <TabButton onClick={handleWeeklyClick} active={dateRange === 1}>
+      <TabButton
+        onClick={handleWeeklyClick}
+        active={dateRange === 1}
+      >
         {i18n.t("report.oneWeek")}
       </TabButton>
-      <TabButton onClick={handleMontlyClick} active={dateRange === 2}>
+      <TabButton
+        onClick={handleMontlyClick}
+        active={dateRange === 2}
+      >
         {i18n.t("report.oneMonth")}
       </TabButton>
     </Container>

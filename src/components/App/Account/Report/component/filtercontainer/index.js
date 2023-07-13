@@ -5,7 +5,7 @@ import config from "../../../../../../config/config";
 const FilterContainerx = styled.div`
   width: 100%;
   margin-top: 16px;
-  background-color: #f7f7f7;
+
   float: left;
   padding: 10px;
 `;

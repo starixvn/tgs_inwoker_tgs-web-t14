@@ -4,6 +4,7 @@ import IconVIPPNG from "../../../../../../assets/images/icon-vip.png";
 import i18n from "../../../../../../utils/i18n";
 import config from "../../../../../../config/config";
 import Common from "../../../../../../utils/Common";
+import { TitleIcon } from "../../../components";
 const heightSwitcher = (language) => {
   switch (language) {
     case "th-TH":
@@ -20,7 +21,11 @@ const heightSwitcher = (language) => {
 const Container = styled.div`
   padding: 20px 28px;
   box-sizing: border-box
-  background-color: #eaeaea;
+  background-color: ${({ theme }) => {
+    return theme.customProfileBackground100
+      ? theme.customProfileBackground100
+      : "#eaeaea";
+  }};
   width: 100%;
   min-height: 611px;
  
@@ -28,21 +33,15 @@ const Container = styled.div`
 const Title = styled.div`
   color: ${({ theme }) => theme.secondary};
 `;
-const TitleIcon = styled.div`
-  width: 34px;
-  height: 25px;
 
-  background: url(${IconVIPPNG}) no-repeat left center;
-  background-size: 24px 24px;
-
-  float: left;
-`;
 const InnerWrap = styled.div`
   width: 935px;
   min-height: 610px;
   margin-top: 18px;
   box-sizing: border-box;
-  background-color: #f7f7f7;
+  background-color: ${({ theme }) => {
+    return theme.darkMode ? theme.customProfileBackground80 : "#f7f7f7";
+  }};
   padding: 25px;
   border-radius: 10px;
 `;
@@ -94,6 +93,9 @@ const VIPContent = styled.div`
   justify-content: center;
   align-items: center;
   height: ${({ height }) => height};
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : "#000";
+  }};
 `;
 
 const TitleContent = styled(VIPContent)`
@@ -150,6 +152,9 @@ const DataRow = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : "#000";
+  }};
 `;
 
 const TitleRow = styled(DataRow)`
@@ -164,6 +169,13 @@ const TitleRow = styled(DataRow)`
 const StandardDataCol = styled.div`
   padding: 10px 20px;
   text-align: center;
+`;
+
+const VipDataCol = styled(StandardDataCol)`
+  font-weight: bold;
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : "#000";
+  }};
 `;
 
 const DataCol = styled(StandardDataCol)`
@@ -196,7 +208,7 @@ const Template1 = ({ vipBenefit, vipBenefitList }) => {
   return (
     <Container>
       <Title>
-        <TitleIcon></TitleIcon>
+        <TitleIcon src={IconVIPPNG} />
         VIP
       </Title>
       <InnerWrap>
@@ -258,9 +270,7 @@ const Template1 = ({ vipBenefit, vipBenefitList }) => {
                   <StandardDataCol>{i18n.t("vip.vipBenefit")}</StandardDataCol>
                 </TitleRow>
                 {vipBenefitList.map((data, index) => {
-                  return (
-                    <StandardDataCol key={index}>{data.level}</StandardDataCol>
-                  );
+                  return <VipDataCol key={index}>{data.level}</VipDataCol>;
                 })}
               </div>
               <div>

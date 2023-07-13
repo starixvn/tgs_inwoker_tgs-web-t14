@@ -99,7 +99,9 @@ const TunnelButton = styled(TabButton)`
 const SplitLine = styled.div`
   width: 100%;
   height: 1px;
-  background-color: #e1dfdf;
+  background-color: ${({ theme }) => {
+    return theme.darkMode ? "#222222" : "#e4eaff";
+  }};
   margin: 20px 0;
 `;
 

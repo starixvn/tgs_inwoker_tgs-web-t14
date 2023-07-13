@@ -8,7 +8,7 @@ import Common from "../../../../../../utils/Common";
 const Container = styled.div`
   padding: 20px 28px;
   box-sizing: border-box
-  background-color: #000326;
+  background-color: #1b1d30;
   width: 100%;
   min-height: 611px;
  
@@ -147,14 +147,13 @@ const Template13 = ({ vipBenefit, vipBenefitList }) => {
   useEffect(() => {
     const onScroll = () => {
       if (
-        vipBenefit !== undefined &&
-        vipBenefit.items !== undefined &&
+        vipBenefit!==undefined &&
+        vipBenefit.items !== undefined && 
         lastItemRef &&
         lastItemRef.current &&
         (document.documentElement.scrollTop < 0 ||
           document.documentElement.scrollTop >
-            lastItemRef.current.getBoundingClientRect().height *
-              vipBenefit.items.length)
+            lastItemRef.current.getBoundingClientRect().height * vipBenefit.items.length)
       ) {
         setIsHeaderOutside(true);
       } else {
@@ -198,15 +197,9 @@ const Template13 = ({ vipBenefit, vipBenefitList }) => {
             <VIPContainer>
               <VIPHeaderRowContainer isHeaderOutside={isHeaderOutside}>
                 <VipTitle title={i18n.t("T13.vip.level")} />
-                <VipTitle
-                  title={i18n.t("T13.vip.levelKeepAccumulateBetAmount")}
-                />
-                <VipTitle
-                  title={i18n.t("T13.vip.levelKeepAccumulateDeposit")}
-                />
-                <VipTitle
-                  title={i18n.t("T13.vip.levelUpAccumulateBetAmount")}
-                />
+                <VipTitle title={i18n.t("T13.vip.levelKeepAccumulateBetAmount")} />
+                <VipTitle title={i18n.t("T13.vip.levelKeepAccumulateDeposit")} />
+                <VipTitle title={i18n.t("T13.vip.levelUpAccumulateBetAmount")} />
                 <VipTitle title={i18n.t("T13.vip.levelUpAccumulateDeposit")} />
                 <VipTitle title={i18n.t("T13.vip.birthBenefit")} />
                 <VipTitle title={i18n.t("T13.vip.promotionBenefit")} />

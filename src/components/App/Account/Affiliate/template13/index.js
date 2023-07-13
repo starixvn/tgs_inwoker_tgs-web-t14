@@ -1,15 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import i18n from "../../../../../../utils/i18n";
+import i18n from "../../../../../utils/i18n";
 import QRCode from "react-qr-code";
-
 import { FormControl, Select } from "@material-ui/core";
-
 import { withStyles } from "@material-ui/core/styles";
-import { useEffect } from "react";
-import { useState } from "react";
-import { generalAction } from "../../../../../../api-services/actions/generalAction";
-
+import { generalAction } from "../../../../../api-services/actions/generalAction";
 import {
   Table,
   TableBody,
@@ -198,7 +193,7 @@ const CustomFormControl = withStyles((theme) => ({
     },
     "& .MuiSelect-select > option": {
       fontSize: "14px",
-      color: "#000326",
+      color: "#1b1d30",
     },
     "& .MuiSelect-icon": {
       color: "#ffffff",
@@ -213,6 +208,15 @@ const CustomSelect = withStyles((theme) => ({
   },
 }))(Select);
 
+const type = [
+  { value: 1, title: "sport" },
+  { value: 2, title: "virtualsports" },
+  { value: 5, title: "livedealer" },
+  { value: 7, title: "chess" },
+  { value: 13, title: "lottery" },
+  { value: 15, title: "egame" },
+];
+
 const Template13 = ({
   affiliateLink,
   account,
@@ -221,15 +225,6 @@ const Template13 = ({
   handleQrAction,
   general,
 }) => {
-  const type = [
-    { value: 1, title: "sport" },
-    { value: 2, title: "virtualsports" },
-    { value: 5, title: "livedealer" },
-    { value: 7, title: "chess" },
-    { value: 13, title: "lottery" },
-    { value: 15, title: "egame" },
-  ];
-
   const [rebates, setRebates] = useState([]);
   const [rebateType, setRebateType] = useState(1);
 
@@ -247,19 +242,32 @@ const Template13 = ({
     } else if (rebates.length > 0) {
       getRebates();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [general.rebates]);
+
+  const handleRebateTypeChange = (e) => {
+    setRebateType(e.target.value);
+  };
+
+  const filteredRebates = rebates.filter((item) => {
+    if (rebateType === 0) {
+      return true;
+    } else {
+      return item.allagentgametype.toString() === rebateType.toString();
+    }
+  });
 
   return (
     <Container>
       <Title>
-        <TitleIcon></TitleIcon>
+        <TitleIcon />
         {i18n.t("affiliate.title")}
       </Title>
       <InnerWrap>
         <div>
           <QRCodeLabel>{i18n.t("affiliate.qrCode")}</QRCodeLabel>
           <QRCodeContainer id="qrcode-container">
-            <QRCode size={128} value={affiliateLink}></QRCode>
+            <QRCode size={128} value={affiliateLink} />
           </QRCodeContainer>
           <QRCodeActionContainer>
             <Button onClick={() => handleQrAction("copy")}>
@@ -271,22 +279,14 @@ const Template13 = ({
           </QRCodeActionContainer>
           <CustomText>
             <CustomLabel>{i18n.t("affiliate.promoId")}</CustomLabel>
-            <CustomInput
-              type={"text"}
-              value={account.info.playercode}
-              readOnly={true}
-            ></CustomInput>
+            <CustomInput type="text" value={account.info.playercode} readOnly />
             <Button onClick={handleCopyReferralID}>
               {i18n.t("common.copy")}
             </Button>
           </CustomText>
           <CustomText>
             <CustomLabel>{i18n.t("affiliate.promoLink")}</CustomLabel>
-            <CustomInput
-              type={"text"}
-              value={affiliateLink}
-              readOnly={true}
-            ></CustomInput>
+            <CustomInput type="text" value={affiliateLink} readOnly />
             <Button onClick={handleCopyLink}>{i18n.t("common.copy")}</Button>
           </CustomText>
         </div>
@@ -300,25 +300,19 @@ const Template13 = ({
                 native
                 className="fix-text-cut"
                 value={rebateType}
-                onChange={(e) => {
-                  setRebateType(e.target.value);
-                }}
+                onChange={handleRebateTypeChange}
               >
-                {type.map((item, index) => {
-                  return (
-                    <option key={index} value={item.value}>
-                      {i18n.t(`common.${item.title}`)}
-                    </option>
-                  );
-                })}
+                <option value={0}>{i18n.t("common.all")}</option>
+                {type.map((item, index) => (
+                  <option key={index} value={item.value}>
+                    {i18n.t(`common.${item.title}`)}
+                  </option>
+                ))}
               </CustomSelect>
             </CustomFormControl>
           </div>
           <div>
-            <CustomTable
-              aria-label="customized table"
-              isTransactionReport={type === "transactionDetails"}
-            >
+            <CustomTable aria-label="customized table">
               <TableHead>
                 <TableRow>
                   <StyledTableCell>
@@ -333,28 +327,13 @@ const Template13 = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rebates
-                  .filter((item) => {
-                    if (rebateType === 0) {
-                      return true;
-                    } else {
-                      return (
-                        item.allagentgametype.toString() ===
-                        rebateType.toString()
-                      );
-                    }
-                  })
-                  .map((data, index) => {
-                    return (
-                      <TableRow>
-                        <StyledTableCell>{data.activenumber}</StyledTableCell>{" "}
-                        <StyledTableCell>{data.turnover}</StyledTableCell>{" "}
-                        <StyledTableCell>
-                          {data.rebatepercentage}
-                        </StyledTableCell>
-                      </TableRow>
-                    );
-                  })}
+                {filteredRebates.map((data, index) => (
+                  <TableRow key={index}>
+                    <StyledTableCell>{data.activenumber}</StyledTableCell>
+                    <StyledTableCell>{data.turnover}</StyledTableCell>
+                    <StyledTableCell>{data.rebatepercentage}</StyledTableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </CustomTable>
           </div>

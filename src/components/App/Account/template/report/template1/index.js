@@ -2,32 +2,31 @@ import React from "react";
 import styled from "styled-components";
 import IconReportRedPNG from "../../../../../../assets/images/icon-report.png";
 import i18n from "../../../../../../utils/i18n";
+import { TitleIcon } from "../../../components";
 
 const Container = styled.div`
   padding: 20px 28px;
   box-sizing: border-box;
-
+  background-color: ${({ theme }) => {
+    return theme.customProfileBackground100
+      ? theme.customProfileBackground100
+      : "#eaeaea";
+  }};
   width: 100%;
   min-height: 611px;
 `;
 const Title = styled.div`
   color: ${({ theme }) => theme.secondary};
 `;
-const TitleIcon = styled.div`
-  width: 34px;
-  height: 24px;
 
-  background: url(${IconReportRedPNG}) no-repeat left center;
-  background-size: 24px 24px;
-
-  float: left;
-`;
 const InnerWrap = styled.div`
   width: 935px;
 
   margin-top: 18px;
   box-sizing: border-box;
-  background-color: #f7f7f7;
+  background-color: ${({ theme }) => {
+    return theme.darkMode ? theme.customProfileBackground80 : "#f7f7f7";
+  }};
   padding: 25px;
   position: relative;
   border-radius: 10px;
@@ -36,71 +35,66 @@ const TabButton = styled.div`
   width: 161px;
   height: 50px;
   font-size: 16px;
-
-  color: #747474;
-  background-color: #f7f7f7;
   text-align: center;
-  padding-top: 14px;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   float: left;
   margin-right: 8px;
   margin-bottom: 20px;
   border: solid 1px #e4eaff;
   transition: all 0.3s;
-
-  ${(props) =>
-    props.active
+  ${({ active, theme }) =>
+    active
       ? ` 
-      border: solid 1px ${props.theme.primary};
-      color: ${props.theme.primary};`
-      : ` `};
+      border: solid 1px ${theme.primary};
+      color: ${theme.primary};`
+      : `color: ${theme.secondary}; `};
   &:hover {
     cursor: pointer;
   }
 `;
-const BalanceChangesTabButton = styled(TabButton)`
-  ${() =>
-    i18n.language !== "zh-CN" && i18n.language !== "zh-TW"
-      ? `padding-top: 5px`
-      : ``}
-`;
+
 const SplitLine = styled.div`
   width: 100%;
   height: 1px;
-  background-color: #e1dfdf;
+  background-color: ${({ theme }) => {
+    return theme.darkMode ? "#eeeeee" : "#e4eaff";
+  }};
   margin: 20px 0;
 `;
+
+const tabs = [
+  { title: "report.bettingDetails", value: 2 },
+  { title: "report.withdrawalDetails", value: 3 },
+  { title: "report.depositDetails", value: 4 },
+  { title: "report.transfer.title", value: 6 },
+  { title: "report.balanceChanges.title", value: 8 },
+  { title: "report.joinedPromo.title", value: 7 },
+];
 
 const Template1 = ({ transferwallet, tab, handleTabClick, switchTab }) => {
   return (
     <Container>
       <Title>
-        <TitleIcon></TitleIcon>
+        <TitleIcon src={IconReportRedPNG} />
         {i18n.t("report.title")}
       </Title>
 
       <InnerWrap>
-        <TabButton active={tab === 2} onClick={() => handleTabClick(2)}>
-          {i18n.t("report.bettingDetails")}
-        </TabButton>
-        <TabButton active={tab === 3} onClick={() => handleTabClick(3)}>
-          {i18n.t("report.withdrawalDetails")}
-        </TabButton>
-        <TabButton active={tab === 4} onClick={() => handleTabClick(4)}>
-          {i18n.t("report.depositDetails")}
-        </TabButton>
-        {transferwallet && (
-          <TabButton active={tab === 6} onClick={() => handleTabClick(6)}>
-            {i18n.t("report.transfer.title")}
-          </TabButton>
-        )}
+        {tabs.map((item, index) => {
+          return (
+            <TabButton
+              key={index}
+              active={tab === item.value}
+              onClick={() => handleTabClick(item.value)}
+            >
+              {i18n.t(item.title)}
+            </TabButton>
+          );
+        })}
 
-        <BalanceChangesTabButton active={tab === 8} onClick={() => handleTabClick(8)}>
-          {i18n.t("report.balanceChanges.title")}
-        </BalanceChangesTabButton>
-        <TabButton active={tab === 7} onClick={() => handleTabClick(7)}>
-          {i18n.t("report.joinedPromo.title")}
-        </TabButton>
         <SplitLine></SplitLine>
         {switchTab()}
       </InnerWrap>

@@ -8,31 +8,29 @@ import Dialog from "@material-ui/core/Dialog";
 
 import i18n from "../../../../../../utils/i18n";
 import config from "../../../../../../config/config";
+import { TitleIcon } from "../../../components";
 
 const Container = styled.div`
   padding: 20px 28px;
   box-sizing: border-box
-  background-color: #eaeaea;
+ background-color: ${({ theme }) => {
+   return theme.darkMode ? theme.customProfileBackground100 : "#eaeaea";
+ }};
   width: 100%;
   min-height: 611px;
 `;
 const Title = styled.div`
   color: ${({ theme }) => theme.secondary};
 `;
-const TitleIcon = styled.div`
-  width: 34px;
-  height: 24px;
 
-  background: url(${IconProfileRedPNG}) no-repeat left center;
-  background-size: 24px 24px;
-  float: left;
-`;
 const InnerWrap = styled.div`
   width: 935px;
   height: 610px;
   margin-top: 18px;
   box-sizing: border-box;
-  background-color: #f7f7f7;
+  background-color: ${({ theme }) => {
+    return theme.darkMode ? theme.customProfileBackground80 : "#f7f7f7";
+  }};
   padding: 25px;
   border-radius: 10px;
 `;
@@ -41,17 +39,25 @@ const ContentWrap = styled.div`
   height: 44px;
   font-size: 14px;
   width: 100%;
-  border-bottom: 1px solid #e9e9e9;
+  border-bottom: 1px solid
+    ${({ theme }) => {
+      return theme.darkMode ? "#222222" : "#eaeaea";
+    }};
 `;
 const ContentLabel = styled.div`
-  color: #747474;
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : "#747474";
+  }};
   float: left;
   width: 160px;
   margin-left: 18px;
   margin-top: 10px;
 `;
 const ContentValue = styled.div`
-  color: #16242a;
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : "#16242a";
+  }};
+
   float: left;
   margin-top: 10px;
   width: 500px;
@@ -69,7 +75,7 @@ const ContentButton = styled.div`
   margin-right: 5px;
   border-radius: 6px;
   border: solid 1px ${({ theme }) => theme.primary};
-  color: ${({ theme }) => theme.primary};
+  color:  ${({ theme }) => theme.primary};
   &:hover {
     cursor: pointer;
   }
@@ -300,7 +306,9 @@ const DialogHeadertitle = styled.div`
   float: left;
   font-size: 18px;
   font-weight: bold;
-  color: ${({ theme }) => theme.secondary};
+  color: ${({ theme }) => {
+    return theme.darkMode ? "" : theme.secondary;
+  }};
   width: 320px;
 `;
 const Template1 = ({
@@ -313,10 +321,21 @@ const Template1 = ({
   handleCloseDialog,
   showDialog,
 }) => {
+  const getCustomMessagingTranslation = (platform) => {
+    switch (platform) {
+      case "qq":
+        return i18n.t("common.qqNumber");
+      case "wechat":
+        return i18n.t("common.wechatNumber");
+      default:
+        return i18n.t(platform + "_account");
+    }
+  };
+
   return (
     <Container>
       <Title>
-        <TitleIcon></TitleIcon>
+        <TitleIcon src={IconProfileRedPNG} />
         {i18n.t("profile.title")}
       </Title>
       <InnerWrap>
@@ -370,7 +389,7 @@ const Template1 = ({
           config.features.CustomMessaging.map((platform) => {
             return GetContentWrap(
               account.info,
-              i18n.t("common." + platform),
+              getCustomMessagingTranslation(platform),
               "member_" + platform,
               handleButtonClick
             );

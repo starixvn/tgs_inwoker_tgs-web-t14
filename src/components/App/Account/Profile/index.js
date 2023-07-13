@@ -14,17 +14,13 @@ import WithdrawalPassword from "./WithdrawalPassword";
 import ChangeWithdrawalPassword from "./ChangeWithdrawalPassword";
 import IDVerification from "./id-verification";
 import PhoneVerification from "./PhoneVerification";
-import QQ from "./QQ";
-import Wechat from "./Wechat";
-import FacebookMessenger from "./FacebookMessenger";
-import Telegram from "./Telegram";
-import Line from "./Line";
-import Viber from "./Viber";
-import Whatsapp from "./Whatsapp";
+
 import i18n from "../../../../utils/i18n";
 import config from "../../../../config/config";
 import Birthdate from "./Birthdate";
 import ProfileTemplate from "../template/profile/index";
+import InstantMessaging from "./instantmessaging";
+
 class Profile extends Component {
   state = {
     openDialog: false,
@@ -97,79 +93,42 @@ class Profile extends Component {
     let title = "";
     let component = null;
 
+    const commonProps = {
+      handleCloseDialog: this.handleCloseDialog,
+      handleChangeTitle: this.handleChangeTitle,
+    };
+
     switch (type) {
       case "member_fb":
         title =
           config.accountTemplate === 13
             ? i18n.t("T13.facebook.fb_title")
             : i18n.t("profile.fb.fbAccount");
-        component = (
-          <FacebookMessenger
-            handleCSClick={this.props.onhandleCSClick}
-            handleCloseDialog={this.handleCloseDialog}
-            account={this.props.account}
-          ></FacebookMessenger>
-        );
+        component = <InstantMessaging platform="fb" {...commonProps} />;
         break;
       case "member_telegram":
         title = i18n.t("profile.telegram.telegramAccount");
-        component = (
-          <Telegram
-            handleCSClick={this.props.onhandleCSClick}
-            handleCloseDialog={this.handleCloseDialog}
-            account={this.props.account}
-          ></Telegram>
-        );
+        component = <InstantMessaging platform="telegram" {...commonProps} />;
         break;
       case "member_line":
         title = i18n.t("profile.line.lineAccount");
-        component = (
-          <Line
-            handleCSClick={this.props.onhandleCSClick}
-            handleCloseDialog={this.handleCloseDialog}
-            account={this.props.account}
-          ></Line>
-        );
+        component = <InstantMessaging platform="line" {...commonProps} />;
         break;
       case "member_viber":
         title = i18n.t("profile.viber.viberAccount");
-        component = (
-          <Viber
-            handleCSClick={this.props.onhandleCSClick}
-            handleCloseDialog={this.handleCloseDialog}
-            account={this.props.account}
-          ></Viber>
-        );
+        component = <InstantMessaging platform="viber" {...commonProps} />;
         break;
       case "member_whatsapp":
         title = i18n.t("profile.whatsapp.whatsappAccount");
-        component = (
-          <Whatsapp
-            handleCSClick={this.props.onhandleCSClick}
-            handleCloseDialog={this.handleCloseDialog}
-            account={this.props.account}
-          ></Whatsapp>
-        );
+        component = <InstantMessaging platform="whatsapp" {...commonProps} />;
         break;
       case "member_wechat":
         title = i18n.t("profile.wechat.weChatAccount");
-        component = (
-          <Wechat
-            handleCSClick={this.props.onhandleCSClick}
-            handleCloseDialog={this.handleCloseDialog}
-            account={this.props.account}
-          ></Wechat>
-        );
+        component = <InstantMessaging platform="wechat" {...commonProps} />;
         break;
       case "member_qq":
         title = i18n.t("profile.qq.qqAccount");
-        component = (
-          <QQ
-            handleCSClick={this.props.onhandleCSClick}
-            handleCloseDialog={this.handleCloseDialog}
-            account={this.props.account}
-          ></QQ>
-        );
+        component = <InstantMessaging platform="qq" {...commonProps} />;
         break;
       case "member_password":
         title =

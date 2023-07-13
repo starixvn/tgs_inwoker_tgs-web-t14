@@ -17,31 +17,16 @@ const Content = styled.div`
   word-break: break-all;
 `;
 function Details(props) {
+  const { inbox } = props;
+  const subject = inbox.localization?.subject || inbox.subject;
+  const content = inbox.localization?.content || inbox.content;
+  const formattedDate = moment(inbox.createon).format("YYYY-MM-DD hh:mm:ss");
+
   return (
     <Container>
-      <CustomTextField
-        value={
-          props.inbox.localization !== null && props.inbox.localization.subject
-            ? props.inbox.localization.subject
-            : props.inbox.subject
-        }
-        maxLength={30}
-        readOnly={true}
-        bold={true}
-      ></CustomTextField>
-      <CustomTextField
-        value={moment(props.inbox.createon).format("YYYY-MM-DD hh:mm:ss")}
-        readOnly={true}
-      ></CustomTextField>
-      <Content
-        dangerouslySetInnerHTML={{
-          __html:
-            props.inbox.localization !== null &&
-            props.inbox.localization.content
-              ? props.inbox.localization.content
-              : props.inbox.content,
-        }}
-      ></Content>
+      <CustomTextField value={subject} maxLength={30} readOnly bold />
+      <CustomTextField value={formattedDate} readOnly />
+      <Content dangerouslySetInnerHTML={{ __html: content }} />
     </Container>
   );
 }

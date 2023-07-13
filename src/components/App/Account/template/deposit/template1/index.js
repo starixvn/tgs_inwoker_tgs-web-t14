@@ -6,44 +6,47 @@ import Loading from "../../../../Loading";
 import config from "../../../../../../config/config";
 import i18n from "../../../../../../utils/i18n";
 import PopupAnnouncement from "../../../../Home/PopupAnnouncement";
+import { TitleIcon } from "../../../components";
 
 const Container = styled.div`
   padding: 20px 28px;
   box-sizing: border-box
   width: 100%;
-  min-height: 611px;
+  min-height: 611px; 
+  background-color: ${({ theme }) => {
+    return theme.customProfileBackground100
+      ? theme.customProfileBackground100
+      : "#eaeaea";
+  }};
 
 `;
 const Title = styled.div`
   color: ${({ theme }) => theme.secondary};
 `;
-const TitleIcon = styled.div`
-  width: 34px;
-  height: 24px;
-  background: url(${IconDepositRedPNG}) no-repeat left center;
-  background-size: 24px 24px;
-  float: left;
-`;
+
 const TabButtonContainer = styled.div`
   padding: 6px;
   margin-bottom: 20px;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   grid-gap: 10px;
+  align-items: start;
 `;
 const TabButton = styled.div`
   font-size: 14px;
-  color: #747474;
+  color: ${({ theme }) => {
+    return theme.darkMode ? "#fff" : "#747474;";
+  }};
   text-align: center;
-  width: 104px;
+  width: 100%;
   border-radius: 5px;
   border: solid 1px #e4eaff;
   transition: all 0.3s;
-  ${(props) =>
-    props.active
+  ${({ active, theme }) =>
+    active
       ? ` 
-      border: solid 1px ${props.theme.primary};
-      color: ${props.theme.primary};`
+      border: solid 1px ${theme.primary};
+      color: ${theme.primary};`
       : ` `};
   &:hover {
     cursor: pointer;
@@ -52,7 +55,9 @@ const TabButton = styled.div`
 const SplitLine = styled.div`
   width: 100%;
   height: 1px;
-  background-color: #e1dfdf;
+  background-color: ${({ theme }) => {
+    return theme.darkMode ? "#222222" : "#e4eaff";
+  }};
   margin: 20px 0;
 `;
 
@@ -68,7 +73,9 @@ const InnerWrap = styled.div`
   padding: 25px;
   margin-top: 14px;
   position: relative;
-  background-color: #f7f7f7;
+  background-color: ${({ theme }) => {
+    return theme.darkMode ? theme.customProfileBackground80 : "#f7f7f7";
+  }}
   min-height: 630px;
   border-radius: 10px;
 `;
@@ -147,7 +154,7 @@ const Template1 = ({
       })()}
 
       <Title>
-        <TitleIcon></TitleIcon>
+        <TitleIcon src={IconDepositRedPNG} />
         {i18n.t("deposit.title")}
       </Title>
       <Wrap>

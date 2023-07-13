@@ -11,7 +11,7 @@ import config from "../../../../../../config/config";
 const Container = styled.div`
   padding: 20px 28px;
   box-sizing: border-box;
-  background-color: #000326;
+  background-color: #1b1d30;
   width: 100%;
   min-height: 611px;
 `;
@@ -406,8 +406,12 @@ const Template13 = ({
         return i18n.t("T13.telegram.tg_title");
       case "viber":
         return i18n.t("T13.viber.vb_title");
+      case "qq":
+        return i18n.t("common.qqNumber");
+      case "wechat":
+        return i18n.t("common.wechatNumber");
       default:
-        return i18n.t("common." + platform);
+        return i18n.t(platform + "_account");
     }
   };
 

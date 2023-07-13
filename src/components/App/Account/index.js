@@ -27,12 +27,15 @@ import Common from "../../../utils/Common";
 import Affiliate from "./Affiliate";
 import config from "../../../config/config";
 import VIP from "./Vip/index.js";
-const baseRouteUrl = Common.baseRouteUrl;
 const Container = styled.div`
   width: 100%;
 `;
 const Container1 = styled(Container)`
-  background: url(${BGJPG});
+  background: ${({ theme }) => {
+    return theme.customProfileBackground100
+      ? theme.customProfileBackground100
+      : `url(${BGJPG})`;
+  }};
 `;
 const InnerContainer = styled.div`
   margin: 35px auto;
@@ -40,7 +43,6 @@ const InnerContainer = styled.div`
 `;
 const InnerContainer1 = styled(InnerContainer)`
   width: 1230px;
-  background-color: rgba(255, 255, 255, 0.8);
   overflow: none;
   padding-bottom: 15px;
 `;
@@ -54,7 +56,12 @@ const Main1 = styled(Main)`
   margin-left: 12px;
   width: 1206px;
   border-radius: 10px;
-  background-color: #d9d9d9;
+  ${({ theme }) => {
+    return theme.customProfileBackground80
+      ? ` background-color:${theme.customProfileBackground80};
+      box-shadow:0px 3px 16px -3px rgba(0,0,0,0.75);`
+      : " background:#d9d9d9";
+  }};
 `;
 
 const RightContent = styled.div`
@@ -338,15 +345,18 @@ class Account extends Component {
                   )}
                 />
 
+                {config.features.HaveVIPFeature && (
+                  <Route
+                    exact
+                    path={"/account/vip"}
+                    render={(props) => <VIP token={this.props.account.token} />}
+                  />
+                )}
+
                 <Route
                   exact
                   path={"/account/inbox"}
                   render={(props) => <Inbox token={this.props.account.token} />}
-                />
-                <Route
-                  exact
-                  path={"/account/vip"}
-                  render={(props) => <VIP token={this.props.account.token} />}
                 />
                 <Route
                   exact
