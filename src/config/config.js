@@ -1,6 +1,6 @@
 import featureList from "./features";
 
-var template = 13; //2 for T2, 3 for T3 (based on .xd file)
+var template = 14; //2 for T2, 3 for T3 (based on .xd file)
 const config = {
   baseUrl:
     window?.env?.apiUrl ||
@@ -13,7 +13,7 @@ const config = {
   brandName: window?.env?.brandName
     ? window?.env?.brandName
     : window?.env?.brand || "GPI",
-  theme: window?.env?.theme || "wapT13",
+  theme: window?.env?.theme || "wapT14",
   wapVersion: template,
   accountTemplate: 13,
   sourceUrl: window?.env?.sourceUrl || "https://images.srvptt.com/",
