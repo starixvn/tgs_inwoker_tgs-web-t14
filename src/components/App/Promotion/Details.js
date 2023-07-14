@@ -312,7 +312,6 @@ class PromotionDetails extends Component {
             openDialog: true,
             isTNCToggled: false,
           });
-          console.log("here show");
           break;
         }
       }
