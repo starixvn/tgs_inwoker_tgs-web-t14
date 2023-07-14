@@ -40,8 +40,6 @@ export const wapT13 = {
   popoverBackground: "rgba(255,255,255,0.95)",
   popoverGameTypeText: "#c40511",
   popoverSubWalletText: "#000",
-  containerBg1: "#181c42",
-  containerBg2: "#252958",
   wapMarqueeBg: "#00032675",
   wapMarqueeText: "#fff",
   accent: "#000326",
@@ -92,6 +90,8 @@ export const wapT14 = {
   popoverBackground: "rgba(255,255,255,0.95)",
   popoverGameTypeText: "#ffa200",
   popoverSubWalletText: "#000",
+  containerBg1: "#181c42",
+  containerBg2: "#252958",
 
   wapMarqueeBg: "#00032675",
   wapMarqueeText: "#fff",

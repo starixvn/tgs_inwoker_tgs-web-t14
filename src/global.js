@@ -37,7 +37,7 @@ export const GlobalStyles = createGlobalStyle`
   }
   
   body {
-    background: ${({ theme }) => theme.body};
+    background: ${({ theme }) => theme.pcAppBar};
     background-size: 100%;
   }
 
