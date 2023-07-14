@@ -74,7 +74,7 @@ const GameMenu = styled.div`
   }
 `;
 
-const GameLister = ({ game }) => {
+const GameLister = ({ game, onhandleShowCSClick }) => {
   var currentPage = window.location.pathname.split("/")[1];
 
   const hardcoded = [
@@ -84,15 +84,15 @@ const GameLister = ({ game }) => {
       path: "promotion",
     },
     {
-      title: "VIP",
-      gameType: "vip",
-      path: "vip",
+      title: "panel.cs",
+      gameType: "cs",
+      path: "cs",
     },
-    {
-      title: "T13.header.news",
-      gameType: "news",
-      path: "news",
-    },
+    // {
+    //   title: "T13.header.news",
+    //   gameType: "news",
+    //   path: "news",
+    // },
   ];
 
   const filterGameList = (item) => {
@@ -144,7 +144,14 @@ const GameLister = ({ game }) => {
           <GameMenu
             active={currentPage === item.path}
             onClick={() => {
-              AppHistory.push("/" + item.path);
+              if(item.path === 'cs')
+              {
+                onhandleShowCSClick();
+              }
+              else 
+              {
+                AppHistory.push("/" + item.path);
+              }
             }}
           >
             <GameMenuIcon src={item.gameType}></GameMenuIcon>

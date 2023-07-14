@@ -10,8 +10,7 @@ import { SHOW_LOGIN } from "../../../api-services/constant/actionType";
 import ScrollAnimation from "react-animate-on-scroll";
 import config from "../../../config/config";
 import Common from "../../../utils/Common";
-import GameLister from "../Home/game-lister";
-
+import JackpotContainer from "../Home/jackpot-section/jackpot-content";
 const Container = styled.div`
   width: 100%;
   height: auto;
@@ -221,7 +220,7 @@ class LiveGame extends Component {
 
     return (
       <Container>
-        <Banner></Banner>
+        <JackpotContainer></JackpotContainer>
 
         <ItemContainer>
           <LeftSlide

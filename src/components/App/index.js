@@ -66,7 +66,7 @@ const Main = styled.div`
   min-height: 600px;
 `;
 const EmptyHeader = styled.div`
-  height: 328px;
+  height: 290px;
   background: transparent;
 `;
 const RouletteFloatingPanel = styled.div`
@@ -565,15 +565,10 @@ class App extends Component {
 
                     <Route
                       exact
-                      path={"/promotion"}
+                      path={["/promotion", "/promotion/:id"]}
                       render={(props) => (
                         <Promotion token={this.props.account.token} />
                       )}
-                    />
-                    <Route
-                      exact
-                      path={"/promotion/:id"}
-                      render={(props) => <PromotionDetails />}
                     />
                     <Route exact path={"/vip"} render={(props) => <VIP />} />
                     {/* <Route

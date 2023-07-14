@@ -6,6 +6,7 @@ import { is } from "date-fns/locale";
 const ContentHolder = styled.div`
   display: flex;
   flex-direction: column;
+  border-radius: 5px;
 `;
 
 const Title = styled.div`
@@ -27,7 +28,7 @@ const WinnerList = styled.div`
 
 const WinnerListItem = styled.div`
   &:nth-child(even) {
-    background: #27273f;
+    background: #252958;
   }
   display: grid;
   grid-template-columns: 1fr 120px 90px 1fr;
@@ -35,7 +36,7 @@ const WinnerListItem = styled.div`
   justify-content: space-between;
   padding: 0 20px 0 10px;
   align-items: center;
-  background: #0f1339;
+  background: #181c42;
   color: #fff;
   height: 120px;
 `;

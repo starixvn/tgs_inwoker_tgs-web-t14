@@ -67,7 +67,7 @@ const InnerWrap = styled.div`
   align-items: center;
   width: 100%;
   font-size: 14px;
-  min-height: 328px;
+  min-height: 290px;
 `;
 const TopContainer = styled.div`
   height: 45px;
@@ -815,12 +815,10 @@ class Header extends Component {
           </BottomContainer>
           {
             <>
-              <GameLister game={this.props.game}></GameLister>
-              {!config.features.HideMarquee && (
-                <MarqueeContainer>
-                  <Marquee text={this.props.ui.marqueeText}></Marquee>
-                </MarqueeContainer>
-              )}
+              <GameLister
+                game={this.props.game}
+                onhandleShowCSClick={this.props.onhandleShowCSClick}
+              ></GameLister>
             </>
           }
         </InnerWrap>
