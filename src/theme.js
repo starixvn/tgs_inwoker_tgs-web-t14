@@ -92,6 +92,7 @@ export const wapT14 = {
   popoverSubWalletText: "#000",
   containerBg1: "#181c42",
   containerBg2: "#252958",
+  containerBg3: "#0F1029",
 
   wapMarqueeBg: "#00032675",
   wapMarqueeText: "#fff",
