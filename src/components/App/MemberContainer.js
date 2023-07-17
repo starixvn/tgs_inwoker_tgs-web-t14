@@ -12,6 +12,7 @@ import config from "../../config/config";
 import { SortedMenuList } from "../../utils/HeaderSorting";
 import CustomPopover from "../Share/custompopover";
 import { Textfit } from "react-textfit";
+import ExpandMore from "@material-ui/icons/ExpandMore";
 
 const balanceIconSwitcher = () => {
   switch (config.theme.toLowerCase()) {
@@ -42,7 +43,7 @@ const Container = styled.div`
   font-size: 14px;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 20px;
   padding-right: 5px;
   justify-content: flex-end;
 `;
@@ -161,6 +162,64 @@ const HeaderButton = styled.div`
   text-transform: uppercase;
 `;
 
+const LeftContainer = styled.div``;
+
+const AccountContainer = styled.div`
+  width: 180px;
+  height: 54px;
+  background: #242958;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
+const AccountName = styled.div``;
+
+const Mailbox = styled.div`
+  width: 25px;
+  height: 25px;
+  background: url(${InboxIconPNG}) no-repeat;
+  background-position: center;
+  margin-left: 20px;
+`;
+
+const RightContainer = styled.div`
+  display: flex;
+`;
+
+const BalanceContainer = styled.div`
+  width: 180px;
+  height: 54px;
+  background: #0f1029;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+`;
+
+const BalanceLabel = styled.div`
+  color: ${({ theme }) => theme.primary};
+`;
+const BalanceValue = styled.div`
+  color: #fff;
+`;
+const RefreshContainer = styled.div``;
+
+const ActionContainer = styled.div`
+  width: 38px;
+  height: 54px;
+  background: #242958;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`;
+
 const MemberContainer = (props) => {
   const vipSwitcher = (rank) => {
     switch (rank) {
@@ -216,7 +275,51 @@ const MemberContainer = (props) => {
 
   return (
     <Container>
-      <ActionButton
+      <LeftContainer>
+        <AccountContainer>
+          <AccountName>
+            {props.account.info.member_username}(
+            {config.features.CustomVIP
+              ? vipSwitcher(props.account.info.member_level_id)
+              : "VIP" + props.account.info.member_level_id}
+            )
+          </AccountName>
+          <Mailbox></Mailbox>
+        </AccountContainer>
+      </LeftContainer>
+      <RightContainer>
+        <BalanceContainer>
+          <BalanceLabel>{i18n.t("web.header.mainAccount")}</BalanceLabel>
+          <BalanceValue>
+            {config.currency} {Common.formatNumberWithThousand(totalBalance)}
+          </BalanceValue>
+          <RefreshContainer></RefreshContainer>
+        </BalanceContainer>
+        <ActionContainer         
+        onClick={(e) => {
+          handleActionClick(e);
+        }}>
+          <ExpandMore />
+        </ActionContainer>
+      </RightContainer>
+      <CustomPopover
+        open={openAction}
+        anchorEl={anchorAction}
+        handleClose={handleActionClose}
+      >
+        <PopoverButton onClick={props.onhandleDeposit}>
+          {i18n.t("web.header.deposit")}
+        </PopoverButton>
+        <PopoverButton onClick={props.onhandleWithdraw}>
+          {i18n.t("common.withdrawal")}
+        </PopoverButton>
+        {props.game.containTransferWallet && !config.features.NewTransferUI && (
+          <PopoverButton onClick={props.onhandleTransfer}>
+            {i18n.t("web.header.transfer")}
+          </PopoverButton>
+        )}
+      </CustomPopover>
+      {/* <ActionButton
         onClick={(e) => {
           handleActionClick(e);
         }}
@@ -322,7 +425,7 @@ const MemberContainer = (props) => {
             </GameType>
           );
         })}
-      </CustomPopover>
+      </CustomPopover> */}
     </Container>
   );
 };
