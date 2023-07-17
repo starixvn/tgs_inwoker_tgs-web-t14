@@ -1,7 +1,7 @@
 
 [submodule "src/api-services"]
 	path = src/api-services
-	url = https://gitlab.com/inwoker/tgs/tgs-services-api
+	url = https://gitlab.com/inwoker/tgs/tgs-services-api.git
 	branch = develop
 [submodule "src/components/App/Account"]
 	path = src/components/App/Account

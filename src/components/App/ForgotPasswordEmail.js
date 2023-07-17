@@ -12,7 +12,7 @@ import ErrorSwitcher from "../../utils/ErrorSwitcher";
 const Container = styled.div`
   width: 506px;
   height: 360px;
-  background: #27273f;
+  background: ${({theme})=> theme.containerBg1};
   display: table;
 `;
 const CloseIconContainer = styled.div`
@@ -58,7 +58,7 @@ const CustomText = withStyles({
       borderBottomColor: "#b6b6b6",
     },
     "& .MuiOutlinedInput-root": {
-      borderRadius: "15px",
+      borderRadius: "10px",
       "& fieldset": {
         borderColor: "#b6b6b6",
       },
@@ -106,9 +106,9 @@ const StyleButton = styled.div`
   ${(props) =>
     props.disable === true
       ? `  background: #b6b6b6;`
-      : `  background: #cf2029;
+      : `  background: ${props.theme.primary};
   `}
-  border-radius: 30px;
+  border-radius: 10px;
   font-size: 16px;
   color: #fff;
   text-align: center;

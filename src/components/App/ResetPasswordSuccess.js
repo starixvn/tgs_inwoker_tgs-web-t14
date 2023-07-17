@@ -7,7 +7,7 @@ import IconLoginClosePNG from "../../assets/images/icon-login-close.png";
 const Container = styled.div`
   width: 506px;
   height: 360px;
-  background: #27273f;
+  background: ${({theme})=> theme.containerBg1};
   display: table;
 `;
 const CloseIconContainer = styled.div`
@@ -37,9 +37,9 @@ const ButtonStyle = styled.div`
   ${(props) =>
     props.disable === true
       ? `  background: #b6b6b6;`
-      : `  background: #cf2029;
+      : `  background: ${props.theme.primary};
   `}
-  border-radius: 30px;
+  border-radius: 10px;
   font-size: 16px;
   color: #fff;
   text-align: center;

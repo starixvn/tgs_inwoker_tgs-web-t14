@@ -24,7 +24,7 @@ import i18n from "../../utils/i18n";
 import config from "../../config/config";
 const Container = styled.div`
   width: 506px;
-  background: #27273f;
+  background: ${({theme})=> theme.containerBg1};
   background-attachment: fixed;
   background-position: center;
   display: table;
@@ -74,7 +74,7 @@ const CustomText = withStyles({
       borderBottomColor: "#b6b6b6",
     },
     "& .MuiOutlinedInput-root": {
-      borderRadius: "15px",
+      borderRadius: "10px",
       "& fieldset": {
         borderColor: "#b6b6b6",
       },
@@ -117,7 +117,7 @@ const CustomText2 = withStyles({
       borderBottomColor: "#b6b6b6",
     },
     "& .MuiOutlinedInput-root": {
-      borderRadius: "15px",
+      borderRadius: "10px",
       "& fieldset": {
         borderColor: "#b6b6b6",
       },
@@ -143,9 +143,9 @@ const ButtonLogin = styled.div`
   height: 60px;
   color: #fff;
   font-size: 20px;
-  border-radius: 30px;
-  background: #cf2029;
-  filter: drop-shadow(1px 1px 8px #cf2029ba);
+  border-radius: 10px;
+  background: ${({theme})=> theme.primary};
+  filter: drop-shadow(1px 1px 8px ${({theme})=> theme.primary}ba);
   &:hover {
     cursor: pointer;
   }
@@ -261,7 +261,7 @@ const CustomFormControl = withStyles((theme) => ({
       borderBottomColor: "#b6b6b6",
     },
     "& .MuiOutlinedInput-root": {
-      borderRadius: "15px",
+      borderRadius: "10px",
       "& fieldset": {
         borderColor: "#b6b6b6",
         marginTop: "1px",
@@ -286,9 +286,9 @@ const StyleButton = styled.div`
   ${(props) =>
     props.disable === true
       ? `  background: #b6b6b6;`
-      : `  background: #cf2029;
+      : `  background: ${props.theme.primary};
   `}
-  border-radius: 30px;
+  border-radius: 10px;
   font-size: 16px;
   color: #fff;
   text-align: center;
