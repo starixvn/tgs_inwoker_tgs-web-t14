@@ -263,7 +263,7 @@ const LeftContent = styled.div`
 `;
 
 const MarqueeContainer = styled.div`
-  background-color: #181c42;
+  background-color: #181C43;
   width: 100%;
 `;
 
