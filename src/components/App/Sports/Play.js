@@ -22,7 +22,6 @@ const Container = styled.div`
   width: 100%;
   border: none;
   height: 100%;
-  background: url(${SportsBGNewPNG}) no-repeat center;
   background-size: cover;
 `;
 

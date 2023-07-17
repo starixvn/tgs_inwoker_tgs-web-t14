@@ -36,7 +36,7 @@ const WinnerListItem = styled.div`
   justify-content: space-between;
   padding: 0 20px 0 10px;
   align-items: center;
-  background: #181c42;
+  background: #181C43;
   color: #fff;
   height: 120px;
 `;

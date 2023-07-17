@@ -20,7 +20,7 @@ width: 100%;
 padding: 40px 30px;
 position: relative;
 //min-height: 800px;
-background: #181c42;
+background: #181C43;
 `;
 
 const Title = styled.div`
