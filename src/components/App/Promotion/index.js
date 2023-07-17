@@ -14,7 +14,7 @@ import { generalAction } from "../../../api-services/actions/generalAction";
 import { SHOW_LOGIN } from "../../../api-services/constant/actionType";
 
 import PromoEmpty from "../../../assets/images/promo-empty.png";
-
+import Details from "./Details";
 const moment = require("moment");
 
 const Container = styled.div`
@@ -59,7 +59,7 @@ const PromoEmptyTextLine = styled.div`
 const PromotionContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 40px 40px;
+  gap: 40px 0px;
   padding: 30px 0;
 `;
 
@@ -71,7 +71,8 @@ const PromotionItem = styled.div`
   background: url(${(props) => props.img}) no-repeat;
   background-size: 100% 100%;
   margin: 0 auto;
-  border-radius: 25px;
+  border: 10px solid #252958;
+  border-radius: 10px;
   transition: all 1s;
   &:hover {
     transform: scale(1.1);
@@ -199,6 +200,7 @@ class Promotion extends Component {
               })}
           </PromotionContainer>
         </Wrap>
+        <Details />
       </Container>
     );
   }

@@ -25,7 +25,10 @@ import Select from "@material-ui/core/Select";
 import FormControl from "@material-ui/core/FormControl";
 import ExpandMoreOutlined from "@material-ui/icons/ExpandMoreOutlined";
 import SearchOutlined from "@material-ui/icons/SearchOutlined";
-
+import JackpotContainer from "../Home/jackpot-section/jackpot-content";
+import Slick from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 const Container = styled.div`
   width: 100%;
   height: auto;
@@ -51,12 +54,13 @@ const Banner = styled.div`
 const InnerWrap = styled.div`
   width: 1280px;
   min-height: 580px;
-  border-radius: 30px;
+  border-radius: 10px;
 
   margin: 10px auto 50px auto;
-  padding: 0 15px;
+  padding: 15px;
   box-sizing: border-box;
   overflow-y: auto;
+  background: #252958;
 `;
 const GameTabContainer = styled.div`
   display: grid;
@@ -321,6 +325,17 @@ const ItemContainer = styled.div`
   background-position: center top;
   filter: drop-shadow(0px 3px 6px #00000028);
 `;
+
+const ItemProvider = styled.div`
+  position: absolute;
+  height: 40px;
+  background-image: linear-gradient(0, #ffa200, white);
+  padding: 10px 10px 0px;
+  border-bottom-right-radius: 25px;
+  width: auto;
+  font-size: 14px;
+  font-weight: bold;
+`;
 const GameDesc = styled.div`
   padding-left: 10px;
 
@@ -347,14 +362,7 @@ const Namecontainer = styled.div`
   bottom: 0;
   text-align: center;
 `;
-const GameProvider = styled.div`
-  float: left;
-  font-size: 14px;
-  color: #ffffff;
-  padding-right: 5px;
-  margin-top: 4px;
-  text-align: center;
-`;
+
 const Bookmark = styled.div`
   float: right;
 
@@ -377,11 +385,44 @@ const Spliter = styled.div`
   margin: 7px 0 10px 0;
 `;
 
+const GameProviderContainer = styled.div`
+  display: flex;
+  width: 1280px;
+  height: 50px;
+  border-radius: 10px;
+
+  margin: 10px auto 30px auto;
+  padding: 0 15px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  background: #252958;
+
+  .slick-prev {
+    left: 0px;
+  }
+  .slick-next {
+    right: 0px;
+  }
+`;
+
+const GameProvider = styled.div`
+  float: left;
+  font-size: 14px;
+  color: ${(props) => (props.active ? "#ffa200" : "#ffffff")};
+  padding-right: 5px;
+  margin-top: 15px;
+  text-align: center;
+
+  &:hover {
+    color: #ffa200;
+  }
+`;
 class Slots extends Component {
   constructor(props) {
     super(props);
 
     const type = this.getType();
+
     this.state = {
       favGame: [],
       firstLoad: true,
@@ -393,7 +434,7 @@ class Slots extends Component {
       total: 0,
       type: type,
       platformList: [],
-      loading: true,
+      loading: false,
       platform: this.props.match.params.platform
         ? this.props.match.params.platform
         : "",
@@ -683,6 +724,7 @@ class Slots extends Component {
                 el.code
               }.jpg`}
             >
+              <ItemProvider>{el.gpcode}</ItemProvider>
               {el.tag.hot && <GameTagContainer>Hot</GameTagContainer>}
               {/* <GameDesc>
                 <GameProvider>{theName}</GameProvider>
@@ -708,60 +750,44 @@ class Slots extends Component {
         });
     }
 
+    const sliderSettings = {
+      dots: false,
+      className: "center",
+      centerMode: false,
+      infinite: true,
+      centerPadding: "0px",
+      slidesToShow: 7,
+      speed: 500,
+      arrows: true,
+      autoplay: false,
+      lazyLoad: "progressive",
+    };
+    console.log(this.props.game);
     return (
       <Container type={this.state.type}>
-        <Banner type={this.state.type}></Banner>
-
+        <JackpotContainer></JackpotContainer>
+        {this.props.game.homePageGameList.length > 0 && (
+          <GameProviderContainer>
+            <Slick {...sliderSettings}>
+              {this.props.game.homePageGameList
+                .filter((ele) => {
+                  return ele.type === this.state.type; //check for only SLOT enum.
+                })
+                .map((row, index) => {
+                  return (
+                    <GameProvider
+                      active={this.state.platform === row.abbreviation}
+                      key={index}
+                      onClick={() => this.handleParentClick(row.abbreviation)}
+                    >
+                      {row.name}
+                    </GameProvider>
+                  );
+                })}
+            </Slick>
+          </GameProviderContainer>
+        )}
         <InnerWrap type={this.state.type}>
-          <GameSubFilterContainer>
-            {this.genCategoryItem(SlotFilterType.All, i18n.t("slot.allGame"))}
-            {this.genCategoryItem(SlotFilterType.Hot, i18n.t("slot.hotGame"))}
-            {this.genCategoryItem(SlotFilterType.New, i18n.t("slot.newGame"))}
-            {this.genCategoryItem(
-              SlotFilterType.Recommend,
-              i18n.t("slot.recommendGame")
-            )}
-            {/* {this.genCategoryItem(
-              SlotFilterType.Bookmark,
-              i18n.t("slot.bookmarkGame")
-            )} */}
-            <CustomFormControl>
-              <Select
-                native
-                variant="outlined"
-                value={this.state.platform}
-                displayEmpty
-                onChange={(e) => {
-                  this.handleParentClick(e.target.value);
-                }}
-                IconComponent={ExpandMoreOutlined}
-              >
-                <option value="">{i18n.t("T13.slot.provider")}</option>
-                {this.props.game.homePageGameList
-
-                  .filter((ele) => {
-                    return ele.type === this.state.type; //check for only SLOT enum.
-                  })
-                  .map((row, index) => {
-                    return (
-                      <option key={index} value={row.abbreviation}>
-                        {row.name}
-                      </option>
-                    );
-                  })}
-              </Select>
-            </CustomFormControl>
-            <SearchFilterItemContainer>
-              <SearchOutlined></SearchOutlined>
-              <SearchFilterItemInput
-                type="text"
-                maxLength="15"
-                autocomplete="off"
-                placeholder={i18n.t("T13.slot.search")}
-                onChange={this.handleKeywordChange}
-              ></SearchFilterItemInput>
-            </SearchFilterItemContainer>
-          </GameSubFilterContainer>
           <GameListContainer>
             <Loading show={this.state.loading}></Loading>
             {list}

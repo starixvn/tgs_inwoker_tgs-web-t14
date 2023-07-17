@@ -8,8 +8,7 @@ import i18n from "../../../utils/i18n";
 
 import ScrollAnimation from "react-animate-on-scroll";
 import Common from "../../../utils/Common";
-import GameLister from "../Home/game-lister";
-
+import JackpotContainer from "../Home/jackpot-section/jackpot-content";
 const Container = styled.div`
   width: 100%;
   height: auto;
@@ -162,7 +161,7 @@ class ESports extends Component {
   render() {
     return (
       <Container>
-        <Banner></Banner>
+        <JackpotContainer></JackpotContainer>
 
         <ItemContainer>
           <LeftSlide

@@ -240,7 +240,7 @@ const DetailButton = styled.div`
   margin: 0 10px;
   padding-top: 7px;
   text-align: center;
-  background: #cf2029;
+  background: ${({ theme }) => theme.primary};
   color: #fff;
   cursor: pointer;
 `;

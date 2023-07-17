@@ -9,7 +9,7 @@ import { SHOW_LOGIN } from "../../../api-services/constant/actionType";
 import { GameTypeEnum } from "../../../api-services/utils/Enum";
 
 import i18n from "../../../utils/i18n";
-import GameLister from "../Home/game-lister";
+import JackpotContainer from "../Home/jackpot-section/jackpot-content";
 const Container = styled.div`
   width: 100%;
   height: auto;
@@ -188,7 +188,7 @@ class Qipai extends Component {
   render() {
     return (
       <Container>
-        <Banner></Banner>
+        <JackpotContainer></JackpotContainer>
 
         <ItemContainer>
           <LeftSlide

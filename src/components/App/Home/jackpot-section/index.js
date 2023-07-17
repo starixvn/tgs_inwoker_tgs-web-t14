@@ -8,10 +8,10 @@ import {
 import Common from "../../../../utils/Common";
 import SlotGenerator from "../slot-generator";
 import Winners from "./winners";
-
+import GameGrid from "./game-grid";
 import { GameService } from "../../../../api-services/services/GameService";
 import i18n from "../../../../utils/i18n";
-
+import JackpotContainer from "./jackpot-content";
 const Container = styled.div`
   width: 100%;
 `;
@@ -280,20 +280,7 @@ const JackpotSection = ({ showLogin, token }) => {
   return (
     <Container>
       <JackpotHolder>
-        <JackpotContentWorkingSpace>
-          <div style={{ color: "#fff" }}>
-            <img
-              style={{ height: "360px" }}
-              alt="banners"
-              src={
-                process.env.PUBLIC_URL +
-                "/assets/images/pcHomePage/startplay.png"
-              }
-            />
-          </div>
-
-          <Winners />
-        </JackpotContentWorkingSpace>
+        <JackpotContainer />
         <Title>Game Entrance</Title>
         <GameEntranceDisplayer>
           <GameEntranceWrapper>
@@ -316,6 +303,7 @@ const JackpotSection = ({ showLogin, token }) => {
           </GameEntranceWrapper>
         </GameEntranceDisplayer>
         <Title>time to play</Title>
+        <GameGrid commonprops={commonprops} games={homePageGameList.slice(0,18)}/>
       </JackpotHolder>
     </Container>
   );

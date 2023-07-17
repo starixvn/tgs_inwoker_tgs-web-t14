@@ -8,7 +8,7 @@ import i18n from "../../../utils/i18n";
 
 import ScrollAnimation from "react-animate-on-scroll";
 import Common from "../../../utils/Common";
-import GameLister from "../Home/game-lister";
+import JackpotContainer from "../Home/jackpot-section/jackpot-content";
 import { GameService } from "../../../api-services/services/GameService";
 import { AppHistory } from "../../../history/History";
 const Container = styled.div`
@@ -180,7 +180,7 @@ class Cockfight extends Component {
   render() {
     return (
       <Container>
-        <Banner></Banner>
+        <JackpotContainer></JackpotContainer>
 
         <ItemContainer>
           <LeftSlide
