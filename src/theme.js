@@ -71,7 +71,7 @@ export const wapT14 = {
   bottomnav: "#242958",
   bottomNavAction: "#fff",
   bottomNavActionSelected: "#fff",
-  body: "#242958",
+  body: "#000215",
   bodyBackground: `url(${
     process.env.PUBLIC_URL + `/assets/images/wapp/resource/T11/bodybg.png`
   })`,
