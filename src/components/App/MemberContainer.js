@@ -1,5 +1,9 @@
 import React from "react";
-import styled, { keyframes, withTheme } from "styled-components";
+import styled, {
+  createGlobalStyle,
+  keyframes,
+  withTheme,
+} from "styled-components";
 import InboxIconPNG from "../../assets/images/inbox-icon.png";
 import InboxIconPNG_PB from "../../assets/images/inbox-icon-pb.png";
 import IconRefreshBalancePNG_PB from "../../assets/images/icon-refresh-balance-pb.png";
@@ -13,6 +17,7 @@ import { SortedMenuList } from "../../utils/HeaderSorting";
 import CustomPopover from "../Share/custompopover";
 import { Textfit } from "react-textfit";
 import ExpandMore from "@material-ui/icons/ExpandMore";
+import { Popover } from "@material-ui/core";
 
 const balanceIconSwitcher = () => {
   switch (config.theme.toLowerCase()) {
@@ -138,17 +143,6 @@ const AccountDetail = styled.div`
   font-size: 16px;
 `;
 
-const PopoverButton = styled.div`
-  width: 100%;
-  height: 30px;
-  color: #b7b7b7;
-  text-align: center;
-  cursor: pointer;
-  &:hover {
-    color: #000;
-  }
-`;
-
 const HeaderButton = styled.div`
   width: 141px;
   height: 54px;
@@ -175,14 +169,24 @@ const AccountContainer = styled.div`
   justify-content: center;
 `;
 
-const AccountName = styled.div``;
+const AccountName = styled.div`
+  cursor: pointer;
+  &:hover {
+    color: ${({ theme }) => theme.primary};
+  }
+`;
 
 const Mailbox = styled.div`
   width: 25px;
   height: 25px;
-  background: url(${InboxIconPNG}) no-repeat;
-  background-position: center;
+  mask: url(${InboxIconPNG}) no-repeat;
+  mask-position: center;
   margin-left: 20px;
+  cursor: pointer;
+  background: #fff;
+  &:hover {
+    background: ${({ theme }) => theme.primary};
+  }
 `;
 
 const RightContainer = styled.div`
@@ -198,6 +202,7 @@ const BalanceContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 5px;
+  cursor: pointer;
 `;
 
 const BalanceLabel = styled.div`
@@ -219,6 +224,113 @@ const ActionContainer = styled.div`
   align-items: center;
   cursor: pointer;
 `;
+
+const MemberMenuPopover = styled(Popover)`
+  .MuiPopover-paper {
+    background: none;
+  }
+`;
+
+const PopoverContent = styled.div`
+  width: 245px;
+  height: auto;
+  border-radius: 10px;
+  padding-top: 20px;
+  margin-top: 20px;
+  background: ${({ theme }) => theme.containerBg3};
+  max-height: ${({ height }) => {
+    return height ? height : "500px";
+  }};
+  color: #fff;
+  border: 1px solid #191b5a;
+
+  overflow: auto;
+  user-select: none;
+
+  ::-webkit-scrollbar {
+    width: 5px;
+    display: none;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+`;
+
+const PopoverButton = styled.div`
+  width: 100%;
+  height: 30px;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 20px;
+  display: flex;
+  gap: 10px;
+  &:hover {
+    color: ${({ theme }) => theme.primary};
+  }
+`;
+
+const CSContainer = styled.div`
+  border-top: 1px solid #191b5a;
+  padding: 20px 0;
+`;
+
+const CSIcon = styled.div`
+  width: 19px;
+  height: 19px;
+  mask: url(${process.env.PUBLIC_URL +
+    `/assets/images/pcHeaderMenu/cs.svg`})
+    no-repeat center / contain;
+  background: #fff;
+
+`;
+const CSButton = styled(PopoverButton)`
+  border-radius: 10px;
+  border: 1px solid ${({ theme }) => theme.primary};
+  width: 139px;
+  height: 50px;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 0px;
+  &:hover {
+    ${CSIcon} {
+      background: ${({theme})=> theme.primary};
+    }
+  }
+`;
+
+const CSDescription = styled.div`
+
+`;
+
+const LogoutIcon = styled.div`
+  width: 20px;
+  height: 20px;
+  mask: url(${process.env.PUBLIC_URL +
+    `/assets/images/pcHeaderMenu/logout.svg`})
+    no-repeat center / contain;
+  background: #fff;
+`;
+
+const LogoutContainer = styled.div`
+  padding-top: 10px;
+  border-top: 1px solid #191b5a;
+
+  &:hover {
+    ${LogoutIcon} {
+      background: ${({theme})=> theme.primary};
+    }
+  }
+`;
+
 
 const MemberContainer = (props) => {
   const vipSwitcher = (rank) => {
@@ -277,155 +389,88 @@ const MemberContainer = (props) => {
     <Container>
       <LeftContainer>
         <AccountContainer>
-          <AccountName>
+          <AccountName onClick={props.onhandleProfile}>
             {props.account.info.member_username}(
             {config.features.CustomVIP
               ? vipSwitcher(props.account.info.member_level_id)
               : "VIP" + props.account.info.member_level_id}
             )
           </AccountName>
-          <Mailbox></Mailbox>
+          <Mailbox onClick={props.onhandleInboxClick}></Mailbox>
         </AccountContainer>
       </LeftContainer>
       <RightContainer>
-        <BalanceContainer>
-          <BalanceLabel>{i18n.t("web.header.mainAccount")}</BalanceLabel>
+        <BalanceContainer
+          onClick={(e) => {
+            handleTransfer(e);
+          }}
+        >
+          <BalanceLabel>{i18n.t("web.header.mainAccount")}:</BalanceLabel>
           <BalanceValue>
             {config.currency} {Common.formatNumberWithThousand(totalBalance)}
           </BalanceValue>
           <RefreshContainer></RefreshContainer>
         </BalanceContainer>
-        <ActionContainer         
-        onClick={(e) => {
-          handleActionClick(e);
-        }}>
+        <ActionContainer
+          onClick={(e) => {
+            handleActionClick(e);
+          }}
+        >
           <ExpandMore />
         </ActionContainer>
       </RightContainer>
-      <CustomPopover
+
+      <MemberMenuPopover
+        elevation="0"
         open={openAction}
         anchorEl={anchorAction}
-        handleClose={handleActionClose}
-      >
-        <PopoverButton onClick={props.onhandleDeposit}>
-          {i18n.t("web.header.deposit")}
-        </PopoverButton>
-        <PopoverButton onClick={props.onhandleWithdraw}>
-          {i18n.t("common.withdrawal")}
-        </PopoverButton>
-        {props.game.containTransferWallet && !config.features.NewTransferUI && (
-          <PopoverButton onClick={props.onhandleTransfer}>
-            {i18n.t("web.header.transfer")}
-          </PopoverButton>
-        )}
-      </CustomPopover>
-      {/* <ActionButton
-        onClick={(e) => {
-          handleActionClick(e);
+        onClose={handleActionClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
         }}
       >
-        +
-      </ActionButton>
-      <AccountDetail>
-        <MemberUserName>
-          {props.account.info.member_username}(
-          {config.features.CustomVIP
-            ? vipSwitcher(props.account.info.member_level_id)
-            : "VIP" + props.account.info.member_level_id}
-          )
-        </MemberUserName>
-        <BalanceAmountLabel
-          onClick={(e) => {
-            handleTransfer(e);
-          }}
-        >
-          {config.currency} {Common.formatNumberWithThousand(totalBalance)}
-          <RefreshBalance onClick={props.onhandleRefreshBalanceClick}>
-            <RefreshBalanceIcon
-              icon={balanceIconSwitcher()}
-              hoverIcon={balanceHoverIconSwitcher()}
-            ></RefreshBalanceIcon>
-          </RefreshBalance>
-        </BalanceAmountLabel>
-      </AccountDetail>
-      <HeaderButton onClick={props.onhandleProfile}>
-        {i18n.t("web.account.profile")}
-      </HeaderButton>
-      <HeaderButton onClick={props.onhandleLogout}>
-        {i18n.t("web.header.logout")}
-      </HeaderButton>
-      <CustomPopover
-        open={openAction}
-        anchorEl={anchorAction}
-        handleClose={handleActionClose}
-      >
-        <PopoverButton onClick={props.onhandleDeposit}>
-          {i18n.t("web.header.deposit")}
-        </PopoverButton>
-        <PopoverButton onClick={props.onhandleWithdraw}>
-          {i18n.t("common.withdrawal")}
-        </PopoverButton>
-        {props.game.containTransferWallet && !config.features.NewTransferUI && (
-          <PopoverButton onClick={props.onhandleTransfer}>
-            {i18n.t("web.header.transfer")}
+        <PopoverContent>
+          <PopoverButton onClick={props.onhandleDeposit}>
+            {i18n.t("web.header.deposit")}
           </PopoverButton>
-        )}
-      </CustomPopover>
-      <CustomPopover open={open} anchorEl={anchorEl} handleClose={handleClose}>
-        <div>
-          <BrandAndBalanceButBigger>
-            <div style={{ paddingRight: 30 }}>
-              {i18n.t("web.header.mainAccount")}
-            </div>
-            <div
-              style={{
-                width: 150,
-                display: "flex",
-                alignSelf: "flex-end",
-                justifyContent: "flex-end",
-              }}
-            >
-              <Textfit mode="single">
-                {Common.formatNumberWithThousand(totalBalance)}
-              </Textfit>
-            </div>
-          </BrandAndBalanceButBigger>
-        </div>
-        {SortedMenuList.map((item, key) => {
-          return (
-            <GameType>
-              <GameTypeName>{i18n.t(item.title)}</GameTypeName>
-              {props.game.homePageGameList
-                .filter((game) => {
-                  return item.gameType.indexOf(game.type) >= 0;
-                })
-                .map((brand, index) => {
-                  return props.game.providerList
-                    .filter((item) => {
-                      return (
-                        item.abbreviation === brand.abbreviation &&
-                        item.transferwallet === true
-                      );
-                    })
-                    .map((data, index) => {
-                      return (
-                        <BrandAndBalance>
-                          <Brand>
-                            {i18n.t(`${data.abbreviation}.${item.path}`)}
-                          </Brand>
-                          <Balance>
-                            {data.maintenance === 1
-                              ? i18n.t("transfer.maintenance")
-                              : Common.formatNumberWithCommas(data.balance)}
-                          </Balance>
-                        </BrandAndBalance>
-                      );
-                    });
-                })}
-            </GameType>
-          );
-        })}
-      </CustomPopover> */}
+          <PopoverButton onClick={props.onhandleWithdraw}>
+            {i18n.t("common.withdrawal")}
+          </PopoverButton>
+          {props.game.containTransferWallet &&
+            !config.features.NewTransferUI && (
+              <PopoverButton onClick={props.onhandleTransfer}>
+                {i18n.t("web.header.transfer")}
+              </PopoverButton>
+            )}
+          <PopoverButton onClick={props.onhandleSecurityClick}>
+            {i18n.t("security")}
+          </PopoverButton>
+          <PopoverButton onClick={props.onhandleReportClick}>
+            {i18n.t("report.title")}
+          </PopoverButton>
+          <PopoverButton onClick={props.onhandleProfile}>
+            {i18n.t("web.account.profile")}
+          </PopoverButton>
+          <CSContainer>
+            <CSButton onClick={props.onhandleShowCSClick}>
+              <CSIcon />
+              {i18n.t("onlinechat")}
+            </CSButton>
+            <CSDescription>{i18n.t('')}</CSDescription>
+          </CSContainer>
+          <LogoutContainer onClick={props.onhandleLogout}>
+            <PopoverButton>
+              <LogoutIcon />
+              {i18n.t("web.header.logout")}
+            </PopoverButton>
+          </LogoutContainer>
+        </PopoverContent>
+      </MemberMenuPopover>
     </Container>
   );
 };

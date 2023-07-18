@@ -407,6 +407,26 @@ class Header extends Component {
     this.props.history.push("/account/withdrawal");
     window.scrollTo({ top: 0, behavior: "auto" });
   };
+  handleReportClick = () => {
+    if (
+      config.features.ForceRedirectAddCard &&
+      !this.props.account.info.bankInfoAuthentication
+    ) {
+      return;
+    }
+    this.props.history.push("/account/report");
+    window.scrollTo({ top: 0, behavior: "auto" });
+  };
+  handleSecurityClick = () => {
+    if (
+      config.features.ForceRedirectAddCard &&
+      !this.props.account.info.bankInfoAuthentication
+    ) {
+      return;
+    }
+    this.props.history.push("/account/security");
+    window.scrollTo({ top: 0, behavior: "auto" });
+  };
   handleRefreshBalanceClick = () => {
     if (
       config.features.ForceRedirectAddCard &&
@@ -804,6 +824,9 @@ class Header extends Component {
                       }
                       onhandleWithdraw={this.handleWithdrawClick}
                       onhandleProfile={this.handleProfileClick}
+                      onhandleSecurityClick={this.handleSecurityClick}
+                      onhandleReportClick={this.handleReportClick}
+                      onhandleShowCSClick={this.props.onhandleShowCSClick}
                       wallet={this.props.wallet}
                       game={this.props.game}
                       account={this.props.account}
