@@ -268,7 +268,7 @@ const GameListContainer = styled.div`
 `;
 
 const GameHoverSelection = styled.div`
-  width: 165px;
+  width: 195px;
   height: 165px;
   position: absolute;
   left: 0;
@@ -285,7 +285,7 @@ const PlayButton = styled.div`
   width: 85px;
   height: 34px;
   border-radius: 16px;
-  margin: 0 40px;
+  margin: 0 55px;
   padding-top: 7px;
   background: #cf2029;
   filter: drop-shadow(1px 1px 8px #cf2029ba);
@@ -303,9 +303,9 @@ const GameTagContainer = styled.div`
   font-size: 12px;
 `;
 const ItemContainer = styled.div`
-  width: 165px;
+  width: 195px;
   height: 165px;
-  border-radius: 25px;
+  border-radius: 10px;
   position: relative;
   float: left;
   margin: 5px 7px;
@@ -320,7 +320,7 @@ const ItemContainer = styled.div`
   background-image:url(` +
     props.img +
     `)`};
-  background-size: 165px 165px;
+  background-size: 195px 165px;
   background-repeat: no-repeat;
   background-position: center top;
   filter: drop-shadow(0px 3px 6px #00000028);
@@ -348,9 +348,9 @@ const GameDesc = styled.div`
   z-index: 3;
 `;
 const Namecontainer = styled.div`
-  width: 165px;
+  width: 195px;
   height: 25px;
-  background: #000000cc;
+  background: linear-gradient(0deg, black, transparent);
   color: #ffffff;
   font-size: 14px;
   padding: 3px 10px 0 10px;
@@ -360,7 +360,7 @@ const Namecontainer = styled.div`
   text-overflow: ellipsis;
   position: absolute;
   bottom: 0;
-  text-align: center;
+  text-align: left;
 `;
 
 const Bookmark = styled.div`
@@ -398,10 +398,40 @@ const GameProviderContainer = styled.div`
   background: #252958;
 
   .slick-prev {
-    left: 0px;
+    left: 0;
+    z-index: 1;
   }
+
   .slick-next {
-    right: 0px;
+    right: 0;
+    z-index: 1;
+  }
+`;
+
+const GameProviderContainerV2 = styled.div`
+  display: flex;
+  width: 1280px;
+  height: 80px;
+  border-radius: 10px;
+
+  margin: 10px auto 30px auto;
+  padding: 0 15px;
+  box-sizing: border-box;
+  overflow-y: auto;
+
+  .slick-list {
+    margin: 0 20px;
+    overflow: hidden;
+  }
+
+  .slick-prev {
+    left: 0;
+    z-index: 1;
+  }
+
+  .slick-next {
+    right: 0;
+    z-index: 1;
   }
 `;
 
@@ -413,6 +443,37 @@ const GameProvider = styled.div`
   margin-top: 15px;
   text-align: center;
 
+  &:hover {
+    color: #ffa200;
+  }
+`;
+
+const GameProviderImage = styled.div`
+  background: url(${(props) =>
+      process.env.PUBLIC_URL + `/assets/images/provider/` + props.img + `.png`})
+    no-repeat;
+  width: 45px;
+  height: 45px;
+  background-size: contain;
+`;
+
+const GameProviderV2 = styled.div`
+  float: left;
+  font-size: 14px;
+  color: ${(props) => (props.active ? "#ffa200" : "#ffffff")};
+  padding-right: 5px;
+  text-align: center;
+  border-radius: 10px;
+  width: 100px;
+  height: 80px;
+  margin: 0 5px;
+  background: ${({ theme }) => theme.containerBg2};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 13px;
+  cursor: pointer;
   &:hover {
     color: #ffa200;
   }
@@ -724,7 +785,7 @@ class Slots extends Component {
                 el.code
               }.jpg`}
             >
-              <ItemProvider>{el.gpcode}</ItemProvider>
+              {/* <ItemProvider>{el.gpcode}</ItemProvider> */}
               {el.tag.hot && <GameTagContainer>Hot</GameTagContainer>}
               {/* <GameDesc>
                 <GameProvider>{theName}</GameProvider>
@@ -754,38 +815,54 @@ class Slots extends Component {
       dots: false,
       className: "center",
       centerMode: false,
-      infinite: true,
+      infinite: false,
+      variableWidth: true,
+      adaptiveHeight: true,
       centerPadding: "0px",
-      slidesToShow: 7,
+      slidesToShow: 6,
+      slidesToScroll: 2,
+      initialSlide: 0,
       speed: 500,
       arrows: true,
       autoplay: false,
       lazyLoad: "progressive",
     };
-    console.log(this.props.game);
     return (
       <Container type={this.state.type}>
         <JackpotContainer></JackpotContainer>
         {this.props.game.homePageGameList.length > 0 && (
-          <GameProviderContainer>
+          <GameProviderContainerV2>
             <Slick {...sliderSettings}>
+              <div>
+                <GameProviderV2
+                  active={this.state.platform === ""}
+                  onClick={() => this.handleParentClick("")}
+                >
+                  {i18n.t("slot.all")}
+                </GameProviderV2>
+              </div>
               {this.props.game.homePageGameList
                 .filter((ele) => {
                   return ele.type === this.state.type; //check for only SLOT enum.
                 })
                 .map((row, index) => {
                   return (
-                    <GameProvider
-                      active={this.state.platform === row.abbreviation}
-                      key={index}
-                      onClick={() => this.handleParentClick(row.abbreviation)}
-                    >
-                      {row.name}
-                    </GameProvider>
+                    <div>
+                      <GameProviderV2
+                        active={this.state.platform === row.abbreviation}
+                        key={index}
+                        onClick={() => this.handleParentClick(row.abbreviation)}
+                      >
+                        <GameProviderImage
+                          img={row.abbreviation.toLowerCase()}
+                        />
+                        {row.abbreviation}
+                      </GameProviderV2>
+                    </div>
                   );
                 })}
             </Slick>
-          </GameProviderContainer>
+          </GameProviderContainerV2>
         )}
         <InnerWrap type={this.state.type}>
           <GameListContainer>
