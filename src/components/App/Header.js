@@ -387,6 +387,16 @@ class Header extends Component {
     this.props.history.push("/account/inbox");
     window.scrollTo({ top: 0, behavior: "auto" });
   };
+  handleMemoClick = () => {
+    if (
+      config.features.ForceRedirectAddCard &&
+      !this.props.account.info.bankInfoAuthentication
+    ) {
+      return;
+    }
+    this.props.history.push("/account/memo");
+    window.scrollTo({ top: 0, behavior: "auto" });
+  };
   handleProfileClick = () => {
     if (
       config.features.ForceRedirectAddCard &&
@@ -826,6 +836,7 @@ class Header extends Component {
                       onhandleProfile={this.handleProfileClick}
                       onhandleSecurityClick={this.handleSecurityClick}
                       onhandleReportClick={this.handleReportClick}
+                      onhandleMemoClick={this.handleMemoClick}
                       onhandleShowCSClick={this.props.onhandleShowCSClick}
                       wallet={this.props.wallet}
                       game={this.props.game}

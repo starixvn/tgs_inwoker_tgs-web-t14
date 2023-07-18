@@ -179,7 +179,7 @@ const AccountName = styled.div`
 const Mailbox = styled.div`
   width: 25px;
   height: 25px;
-  mask: url(${InboxIconPNG}) no-repeat;
+  mask: url(${process.env.PUBLIC_URL + "/assets/images/pcAccountMenu/icon-memo.svg"}) no-repeat;
   mask-position: center;
   margin-left: 20px;
   cursor: pointer;
@@ -396,7 +396,7 @@ const MemberContainer = (props) => {
               : "VIP" + props.account.info.member_level_id}
             )
           </AccountName>
-          <Mailbox onClick={props.onhandleInboxClick}></Mailbox>
+          <Mailbox onClick={props.onhandleMemoClick}></Mailbox>
         </AccountContainer>
       </LeftContainer>
       <RightContainer>
