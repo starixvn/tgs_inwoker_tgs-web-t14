@@ -407,7 +407,8 @@ const MemberContainer = (props) => {
         >
           <BalanceLabel>{i18n.t("web.header.mainAccount")}:</BalanceLabel>
           <BalanceValue>
-            {config.currency} {Common.formatNumberWithThousand(totalBalance)}
+            ₱
+            {Common.formatNumberWithThousand(totalBalance)}
           </BalanceValue>
           <RefreshContainer></RefreshContainer>
         </BalanceContainer>

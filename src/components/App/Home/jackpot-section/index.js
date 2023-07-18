@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { AppHistory } from "../../../../history/History";
 import styled from "styled-components";
 import {
   GameTypeEnum,
@@ -228,8 +228,8 @@ const JackpotSection = ({ showLogin, token }) => {
 
   const [gameToDisplay, setGameToDisplay] = useState([
     { title: "common.live", type: "live", path: "/live" },
-    { title: "common.chess", type: "card", path: "/live" },
-    { title: "common.sports", type: "sport", path: "/live" },
+    { title: "common.chess", type: "card", path: "/chess" },
+    { title: "common.sports", type: "sport", path: "/sports" },
   ]);
 
   useEffect(() => {
@@ -277,16 +277,21 @@ const JackpotSection = ({ showLogin, token }) => {
     }
   };
 
+  const navigate = (to) => {
+    AppHistory.push(to);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <Container>
       <JackpotHolder>
         <JackpotContainer />
-        <Title>Game Entrance</Title>
+        <Title>{i18n.t('gameEntrance')}</Title>
         <GameEntranceDisplayer>
           <GameEntranceWrapper>
             {gameToDisplay.map((game) => {
               return (
-                <ContentWrapper>
+                <ContentWrapper onClick={()=> navigate(game.path)} key={game.type}>
                   <Overlay />
                   <CustomButton>{i18n.t(game.title)}</CustomButton>
                   <CustomImage
@@ -302,7 +307,7 @@ const JackpotSection = ({ showLogin, token }) => {
             })}
           </GameEntranceWrapper>
         </GameEntranceDisplayer>
-        <Title>time to play</Title>
+        <Title>{i18n.t('timeToPlay')}</Title>
         <GameGrid commonprops={commonprops} games={homePageGameList.slice(0,18)}/>
       </JackpotHolder>
     </Container>

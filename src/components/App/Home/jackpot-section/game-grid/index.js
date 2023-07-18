@@ -47,6 +47,7 @@ const LoadGameButton = styled.div`
 const GameGrid = ({ commonprops, games }) => {
   const navigate = (to) => {
     AppHistory.push(to);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const navigateToGame = (game) => {
