@@ -176,12 +176,32 @@ const AccountName = styled.div`
   }
 `;
 
+const MailboxContainer = styled.div`
+  position: relative;
+  &:after {
+    content: "${(props)=> props.num }";
+    width: 15px;
+    height: 15px;
+    background: #ffa200;
+    position: absolute;
+    top: 0px;
+    right: 0;
+    border-radius: 50%;
+    font-size: 12px;
+    text-align: center;
+  }
+`;
+
 const Mailbox = styled.div`
   width: 25px;
-  height: 25px;
-  mask: url(${process.env.PUBLIC_URL + "/assets/images/pcAccountMenu/icon-memo.svg"}) no-repeat;
+  height: 30px;
+  mask: url(${process.env.PUBLIC_URL +
+    "/assets/images/pcAccountMenu/icon-memo.svg"})
+    no-repeat;
   mask-position: center;
+  mask-size: 25px 20px;
   margin-left: 20px;
+  margin-right: 4px;
   cursor: pointer;
   background: #fff;
   &:hover {
@@ -286,11 +306,9 @@ const CSContainer = styled.div`
 const CSIcon = styled.div`
   width: 19px;
   height: 19px;
-  mask: url(${process.env.PUBLIC_URL +
-    `/assets/images/pcHeaderMenu/cs.svg`})
+  mask: url(${process.env.PUBLIC_URL + `/assets/images/pcHeaderMenu/cs.svg`})
     no-repeat center / contain;
   background: #fff;
-
 `;
 const CSButton = styled(PopoverButton)`
   border-radius: 10px;
@@ -302,14 +320,12 @@ const CSButton = styled(PopoverButton)`
   gap: 0px;
   &:hover {
     ${CSIcon} {
-      background: ${({theme})=> theme.primary};
+      background: ${({ theme }) => theme.primary};
     }
   }
 `;
 
-const CSDescription = styled.div`
-
-`;
+const CSDescription = styled.div``;
 
 const LogoutIcon = styled.div`
   width: 20px;
@@ -326,11 +342,10 @@ const LogoutContainer = styled.div`
 
   &:hover {
     ${LogoutIcon} {
-      background: ${({theme})=> theme.primary};
+      background: ${({ theme }) => theme.primary};
     }
   }
 `;
-
 
 const MemberContainer = (props) => {
   const vipSwitcher = (rank) => {
@@ -385,6 +400,7 @@ const MemberContainer = (props) => {
       .filter((item) => item.status === 0 && item.transferwallet === true)
       .reduce((a, v) => (a = a + v.balance), 0);
 
+  console.log(props.account.info.message_num);
   return (
     <Container>
       <LeftContainer>
@@ -396,7 +412,9 @@ const MemberContainer = (props) => {
               : "VIP" + props.account.info.member_level_id}
             )
           </AccountName>
-          <Mailbox onClick={props.onhandleMemoClick}></Mailbox>
+          <MailboxContainer num={props.account.info.message_num}>
+            <Mailbox onClick={props.onhandleMemoClick}></Mailbox>
+          </MailboxContainer>
         </AccountContainer>
       </LeftContainer>
       <RightContainer>
@@ -407,8 +425,7 @@ const MemberContainer = (props) => {
         >
           <BalanceLabel>{i18n.t("web.header.mainAccount")}:</BalanceLabel>
           <BalanceValue>
-            ₱
-            {Common.formatNumberWithThousand(totalBalance)}
+            ₱{Common.formatNumberWithThousand(totalBalance)}
           </BalanceValue>
           <RefreshContainer></RefreshContainer>
         </BalanceContainer>
@@ -462,7 +479,7 @@ const MemberContainer = (props) => {
               <CSIcon />
               {i18n.t("onlinechat")}
             </CSButton>
-            <CSDescription>{i18n.t('')}</CSDescription>
+            <CSDescription>{i18n.t("")}</CSDescription>
           </CSContainer>
           <LogoutContainer onClick={props.onhandleLogout}>
             <PopoverButton>
