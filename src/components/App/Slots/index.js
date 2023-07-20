@@ -206,7 +206,7 @@ const CategoryText = styled.div`
 const SearchFilterItemContainer = styled.div`
   display: flex;
   width: 185px;
-  height: 40px;
+  height: 30px;
   border-radius: 5px;
   background-color: #fff;
   margin-top: 6px;
@@ -215,7 +215,7 @@ const SearchFilterItemContainer = styled.div`
   & .MuiSvgIcon-root {
     fill: #000;
     color: #ffffff;
-    margin: 10px 0px 10px 10px;
+    margin: ato 0px auto 5px;
   }
 `;
 const SearchFilterItemInput = styled.input`
