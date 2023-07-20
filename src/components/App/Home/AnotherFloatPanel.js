@@ -86,9 +86,9 @@ const SidePanel = styled.div`
 
   overflow: visible;
 
-  border-width: 2px;
-  border-color: #fff;
-  border-style: solid;
+  //border-width: 2px;
+  //border-color: #fff;
+  //border-style: solid;
   border-radius: 1000px;
 
   ${({ active, theme }) => {
@@ -100,19 +100,19 @@ const SidePanel = styled.div`
       border-color: ${theme.accent};
   
       ${Icon} {
-        background: ${theme.accent};
+        background: #2367AA;
         background-size: 100%;
         transform: translateY(-5px);
       }
       ${Text} {
         opacity: 1;
         display: block;
-        color: ${theme.accent};
+        color: #2367AA;
         transition: opacity 200ms;
         transition-delay: 100ms;
       }`
       : `  
-      background-color: ${theme.accent};`;
+      background-color: #2367AA;`;
   }}
 
   &:hover {
@@ -122,20 +122,30 @@ const SidePanel = styled.div`
     border-color: ${({ theme }) => theme.accent};
 
     ${Icon} {
-      background: ${({ theme }) => theme.accent};
+      background: #2367AA;
       background-size: 100%;
       transform: translateY(-5px);
     }
     ${Text} {
       opacity: 1;
       display: block;
-      color: ${({ theme }) => theme.accent};
+      color: #2367AA;
       transition: opacity 200ms;
       transition-delay: 100ms;
     }
   }
   box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
   margin: 10px 10px 5px auto;
+  position: relative;
+`;
+const WeAreHere = styled.div`
+  position: absolute;
+  width: 130px;
+  height: 124px;
+  background: url(${process.env.PUBLIC_URL + `/assets/images/pcHomePage/wearehere.png`}) no-repeat;
+  background-size: contain;
+  top: -25px;
+  left: -37px;
 `;
 
 const CustomModal = styled(Dialog)`
@@ -321,12 +331,13 @@ const AnotherFloatPanel = (props) => {
             onClick={() => {
               performOpenCsModal();
             }}
-            src2={PanelUserPNG2}
+            src2={process.env.PUBLIC_URL + `/assets/images/pcHeaderMenu/cs.svg`}
           >
+            <WeAreHere></WeAreHere>
             <RotateBack active={csModal}>
               <Icon
-                src={PanelUserPNG}
-                src2={PanelUserPNG2}
+                src={process.env.PUBLIC_URL + `/assets/images/pcHeaderMenu/cs.svg`}
+                src2={process.env.PUBLIC_URL + `/assets/images/pcHeaderMenu/cs.svg`}
                 active={csModal}
                 alt="user-icon"
               />
