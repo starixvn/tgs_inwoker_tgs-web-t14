@@ -9,5 +9,6 @@
 	branch = develop
 [submodule "src/components/Wap"]
 	path = src/components/Wap
-	url = https://gitlab.com/inwoker/tgs/tgs-wap-temp-4.git
+	url = https://gitlab.com/inwoker/tgs/tgs-wap-temp-3.git
+	branch = develop
 	
