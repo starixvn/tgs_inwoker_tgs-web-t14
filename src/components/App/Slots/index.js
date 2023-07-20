@@ -172,19 +172,18 @@ const GameTabAll = styled(GameTabButton)`
 const GameSubFilterContainer = styled.div`
   width: 1280px;
   height: 50px;
-  margin: 25px 0 15px 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  margin: 10px auto 50px auto;
+  display: flex;
+  background: ${({ theme }) => theme.containerBg2};
+  border-radius: 10px;
 `;
 
 const CategoryContainer = styled.div`
   height: 40px;
-  box-sizing: border-box;
   font-size: 16px;
-  margin-right: 20px;
-  margin-top: 6px;
+  margin: auto 10px;
   border-radius: 30px;
-  width: 160px;
+  width: auto;
   color: #fff;
   text-align: center;
 
@@ -194,53 +193,27 @@ const CategoryContainer = styled.div`
 
   ${(props) =>
     props.active
-      ? `  
-      border: 1px solid #CF2029;
-      background: #CF2029;`
+      ? `
+      color: ${props.theme.primary};
+      `
       : `  
-      border: 1px solid #27273f;
-      background: #27273f;`}
+      `}
 `;
 const CategoryText = styled.div`
   margin-top: 8px;
 `;
-const CustomFormControl = withStyles((theme) => ({
-  root: {
-    "& .MuiSelect-select": {
-      fontSize: "16px",
-      color: "#ffffff",
-      fontFamily: "Montserrat",
-    },
-    "& .MuiSelect-select > option": {
-      fontSize: "14px",
-      color: "#000326",
-      fontFamily: "Montserrat",
-    },
-    "& .MuiSelect-icon": {
-      color: "#ffffff",
-    },
-    "& .MuiOutlinedInput-root": {
-      width: "180px",
-      height: "40px",
-      marginTop: "6px",
-    },
-    "& .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#fff !important",
-      borderRadius: "25px",
-    },
-  },
-}))(FormControl);
 
 const SearchFilterItemContainer = styled.div`
   display: flex;
   width: 185px;
   height: 40px;
-  border-radius: 25px;
-  background-color: transparent;
+  border-radius: 5px;
+  background-color: #fff;
   margin-top: 6px;
   border: 1px solid #ffffff;
-
+  margin: auto 5px auto auto;
   & .MuiSvgIcon-root {
+    fill: #000;
     color: #ffffff;
     margin: 10px 0px 10px 10px;
   }
@@ -248,18 +221,18 @@ const SearchFilterItemContainer = styled.div`
 const SearchFilterItemInput = styled.input`
   background: transparent;
   border: none;
-  color: #ffffff;
+  color: #000;
   font-size: 16px;
   width: 130px;
   font-family: "Montserrat";
   ::placeholder,
   ::-webkit-input-placeholder {
-    color: #ffffff;
+    color: #000;
     font-size: 16px;
     font-family: "Montserrat";
   }
   :-ms-input-placeholder {
-    color: #ffffff;
+    color: #000;
   }
 `;
 
@@ -287,8 +260,8 @@ const PlayButton = styled.div`
   border-radius: 16px;
   margin: 0 55px;
   padding-top: 7px;
-  background: #cf2029;
-  filter: drop-shadow(1px 1px 8px #cf2029ba);
+  background: ${({ theme }) => theme.primary};
+  filter: drop-shadow(1px 1px 8px ${({ theme }) => theme.primary}ba);
   text-transform: uppercase;
 `;
 
@@ -830,6 +803,29 @@ class Slots extends Component {
     return (
       <Container type={this.state.type}>
         <JackpotContainer></JackpotContainer>
+        <GameSubFilterContainer>
+          {this.genCategoryItem(SlotFilterType.All, i18n.t("slot.allGame"))}
+          {this.genCategoryItem(SlotFilterType.Hot, i18n.t("slot.hotGame"))}
+          {this.genCategoryItem(SlotFilterType.New, i18n.t("slot.newGame"))}
+          {this.genCategoryItem(
+            SlotFilterType.Recommend,
+            i18n.t("slot.recommendGame")
+          )}
+          {/* {this.genCategoryItem(
+              SlotFilterType.Bookmark,
+              i18n.t("slot.bookmarkGame")
+            )} */}
+          <SearchFilterItemContainer>
+            <SearchOutlined></SearchOutlined>
+            <SearchFilterItemInput
+              type="text"
+              maxLength="15"
+              autocomplete="off"
+              placeholder={i18n.t("T13.slot.search")}
+              onChange={this.handleKeywordChange}
+            ></SearchFilterItemInput>
+          </SearchFilterItemContainer>
+        </GameSubFilterContainer>
         {this.props.game.homePageGameList.length > 0 && (
           <GameProviderContainerV2>
             <Slick {...sliderSettings}>
