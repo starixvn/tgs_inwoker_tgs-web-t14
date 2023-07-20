@@ -96,14 +96,17 @@ const BalanceContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 5px;
-  cursor: pointer;
 `;
 
 const BalanceLabel = styled.div`
   color: ${({ theme }) => theme.primary};
 `;
 const BalanceValue = styled.div`
+  cursor: pointer;
   color: #fff;
+  &:hover {
+    color: ${({ theme }) => theme.primary};
+  }
 `;
 const rotateKeyFrame = keyframes`
   0% {
@@ -118,7 +121,7 @@ const RefreshButtonIcon = styled.div`
   height: 17px;
   mask: url(${IconRefreshPNG}) no-repeat center;
   mask-size: contain;
-  background: #fff;
+  background: #005DAE;
   transform: scaleX(-1) rotate(-45deg);
   transform-origin: 8px 8px;
 `;
@@ -129,7 +132,6 @@ const RefreshButton = styled.div`
   &:hover {
     cursor: pointer;
     ${RefreshButtonIcon} {
-      background: ${({theme})=> theme.primary};
       animation: ${rotateKeyFrame} 1s linear 0s infinite;
     }
   }
@@ -144,6 +146,17 @@ const ActionContainer = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+
+  & > svg {
+    ${(props) =>
+      props.active
+        ? `
+    transform: rotate(0deg);
+    `
+        : `    transform: rotate(-90deg);
+    `}
+    transition: all 0.5s;
+  }
 `;
 
 const MemberMenuPopover = styled(Popover)`
@@ -248,8 +261,6 @@ const LogoutContainer = styled.div`
   }
 `;
 
-
-
 const MemberContainer = (props) => {
   const vipSwitcher = (rank) => {
     switch (rank) {
@@ -278,7 +289,7 @@ const MemberContainer = (props) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [anchorAction, setAnchorAction] = React.useState(null);
-  
+
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
   };
@@ -320,13 +331,13 @@ const MemberContainer = (props) => {
         </AccountContainer>
       </LeftContainer>
       <RightContainer>
-        <BalanceContainer
-          onClick={(e) => {
-            handleTransfer(e);
-          }}
-        >
+        <BalanceContainer>
           <BalanceLabel>{i18n.t("web.header.mainAccount")}:</BalanceLabel>
-          <BalanceValue>
+          <BalanceValue
+            onClick={(e) => {
+              handleTransfer(e);
+            }}
+          >
             ₱{Common.formatNumberWithThousand(totalBalance)}
           </BalanceValue>
           <RefreshButton onClick={props.onhandleRefreshBalanceClick}>
@@ -334,6 +345,7 @@ const MemberContainer = (props) => {
           </RefreshButton>
         </BalanceContainer>
         <ActionContainer
+          active={openAction}
           onClick={(e) => {
             handleActionClick(e);
           }}
