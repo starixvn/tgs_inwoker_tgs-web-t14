@@ -9,6 +9,8 @@ import InboxIconPNG_PB from "../../assets/images/inbox-icon-pb.png";
 import IconRefreshBalancePNG_PB from "../../assets/images/icon-refresh-balance-pb.png";
 import IconRefreshBalancePNG from "../../assets/images/icon-refresh-balance.png";
 import IconRefreshBalanceHoverPNG from "../../assets/images/icon-refresh-balance-hover.png";
+import IconRefreshPNG from "../../assets/images/icon-refresh.png";
+
 import { Link } from "react-router-dom";
 import i18n from "../../utils/i18n";
 import Common from "../../utils/Common";
@@ -19,31 +21,6 @@ import { Textfit } from "react-textfit";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import { Popover } from "@material-ui/core";
 
-const balanceIconSwitcher = () => {
-  switch (config.theme.toLowerCase()) {
-    case "pb":
-      return `${IconRefreshBalancePNG_PB}`;
-    default:
-      return `${IconRefreshBalancePNG}`;
-  }
-};
-const balanceHoverIconSwitcher = () => {
-  switch (config.theme.toLowerCase()) {
-    case "pb":
-      return `${IconRefreshBalancePNG_PB}`;
-    default:
-      return `${IconRefreshBalanceHoverPNG}`;
-  }
-};
-
-export const rotateKeyFrame = keyframes`
-  0% {
-    transform:rotate(0deg)
-  }
-  100% {
-    transform:rotate(-359deg)
-  }
-`;
 const Container = styled.div`
   font-size: 14px;
   display: flex;
@@ -51,109 +28,6 @@ const Container = styled.div`
   gap: 20px;
   padding-right: 5px;
   justify-content: flex-end;
-`;
-
-const RefreshBalance = styled.div`
-  margin: 1px 1px 0 1px;
-
-  width: 18px;
-  height: 18px;
-
-  &:hover {
-    cursor: pointer;
-  }
-`;
-const RefreshBalanceIcon = styled.div`
-  background-image: url(${({ theme }) => balanceIconSwitcher()});
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 13px;
-  width: 18px;
-  height: 18px;
-
-  &:hover {
-    background-image: url(${({ theme }) => balanceHoverIconSwitcher()});
-    animation: ${rotateKeyFrame} 1s linear 0s infinite;
-  }
-`;
-const BalanceAmountLabel = styled.span`
-  color: ${({ theme }) => theme.pcHeaderText};
-  display: flex;
-  &:hover {
-    cursor: pointer;
-  }
-`;
-const MemberUserName = styled.span`
-  color: ${({ theme }) => theme.pcHeaderText};
-`;
-
-const GameType = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 10px;
-`;
-
-const GameTypeName = styled.div`
-  padding-bottom: 10px;
-  color: ${({ theme }) => theme.popoverGameTypeText};
-  opacity: 0.65;
-`;
-
-const BrandAndBalance = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 2.5px 0;
-  color: ${({ theme }) => theme.popoverText};
-`;
-
-const Brand = styled.div`
-  padding-left: 5px;
-  font-size: 12px;
-`;
-
-const Balance = styled.div`
-  text-align: right;
-  opacity: 0.75;
-`;
-
-const BrandAndBalanceButBigger = styled(BrandAndBalance)`
-  border-bottom: solid 1px #000;
-  margin-bottom: 10px;
-  padding-bottom: 10px;
-  font-weight: bold;
-  color: ${({ theme }) => theme.primary};
-  font-size: 20px;
-`;
-
-const ActionButton = styled.div`
-  background: ${({ theme }) => theme.primary};
-  width: 35px;
-  height: 35px;
-  font-size: 35px;
-  line-height: 35px;
-  padding-left: 7px;
-  border-radius: 25px;
-  cursor: pointer;
-`;
-
-const AccountDetail = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 0 10px;
-  font-size: 16px;
-`;
-
-const HeaderButton = styled.div`
-  width: 141px;
-  height: 54px;
-  font-size: 20px;
-  padding: 12.5px 0px;
-  text-align: center;
-  color: ${({ theme }) => theme.pcHeaderText};
-  cursor: pointer;
-  border: 1px solid ${({ theme }) => theme.pcHeaderText};
-  border-radius: 30px;
-  text-transform: uppercase;
 `;
 
 const LeftContainer = styled.div``;
@@ -179,7 +53,7 @@ const AccountName = styled.div`
 const MailboxContainer = styled.div`
   position: relative;
   &:after {
-    content: "${(props)=> props.num }";
+    content: "${(props) => props.num}";
     width: 15px;
     height: 15px;
     background: #ffa200;
@@ -231,8 +105,35 @@ const BalanceLabel = styled.div`
 const BalanceValue = styled.div`
   color: #fff;
 `;
-const RefreshContainer = styled.div``;
+const rotateKeyFrame = keyframes`
+  0% {
+    transform:scaleX(-1) rotate(-45deg);
+  }
+  100% {
+    transform:scaleX(-1) rotate(-400deg);
+  }
+`;
+const RefreshButtonIcon = styled.div`
+  width: 17px;
+  height: 17px;
+  mask: url(${IconRefreshPNG}) no-repeat center;
+  mask-size: contain;
+  background: #fff;
+  transform: scaleX(-1) rotate(-45deg);
+  transform-origin: 8px 8px;
+`;
+const RefreshButton = styled.div`
+  width: 17px;
+  height: 17px;
 
+  &:hover {
+    cursor: pointer;
+    ${RefreshButtonIcon} {
+      background: ${({theme})=> theme.primary};
+      animation: ${rotateKeyFrame} 1s linear 0s infinite;
+    }
+  }
+`;
 const ActionContainer = styled.div`
   width: 38px;
   height: 54px;
@@ -347,6 +248,8 @@ const LogoutContainer = styled.div`
   }
 `;
 
+
+
 const MemberContainer = (props) => {
   const vipSwitcher = (rank) => {
     switch (rank) {
@@ -375,7 +278,7 @@ const MemberContainer = (props) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [anchorAction, setAnchorAction] = React.useState(null);
-
+  
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
   };
@@ -400,7 +303,6 @@ const MemberContainer = (props) => {
       .filter((item) => item.status === 0 && item.transferwallet === true)
       .reduce((a, v) => (a = a + v.balance), 0);
 
-  console.log(props.account.info.message_num);
   return (
     <Container>
       <LeftContainer>
@@ -427,7 +329,9 @@ const MemberContainer = (props) => {
           <BalanceValue>
             ₱{Common.formatNumberWithThousand(totalBalance)}
           </BalanceValue>
-          <RefreshContainer></RefreshContainer>
+          <RefreshButton onClick={props.onhandleRefreshBalanceClick}>
+            <RefreshButtonIcon></RefreshButtonIcon>
+          </RefreshButton>
         </BalanceContainer>
         <ActionContainer
           onClick={(e) => {
