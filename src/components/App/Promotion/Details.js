@@ -241,6 +241,49 @@ class PromotionDetails extends Component {
     if (this.props.match.params.id == null) {
       AppHistory.replace("/promotion");
     }
+    else{
+      for (var i = 0; i < this.props.general.promotionList.items.length; i++) {
+        if (
+          this.props.general.promotionList.items[i].id ===
+          this.props.match.params.id
+        ) {
+          var term = "";
+          if (this.props.general.promotionList.items[i]) {
+            if (
+              JSON.stringify(
+                this.props.general.promotionList.items[i].localization
+              ) !== "{}" &&
+              (this.props.general.promotionList.items[i].localization[
+                i18n.language
+              ] !== "" ||
+                this.props.general.promotionList.items[i].localization[
+                  i18n.language
+                ] !== null)
+            ) {
+              term = this.props.general.promotionList.items[i].localization[
+                i18n.language
+              ].terms
+                ? this.props.general.promotionList.items[i].localization[
+                    i18n.language
+                  ].terms
+                : this.props.general.promotionList.items[i].terms;
+            } else {
+              term = this.props.general.promotionList.items[i].terms || "";
+            }
+          }
+          this.setState({
+            ...this.state,
+            index: i,
+            details: this.props.general.promotionList.items[i],
+            term: term,
+            joined: false,
+            openDialog: true,
+            isTNCToggled: false,
+          });
+          break;
+        }
+      }
+    }
     if (this.props.general.promotionList.items.length <= 0) {
       AppHistory.replace("/promotion");
     }
