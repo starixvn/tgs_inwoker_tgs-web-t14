@@ -102,6 +102,8 @@ export const wapT14 = {
   buttonWapBoxShadow: "none",
 
   textfieldColor: "#000",
+  inputBackground: "#fff",
+  wapBorderRadius: "20px",
 };
 
 export const themeList = {
