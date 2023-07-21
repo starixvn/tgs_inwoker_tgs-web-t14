@@ -268,7 +268,7 @@ const PlayButton = styled.div`
 const GameTagContainer = styled.div`
   width: 42px;
   height: 30px;
-  border-radius: 0 25px;
+  border-radius: 0 10px;
   background-color: #cf2029;
   float: right;
   color: #ffffff;
