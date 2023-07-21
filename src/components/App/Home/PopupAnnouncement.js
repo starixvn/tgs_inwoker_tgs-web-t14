@@ -11,7 +11,7 @@ const StyledDialog = withStyles({
 
     "& .MuiPaper-root": {
       backgroundColor: "transparent",
-      borderRadius: "15px",
+      borderRadius: "10px",
     },
   },
 })(Dialog);
@@ -20,7 +20,7 @@ const CustomStyledPromoDialog = withStyles({
     boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
     "& .MuiPaper-root": {
       backgroundColor: "#27273F",
-      borderRadius: "35px",
+      borderRadius: "10px",
       maxWidth: "1160px",
     },
   },
@@ -30,7 +30,7 @@ const CustomStyledDialog = withStyles({
     boxShadow: "none",
     "& .MuiPaper-root": {
       backgroundColor: "transparent",
-      borderRadius: "15px",
+      borderRadius: "10px",
       maxWidth: "700px",
       paddingTop: "85px",
       paddingRight: "50px",
@@ -40,7 +40,7 @@ const CustomStyledDialog = withStyles({
 })(Dialog);
 const Container = styled.div`
   width: ${(props) => (props.isPromo ? `1160px` : `506px`)};
-  background: #27273f;
+  background: ${(props) => (props.theme.containerBg1 ? props.theme.containerBg1 : `#27273f`)};
   background-attachment: fixed;
   background-position: center;
   color: #fff;
@@ -50,7 +50,7 @@ const Container = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  border-radius: 50px;
+  border-radius: 10px;
 `;
 const CloseIconContainer = styled.div`
   background: url(${IconLoginClosePNG}) no-repeat;
@@ -71,7 +71,7 @@ const CloseButton = styled.div`
   text-align: center;
   letter-spacing: 3px;
   font-size: 30px;
-  border-radius: 50px;
+  border-radius: 10px;
   filter: drop-shadow(1px 1px 8px ${({ theme }) => theme.primary}ba);
   cursor: pointer;
 `;
@@ -125,7 +125,7 @@ const ImageBanner = styled.div`
 `;
 
 const CustomPromoImageBanner = styled(ImageBanner)`
-  border-radius: 15px;
+  border-radius: 10px;
 `;
 
 const TheButton = styled.div`
@@ -149,7 +149,7 @@ const CustomContainer = styled.div`
 `;
 const CustomPromoContainer = styled(CustomContainer)`
   width: 1160px;
-  background: #27273f;
+  background: #181C43;
 `;
 const CustomCloseButton = styled.div`
   background: url(${process.env.PUBLIC_URL +
@@ -236,7 +236,7 @@ const CustomFormContainer = styled.div`
 const DetailButton = styled.div`
   width: 100px;
   height: 34px;
-  border-radius: 25px;
+  border-radius: 10px;
   margin: 0 10px;
   padding-top: 7px;
   text-align: center;
