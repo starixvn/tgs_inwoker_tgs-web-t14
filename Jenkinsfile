@@ -5,13 +5,13 @@ pipeline {
 	agent any
 	environment {
         TAG = sh(script: "echo `date +%Y-%m%d-%H%M`", returnStdout: true).trim()
-		GitUrl = "gitlab.com/inwoker/tgs/tgs-web-t13.git"
+		GitUrl = "gitlab.com/inwoker/tgs/tgs-web-t14.git"
         Registry = "pgtgs/"
-        LobbyName = "lobby-t13"
+        LobbyName = "lobby-t14"
 		ApiKey = "I7nKiimrZQOqnJ6ryjUw74c0Hi64KC6Myunhob4cHh8VOUIuZh4p63czefxyyzbZ"
-		Brand = "T13"
-		Theme = "wapT13" 
-		Template = "13"
+		Brand = "T14"
+		Theme = "wapT14" 
+		Template = "14"
 		DefaultCurrency = "PHP"
 		DefaultLanguage = "en-US"
     }
@@ -27,7 +27,7 @@ pipeline {
                     {
                         case ['master', 'origin/master']:
                             env.kube_ns = "prod";
-							env.domain = "t13.srvptt.com";
+							env.domain = "t14.srvptt.com";
                             env.k8s_config = 'prod-k8s-config';
                             sh "git config --file=.gitmodules submodule.src/components/Wap.branch master";
                             sh "git config --file=.gitmodules submodule.src/components/App/Account.branch master";
@@ -37,7 +37,7 @@ pipeline {
                             break;
                         case ['release/current', 'origin/release/current']:
                             env.kube_ns = "staging";
-							env.domain = "stg-t13.rpgp.cc";
+							env.domain = "stg-t14.rpgp.cc";
                             env.k8s_config = 'stag-k8s-config';
                             sh "git config --file=.gitmodules submodule.src/components/Wap.branch release/current";
                             sh "git config --file=.gitmodules submodule.src/components/App/Account.branch release/current";
@@ -52,7 +52,7 @@ pipeline {
                             sh "git submodule sync";
                             sh "git submodule update --remote";
                             env.kube_ns = "dev";
-							env.domain = "dev-t13.rpgp.cc";
+							env.domain = "dev-t14.rpgp.cc";
                             env.k8s_config = 'k8s-kube-config' 
                             break;
                     }
@@ -166,7 +166,7 @@ pipeline {
                     withKubeConfig([credentialsId: env.k8s_config]) {
                         message += "\nComponent:"
 
-						if (env.tgs_lobby_t13_components!="") {
+						if (env.tgs_lobby_t14_components!="") {
 							for (i = 0;i < componentArray.length; i++) {
 								message += "\n    ${componentArray[i]}"
 								sh "kubectl set image deployment/${componentArray[i]} ${componentArray[i]}=${Registry}${LobbyName}:${TAG} --record -n $env.kube_ns"
