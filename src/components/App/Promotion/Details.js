@@ -476,6 +476,7 @@ class PromotionDetails extends Component {
   render() {
     if (this.state.details === null) return <></>;
     var isDummy = this.state.details.promotionType.toUpperCase() === "DUMMY";
+    var isPromoteDepositChannel = this.state.details.promotionType.toUpperCase() === "PROMOTEDEPOSITCHANNEL";
     var checkIfLocalizationIsEmpty =
       JSON.stringify(this.state.details.localization) === "{}";
     return (
@@ -590,7 +591,7 @@ class PromotionDetails extends Component {
                   )}
                 </React.Fragment>
               )}
-              {!isDummy && (
+              {!(isDummy || isPromoteDepositChannel) && (
                 <PromotionButton
                   disabled={this.state.joined}
                   onClick={() =>
