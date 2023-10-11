@@ -263,7 +263,7 @@ const LeftContent = styled.div`
 `;
 
 const MarqueeContainer = styled.div`
-  background-color: #181C43;
+  background-color: #181c43;
   width: 100%;
 `;
 
@@ -567,7 +567,11 @@ class Header extends Component {
         } else {
           if (gameType === GameTypeEnum.RNGSPORTS) {
             this.props.history.push("/sports/" + gameCode);
-          } else if (gameCode === "WGFM" || gameCode === "WGVIA") {
+          } else if (
+            gameCode === "WGFM" ||
+            gameCode === "WGVIA" ||
+            gameCode === "9WCRICKET"
+          ) {
             if (document.getElementById("audio") != null)
               document.getElementById("audio").volume = 0;
             if (this.props.history.location.pathname.indexOf("play") >= 0) {
@@ -734,7 +738,11 @@ class Header extends Component {
                 />
               </LinkContainer>
               {config.features.OnlineUser && (
-                <OnlineUserDisplayer color="#fff" size="14px" iconOnly={false} />
+                <OnlineUserDisplayer
+                  color="#fff"
+                  size="14px"
+                  iconOnly={false}
+                />
               )}
               <TimerContainer>
                 <TimerSpan>GMT+8 {this.state.systemDateTime}</TimerSpan>
