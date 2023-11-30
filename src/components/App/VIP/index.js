@@ -287,24 +287,24 @@ const VIP = (props) => {
             <VIPRebateContainer>
               <VIPRebateHeader>
                 <VipTitle title={i18n.t("vip.vipBenefit")} />
-                <VipTitle title={i18n.t("vip.cardGameRebate")} />
                 <VipTitle title={i18n.t("vip.liveDealerRebate")} />
-                <VipTitle title={i18n.t("vip.lotteryRebate")} />
                 <VipTitle title={i18n.t("vip.slotRebate")} />
+                <VipTitle title={i18n.t("vip.cardGameRebate")} />
                 <VipTitle title={i18n.t("vip.sportsRebate")} />
                 <VipTitle title={i18n.t("vip.virtualSportsRebate")} />
+                <VipTitle title={i18n.t("vip.lotteryRebate")} />
               </VIPRebateHeader>
 
               {vipBenefitList.map((data, index) => {
                 return (
                   <VIPRebateRow key={index}>
                     <VipContent content={data.level} />
-                    <VipContent content={data.cardGameRebate + "%"} />
                     <VipContent content={data.liveDealerRebate + "%"} />
-                    <VipContent content={data.lotteryRebate + "%"} />
                     <VipContent content={data.slotRebate + "%"} />
+                    <VipContent content={data.cardGameRebate + "%"} />
                     <VipContent content={data.sportsRebate + "%"} />
                     <VipContent content={data.virtualSportsRebate + "%"} />
+                    <VipContent content={data.lotteryRebate + "%"} />
                   </VIPRebateRow>
                 );
               })}
