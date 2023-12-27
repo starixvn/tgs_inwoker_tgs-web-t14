@@ -16,11 +16,11 @@ import { Dialog } from "@material-ui/core";
 const moment = require("moment");
 
 const Container = styled.div`
-width: 100%;
-padding: 40px 30px;
-position: relative;
-//min-height: 800px;
-background: #181C43;
+  width: 100%;
+  padding: 40px 30px;
+  position: relative;
+  //min-height: 800px;
+  background: #181c43;
 `;
 
 const Title = styled.div`
@@ -240,8 +240,7 @@ class PromotionDetails extends Component {
   componentDidMount() {
     if (this.props.match.params.id == null) {
       AppHistory.replace("/promotion");
-    }
-    else{
+    } else {
       for (var i = 0; i < this.props.general.promotionList.items.length; i++) {
         if (
           this.props.general.promotionList.items[i].id ===
@@ -428,6 +427,7 @@ class PromotionDetails extends Component {
           "DailyFirstDeposit",
           "DepositReward",
           "DepositAccumulateRoulette",
+          "AccountFirstDeposit",
         ].indexOf(promotionType) >= 0
       ) {
         AppHistory.push({
